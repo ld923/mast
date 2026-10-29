@@ -53,17 +53,23 @@ export const BR = {
     sets: [['Malta\'s shops in one app', 'Robin searches Malta\'s electronics and home shops at once, so you can compare.', 'Coming soon'], ['Compare. Get alerted. Get it installed.', 'Compare shops, set price alerts, and book delivery with installation. Coming soon.', 'Coming soon'], ['One search for Malta', 'Robin: electronics and home shops, side by side. The shops compete, you choose.', 'Coming soon']],
     fu: ['Still comparing?', 'Robin: Malta\'s electronics and home shops in one app. Coming soon.', 'Coming soon'] },
 };
+const GOAL = { brl: 'Get bands and DJs to open the app', lispa: 'Bookings ahead of the 7 Nov 2026 opening', n923: 'Visits to the shirt and print shop', ldtv: 'Awareness (coming soon)', vdk: 'Awareness (coming soon)', dbox: 'Awareness (coming soon)', robin: 'Awareness (coming soon)', gaffer: 'Awareness (coming soon)' };
+['brl', 'lispa', 'n923'].forEach(k => { BR[k].live = !!BR[k].url; }); Object.keys(GOAL).forEach(k => { BR[k].goal = GOAL[k]; if (!BR[k].live) BR[k].live = false; });
 export const BR_ORDER = ['brl', 'lispa', 'ldtv', 'n923', 'vdk', 'dbox', 'robin', 'gaffer'];
 const valid = k => { const b = BR[k]; return !!(b && b.name && b.sub && b.cta && b.icon && b.hero && Array.isArray(b.copy) && b.copy.length); };
 const live = () => BR_ORDER.filter(valid);
 
 const Q = new URLSearchParams(location.search);
 const DEV = { k: valid(Q.get('ad')) ? Q.get('ad') : '', f: Q.get('adfmt') || '' };
-const DAY = () => new Date().toISOString().slice(0, 10), CAP = 3, FU_MS = 72 * 3600e3;
+const OPEN = Date.UTC(2026, 10, 7), daysTo = () => Math.max(0, Math.ceil((OPEN - Date.now()) / 864e5));
+const tagUrl = (u, m) => { try { const x = new URL(u); x.searchParams.set('utm_source', 'mast'); x.searchParams.set('utm_medium', m || 'toast'); x.searchParams.set('utm_campaign', 'house'); return x.toString(); } catch (e) { return u; } };
+const LOGK = 'adlog';
+const alog = (k, ev, fmt) => { if (!BR[k]) return; const l = store.get(LOGK, []); l.push({ t: Date.now(), k, ev, f: fmt }); store.set(LOGK, l.slice(-400)); };
+const DAY = () => new Date().toISOString().slice(0, 10), CAP = 3, FU_MS = 72 * 3600e3, FULL_GAP = 7 * 864e5;
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const anim = () => getAnim() === 'full', still = () => getAnim() === 'off';
-const S = { n: 0, nat: 0, banner: null, timer: null, ref: 0, full: false, why: null, natDone: false, route: '' };
+const S = { fail: 0, sess: 0, n: 0, banner: null, timer: null, full: false, why: null, route: '', watched: false };
 
 /* ---- state (local only) ---- */
 const off = () => store.get('ads.off', false) === true;
@@ -81,10 +87,11 @@ function creative(k) {
   let pool = dv === 'play' ? fun : dv === 'pro' && pro.length ? pro : dv === 'fu' && fu ? [fu] : (fu && engRecent(k) && !DEV.k && Math.random() < .6) ? [fu] : (Math.random() < .6 && pro.length ? pro : fun);
   const last = store.get('ads.last.' + k, ''), alt = pool.filter(c => c.id !== last); if (alt.length) pool = alt;
   const c = pool[Math.floor(Math.random() * pool.length)]; store.set('ads.last.' + k, c.id);
+  if (k === 'lispa') { const n = daysTo(); return { h: n > 0 ? `Opens in ${n} day${n === 1 ? '' : 's'} · Book a treatment` : 'Now open · Book a treatment', d: '', cta: b.cta2 || b.cta, fu: false }; }
   return { h: c.h, d: c.d || '', cta: c.cta || b.cta2 || b.cta, fu: c.id === 'f' };
 }
-function pick(avoid) {
-  let k = DEV.k; const L = live();
+function pick(avoid, liveOnly) {
+  let k = DEV.k; const L = live().filter(q => !liveOnly || BR[q].live);
   if (!k) {
     const ok = L.filter(q => q !== avoid && !capped(q)), e = ok.filter(engRecent);
     if (!ok.length) return null;
@@ -105,7 +112,7 @@ function calm() {
 const busy = () => !!($('.pclock, .pc-ring, [data-clock-running]') || document.querySelector('[role=dialog][aria-modal=true]:not(.ad-full)') || $('.co-more'));
 const ok = () => !off() && !S.full && calm() && !busy();
 
-const link = (b, cls, inner, label) => b.url ? `<a class="${cls}" href="${esc(b.url)}" target="_blank" rel="noopener sponsored"${label ? ` aria-label="${esc(label)}"` : ''}>${inner}</a>` : `<span class="${cls} soon">${inner}</span>`;
+const link = (b, cls, inner, label, med) => b.url && b.live ? `<a class="${cls}" data-med="${med || 'toast'}" href="${esc(tagUrl(b.url, med))}" target="_blank" rel="noopener sponsored"${label ? ` aria-label="${esc(label)}"` : ''}>${inner}</a>` : `<span class="${cls} soon">${inner}</span>`;
 const img = (a, alt = '', cls = '') => `<img${cls ? ` class="${cls}"` : ''} src="${a[0]}" width="${a[1]}" height="${a[2]}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
 const kick = () => `<span class="ad-k">Sponsored · House ad</span>`;
 const chip = () => `<button type="button" class="ad-why" data-why aria-label="Why am I seeing this ad?"><i aria-hidden="true">i</i></button>`;
@@ -113,68 +120,82 @@ const presenter = (b, k) => b.who ? `<span class="ad-pres" aria-hidden="true">${
 const root = () => { let r = $('#ads'); if (!r) { r = document.createElement('div'); r.id = 'ads'; document.body.appendChild(r); } return r; };
 let cssP = null; const css = () => cssP || (cssP = new Promise(res => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'css/ads.css'; l.onload = l.onerror = res; document.head.appendChild(l); }));
 
-/* ---- banner ---- */
-function killBanner() { clearTimeout(S.timer); S.timer = null; const el = S.banner; S.banner = null; if (el) { el.classList.add('out'); setTimeout(() => el.remove(), anim() ? 260 : 0); } }
-function fillBanner(el, a) {
-  const b = a.b; el.dataset.adk = a.k; el.className = `ad-banner ad-${a.k}`; if (b.color) el.style.setProperty('--a', b.color);
-  el.innerHTML = `<span class="ad-ic">${img(b.icon, '')}</span><span class="ad-tx">${kick()}<b>${esc(a.h)}</b>${presenter(b, a.k)}</span>${link(b, 'ad-cta', esc(a.cta))}${chip()}<button type="button" class="ad-x" aria-label="Close ad">&times;</button>`;
+/* ---- toast: one small pop-up at a time, auto-dismisses ---- */
+function killBanner(why) { clearTimeout(S.timer); S.timer = null; const el = S.banner; S.banner = null; if (el) { if (why !== 'x') alog(el.dataset.adk, 'dismissed', 'toast-auto'); el.classList.add('out'); setTimeout(() => el.remove(), anim() ? 260 : 0); } }
+function fillToast(el, a) {
+  const b = a.b, shot = (b.shots || [])[0];
+  el.dataset.adk = a.k; el.className = `ad-toast ad-${a.k}`; if (b.color) el.style.setProperty('--a', b.color);
+  el.innerHTML = `<div class="ad-tb" tabindex="0" role="button" aria-expanded="false" aria-label="${esc(b.name)}: ${esc(a.h)}. Show preview"><span class="ad-ic">${img(b.icon, '')}</span><span class="ad-tx"><b>${esc(b.name)}</b><span class="ad-line">${esc(a.h)}</span></span></div>
+   <button type="button" class="ad-x" aria-label="Close ad">&times;</button>
+   <div class="ad-trow"><span class="ad-k">Sponsored</span><span class="grow"></span>${chip()}${link(b, 'ad-cta', esc(a.cta), '', 'toast')}</div>
+   ${shot ? `<div class="ad-prev"><img src="${shot}" alt="${esc(b.name)} preview" loading="lazy" decoding="async"></div>` : ''}`;
   hydrate(el);
+  const tb = $('.ad-tb', el), arm = () => { clearTimeout(S.timer); S.timer = setTimeout(() => killBanner('auto'), +Q.get('adms') || 8000); };
+  const tog = () => { if (!shot) return; const o = el.classList.toggle('exp'); tb.setAttribute('aria-expanded', o); if (o) clearTimeout(S.timer); else arm(); };
+  tb.onclick = tog; tb.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } };
+  el.addEventListener('pointerenter', () => clearTimeout(S.timer)); el.addEventListener('pointerleave', () => { if (!el.classList.contains('exp') && S.banner === el) arm(); });
+  arm();
 }
-async function banner(force) {
-  if (!force && (!ok() || hidden() || S.banner || S.natDone)) return; if (force && off()) return;
-  const a = pick(); if (!a) return; await css(); killBanner(); S.ref = 0;
-  const el = document.createElement('aside'); el.setAttribute('aria-label', 'Advertisement'); fillBanner(el, a); root().appendChild(el); S.banner = el;
-  const next = last => { S.timer = setTimeout(() => { if (!el.isConnected) return; if (!ok() || S.ref >= 2) { killBanner(); return; } S.ref++; const n = pick(last); if (!n) { killBanner(); return; } fillBanner(el, n); next(n.k); }, +Q.get('adrefms') || 45000); };
-  next(a.k);
-}
-
-/* ---- native card (Review list, Coach hub) ---- */
-function media(b) {
-  const tiles = [];
-  if (b.clip && anim()) tiles.push(`<span class="ad-frame clip"><video muted loop playsinline preload="none" data-src="${b.clip}" poster="${b.v ? b.v + '-11-p.webp' : ''}" aria-hidden="true"></video></span>`);
-  (b.shots || []).forEach((s, i) => tiles.push(`<span class="ad-frame ${b.fit || 'contain'}"><img src="${s}" alt="${esc(b.name)} screen ${i + 1}" loading="lazy" decoding="async"></span>`));
-  return `<div class="ad-strip" tabindex="0" role="group" aria-label="${esc(b.name)} screens">${tiles.join('')}</div>`;
-}
-function nativeHTML(a) {
-  const b = a.b;
-  return `<section class="card ad-native ad-${a.k}" data-adk="${a.k}" aria-label="Advertisement"><div class="ad-nh"><span class="ad-ic">${img(b.icon, '')}</span><div class="ad-nw"><b>${esc(b.name)}</b>${kick()}</div>${chip()}</div>
-   ${media(b)}<p class="ad-hl">${esc(a.h)}</p><p class="ad-sub">${esc(a.d || b.sub)}</p>${presenter(b, a.k)}${link(b, 'ad-cta wide', esc(a.cta))}</section>`;
-}
-function wireMedia(el) {
-  const vs = [...el.querySelectorAll('video[data-src]')]; if (!vs.length || !('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting && anim() && !document.hidden) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => { }); } else { try { v.pause(); } catch (x) { } } }), { threshold: .5 });
-  vs.forEach(v => io.observe(v));
-  new MutationObserver(() => { if (!el.isConnected) { io.disconnect(); vs.forEach(v => { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (x) { } }); } }).observe(document.body, { childList: true, subtree: true });
-}
-function place(card) {
-  const [r, sub] = parts(); const v = $('#view'); if (!v) return false;
-  if (r === 'review' && !sub) { const l = $('.rv-list', v); if (!l) return false; l.after(card); return true; }
-  if (r === 'coach' && !sub) { const h = $('.co-hub', v); if (!h) return false; const c = h.children[3] || h.lastElementChild; card.style.gridColumn = '1/-1'; h.insertBefore(card, c); return true; }
-  if (DEV.f === 'native') { v.appendChild(card); return true; }
-  return false;
-}
-async function native(force) {
-  if (!force && (!ok() || S.natDone || hidden() || ((store.get('ads.nat', {}).d === DAY() ? store.get('ads.nat').n : 0) >= 4))) return;
-  const [r, sub] = parts(); if (!force && !((r === 'review' || r === 'coach') && !sub)) return;
-  let tries = 0; const go = async () => {
-    if (!force && !ok()) return; if (S.route !== location.hash) return;
-    const probe = document.createElement('div'); if (!place(probe)) { if (++tries < 14) setTimeout(go, 250); return; } probe.remove();
-    const a = pick(); if (!a) return; await css(); const t = document.createElement('div'); t.innerHTML = nativeHTML(a); const card = t.firstElementChild;
-    if (!place(card)) return; S.natDone = true; S.nat++; killBanner(); const n = store.get('ads.nat', {}); store.set('ads.nat', { d: DAY(), n: (n.d === DAY() ? n.n : 0) + 1 });
-    hydrate(card); wireMedia(card);
-  }; go();
+const tday = () => { const c = store.get('ads.tday', null); return c && c.d === DAY() ? c.n : 0; };
+const TOAST_ROUTES = ['review', 'coach', 'collection', 'trophies', 'masters', 'secrets', 'voyage'];
+async function toast(force) {
+  if (force && off()) return;
+  if (!force) { const [r, sub] = parts(); if (!ok() || hidden() || S.banner || S.sess >= 1 || tday() >= 2 || Date.now() - S.fail < 60000 || sub || !TOAST_ROUTES.includes(r)) return; }
+  const a = pick(null, !DEV.k); if (!a) return; if (!force) { S.sess++; store.set('ads.tday', { d: DAY(), n: tday() + 1 }); }
+  alog(a.k, 'shown', 'toast'); await css(); killBanner();
+  const el = document.createElement('aside'); el.setAttribute('aria-label', 'Advertisement'); fillToast(el, a); root().appendChild(el); S.banner = el;
 }
 
-/* ---- interstitial: once a day, 2nd calm view, never mid-session ---- */
+/* ---- sponsor chips: tiny static labels, never over a board or clock ---- */
+const TAIL = { brl: 'live music, no flag fall', lispa: 'relax, it\'s only a pawn', ldtv: 'tune in, it is live', n923: 'good paper, good notes', vdk: 'steady hands, steady moves', dbox: 'good things come in boxes', robin: 'every shop on one map', gaffer: 'captain your week' };
+const SLOT = { streak: ['brl', 'Streak powered by BeatRouteLive'], log: ['n923', 'Log paper by Nine23'], chart: ['robin', 'Charts by Robin · every shop on one map'], eval: ['ldtv', 'Analysis brought to you by LDTV'], crew: ['n923', 'Crew kit by Nine23'], opp: ['gaffer', 'Match sponsored by The Gaffer'] };
+const RX = /^(watch|drill|round|session) (complete|over)/i;
+const slotFor = () => {
+  const [r, sub] = parts(), v = $('#view'); if (!v) return null;
+  if (r === 'today' || r === 'watch' || r === 'drills') { const k = [...v.querySelectorAll('.k')].find(e => RX.test(e.textContent.trim())); if (k) { if (/^watch/i.test(k.textContent.trim())) S.watched = true; return ['streak', k.closest('.card') || k.parentElement, 'in']; } }
+  const lg = $('.clog .cl-d', v); if (lg) return ['log', lg, 'after'];
+  if (r === 'voyage' && !sub) { const s = $('h1 + .sub', v); if (s) return ['chart', s, 'after']; }
+  if (r === 'masters' && !sub) { const s = $('h1 + .sub', v); if (s) return ['crew', s, 'after']; }
+  if (r === 'play' && !sub) { const s = $('h1 + .sub', v); if (s) return ['opp', s, 'after']; }
+  if (r === 'review' && sub) { const h = $('h1', v); if (h) return ['eval', $('h1 + .sub', v) || h, 'after']; }
+  return null;
+};
+const chipEl = (k, text) => { const b = BR[k]; return `<button type="button" class="ad-chip ad-${k}" data-why data-adk="${k}" aria-label="Sponsored: ${esc(text)}. Why am I seeing this?"><span class="ad-ci">${img(b.icon, '')}</span><span>${esc(text)}</span>${b.live ? '' : '<em class="ad-soon">coming soon</em>'}</button>`; };
+async function chips() {
+  document.querySelectorAll('.ad-chip').forEach(c => { if (!c.isConnected || !c.closest('#view, .ad-deckfo')) c.remove(); });
+  if (off() || hidden() || document.hidden || busy()) { document.querySelectorAll('#view .ad-chip').forEach(c => c.remove()); return; }
+  const s = slotFor(); if (!s) return; const [slot, el, mode] = s; if ((mode === 'in' ? el : el.parentElement || el).querySelector('.ad-chip, .ad-chipw')) return;
+  const pref = SLOT[slot], L = live(); let k = DEV.k || (pref && L.includes(pref[0]) ? pref[0] : L[0]); if (!k || !BR[k] || !valid(k)) return;
+  const text = (!DEV.k || DEV.k === (pref || [])[0]) && pref && k === pref[0] ? pref[1] : `Sponsored by ${BR[k].name}: ${TAIL[k] || BR[k].sub}`;
+  await css(); const w = document.createElement('div'); w.className = 'ad-chipw'; w.innerHTML = chipEl(k, text);
+  if (mode === 'in') el.appendChild(w); else el.after(w); alog(k, 'shown', 'chip');
+}
+/* deck: a painted sponsor board that rotates brands */
+let boardT = null;
+function boardSVG(k, tall) {
+  const b = BR[k], t = (TAIL[k] ? `${b.name}: ${TAIL[k]}` : b.name), W = 380, x = tall ? 400 : 1100, y = tall ? 60 : 50;
+  const cut = s => s.length > 34 ? s.slice(0, 33) + '…' : s;
+  return `<g class="ad-board" data-adk="${k}" transform="translate(${x} ${y}) scale(1.35)" role="img" aria-label="Sponsor board: ${esc(t)}"><rect width="${W}" height="64" rx="8" fill="#3b2a1a" stroke="#C9A24B" stroke-width="3" opacity=".94"/><rect x="8" y="8" width="48" height="48" rx="8" fill="#fff" opacity=".92"/><image href="${b.icon[0]}" x="10" y="10" width="44" height="44" preserveAspectRatio="xMidYMid meet"/><text x="68" y="26" font-size="13" fill="#C9A24B" font-family="inherit" letter-spacing="2">PRESENTED BY${b.live ? '' : ' · COMING SOON'}</text><text x="68" y="48" font-size="19" fill="#f7ebcf" font-family="inherit">${esc(cut(t))}</text></g>`;
+}
+function deck() {
+  clearInterval(boardT); boardT = null; const svg = $('#deck svg.deck'); if (!svg) return;
+  const old = svg.querySelector('.ad-board'); if (off() || hidden()) { old && old.remove(); return; }
+  const L = live(), tall = svg.getAttribute('viewBox').split(' ')[3] > svg.getAttribute('viewBox').split(' ')[2];
+  let i = DEV.k ? L.indexOf(DEV.k) : (store.get('ads.board', 0) || 0) % L.length; if (i < 0) i = 0;
+  const put = () => { if (!svg.isConnected || off() || hidden() || document.hidden) return; const k = L[i % L.length]; const g = svg.querySelector('.ad-board'); const n = document.createElementNS('http://www.w3.org/2000/svg', 'g'); n.innerHTML = boardSVG(k, tall); const nb = n.firstChild; nb.style.cssText = 'opacity:0;transition:opacity .6s'; (g ? g.replaceWith(nb) : svg.appendChild(nb)); requestAnimationFrame(() => requestAnimationFrame(() => { nb.style.opacity = 1; })); if (!DEV.k) store.set('ads.board', ++i % L.length); alog(k, 'shown', 'board'); };
+  put(); if (L.length > 1 && !DEV.k) boardT = setInterval(put, 25000);
+}
+
+/* ---- interstitial: at most once per 3 days, on the deck right after a finished watch ---- */
 const T = s => `0:${String(Math.max(0, Math.ceil(s))).padStart(2, '0')}`;
 async function interstitial(force) {
-  if (off() || S.full || (!force && !ok())) return; const a = pick(); if (!a) return; await css();
+  if (off() || S.full || (!force && !ok())) return; const a = pick(null, !DEV.k); if (!a) return; await css(); alog(a.k, 'shown', 'full');
   const b = a.b, prev = document.activeElement, rm = !anim(), poster = b.v ? b.v + '-916-p.webp' : '';
   S.full = true; killBanner();
   const el = document.createElement('div'); el.className = `ad-full ad-${a.k}`; el.dataset.adk = a.k; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Sponsored break');
   el.innerHTML = `<div class="ad-stage"><div class="ad-vid"${poster ? ` style="background-image:url(${poster})"` : ''}></div><div class="ad-fade"></div>
    <div class="ad-ftop">${kick()}<span class="ad-time" role="timer" aria-label="Ad time left">${T(15)}</span><span class="grow"></span>${chip()}</div>
-   <div class="ad-fbot"><div class="ad-fcard"><span class="ad-ic">${img(b.icon, '')}</span><div class="ad-nw"><b>${esc(b.name)}</b><small>${esc(a.h)}</small></div>${link(b, 'ad-cta', esc(a.cta))}</div>
+   <div class="ad-fbot"><div class="ad-fcard"><span class="ad-ic">${img(b.icon, '')}</span><div class="ad-nw"><b>${esc(b.name)}</b><small>${esc(a.h)}</small></div>${link(b, 'ad-cta', esc(a.cta), '', 'full')}</div>
    ${presenter(b, a.k)}<div class="ad-skiprow"><button type="button" class="ad-skip" aria-disabled="true">Skip in 5</button></div></div><div class="ad-prog" aria-hidden="true"><i></i></div></div>`;
   root().appendChild(el); hydrate(el);
   const stage = $('.ad-vid', el), sk = $('.ad-skip', el), bar = $('.ad-prog i', el), tm = $('.ad-time', el); let open = false, vd = null;
@@ -189,7 +210,7 @@ async function interstitial(force) {
     if (e < 5000) sk.textContent = `Skip in ${Math.ceil((5000 - e) / 1000)}`; else if (!open) { open = true; markEng(a.k); sk.setAttribute('aria-disabled', 'false'); sk.textContent = 'Skip ad'; sk.focus(); }
     if (e >= DUR) done();
   }, 250);
-  sk.onclick = () => { if (open) done(); };
+  sk.onclick = () => { if (open) { alog(a.k, 'dismissed', 'full'); done(); } };
 }
 
 /* ---- why chip ---- */
@@ -208,44 +229,53 @@ function why(k) {
   $('[data-rep]', el).onclick = () => { $('p', el).textContent = 'Noted. Stored on this device only.'; };
   $('[data-h24]', el).onclick = () => { hide24(); close(); }; $('[data-ok]', el).focus();
 }
-function hide24() { store.set('ads.hide', Date.now() + 24 * 3600e3); killBanner(); paint(); }
+function hide24() { store.set('ads.hide', Date.now() + 24 * 3600e3); killBanner(); document.querySelectorAll('.ad-chipw,.ad-board').forEach(n => n.remove()); clearInterval(boardT); paint(); }
 
 /* ---- settings ---- */
+function logTable() {
+  let box = $('#ads-log'); if (!box) { const h = $('#ads-hide'); if (!h) return; box = document.createElement('div'); box.id = 'ads-log'; h.closest('.row').after(box); }
+  const l = store.get(LOGK, []), t = {}; l.forEach(e => { const r = t[e.k] || (t[e.k] = { shown: 0, tapped: 0, dismissed: 0 }); r[e.ev]++; });
+  const rows = Object.keys(t).map(k => `<tr><td>${esc(BR[k] ? BR[k].name : k)}</td><td>${t[k].shown}</td><td>${t[k].tapped}</td><td>${t[k].dismissed}</td></tr>`).join('');
+  box.innerHTML = `<table class="ad-logt"><caption>Ad log (this device only)</caption><thead><tr><th>Brand</th><th>Shown</th><th>Tapped</th><th>Closed</th></tr></thead><tbody>${rows || '<tr><td colspan="4">Nothing yet</td></tr>'}</tbody></table><button type="button" class="btn ghost sm" id="ads-logclr">Clear log</button>`;
+  $('#ads-logclr', box).onclick = e => { e.stopPropagation(); store.set(LOGK, []); logTable(); };
+}
 function paint() {
-  const m = $('#menu'); if (!m) return; m.querySelectorAll('[data-ad]').forEach(b => b.classList.toggle('on', (b.dataset.ad === '1') === !off()));
+  const m = $('#menu'); if (!m) return; logTable(); m.querySelectorAll('[data-ad]').forEach(b => b.classList.toggle('on', (b.dataset.ad === '1') === !off()));
   const h = $('#ads-hide'); if (h) { h.textContent = hidden() ? 'Ads hidden until ' + new Date(store.get('ads.hide', 0)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (tap to undo)' : 'Hide ads for 24h'; }
 }
 function bind() {
   const m = $('#menu'); if (!m) return;
-  m.querySelectorAll('[data-ad]').forEach(b => b.onclick = e => { e.stopPropagation(); store.set('ads.off', b.dataset.ad === '0'); if (off()) { killBanner(); $('#ads .ad-native,.ad-native')?.remove(); const f = $('#ads .ad-full'); if (f) { f.remove(); S.full = false; clearInterval(S.tick); S.esc = S.trap = null; } } paint(); });
-  const h = $('#ads-hide'); if (h) h.onclick = e => { e.stopPropagation(); if (hidden()) { store.set('ads.hide', 0); paint(); } else hide24(); };
+  m.querySelectorAll('[data-ad]').forEach(b => b.onclick = e => { e.stopPropagation(); store.set('ads.off', b.dataset.ad === '0'); if (off()) { killBanner(); document.querySelectorAll('.ad-chipw,.ad-board').forEach(n => n.remove()); clearInterval(boardT); const f = $('#ads .ad-full'); if (f) { f.remove(); S.full = false; clearInterval(S.tick); S.esc = S.trap = null; } } paint(); if (!off()) refresh(); });
+  const h = $('#ads-hide'); if (h) h.onclick = e => { e.stopPropagation(); if (hidden()) { store.set('ads.hide', 0); paint(); refresh(); } else hide24(); };
   const g = $('#gear'); if (g) g.addEventListener('click', paint); paint();
 }
 
 /* ---- view-change driver ---- */
+const refresh = () => { chips(); deck(); };
+let mo = null, mt = 0; const FAILRX = /\b(wrong|incorrect|not quite|blundered|you lose|you lost|checkmated|out of time|flagged|game over|resigned|time'?s up)\b/i;
+function watchView() { const v = $('#view'); if (!v || mo) return; mo = new MutationObserver(() => { if (FAILRX.test(v.innerText || '')) S.fail = Date.now(); clearTimeout(mt); mt = setTimeout(chips, 250); }); mo.observe(v, { childList: true, subtree: true }); }
 function onView() {
-  S.n++; S.natDone = false; S.route = location.hash; clearTimeout(S.timer); killBanner(); S.timer = null;
-  const w = $('.ad-native'); if (w) w.remove();
-  if (S.full) { if (!calm() && S.esc) { /* tick() ends it */ } return; }
-  if (off() || !calm() || DEV.f) return;
-  const [r, sub] = parts();
-  if (S.n >= 2 && store.get('ads.day', '') !== DAY() && !hidden() && !S.dayDone) { S.dayDone = true; store.set('ads.day', DAY()); S.timer = setTimeout(() => interstitial(), 900); return; }
-  if ((r === 'review' || r === 'coach') && !sub) native();
-  if (hidden() || S.natDone) return;
-  if (Math.random() < .5) S.timer = setTimeout(() => { if (!S.natDone) banner(); }, 3000 + Math.random() * 2000);
+  S.n++; S.route = location.hash; clearTimeout(S.timer); killBanner(); S.timer = null; watchView();
+  setTimeout(refresh, 400); setTimeout(refresh, 1500);
+  if (S.full) return;
+  if (off() || DEV.f) return;
+  const [r] = parts();
+  if (r === 'today' && S.watched && !hidden() && Date.now() - (store.get('ads.full', 0) || 0) > FULL_GAP) { S.watched = false; store.set('ads.full', Date.now()); S.timer = setTimeout(() => interstitial(), 1200); return; }
+  if (hidden() || !calm() || Date.now() - S.fail < 60000) return;
+  if (Math.random() < .5) S.timer = setTimeout(() => toast(), 3000 + Math.random() * 2000);
 }
 function devRun() {
   if (!DEV.f || off()) return; const f = DEV.f;
-  setTimeout(() => { S.route = location.hash; if (f === 'banner') banner(true); else if (f === 'full') interstitial(true); else if (f === 'native') native(true); }, 700);
+  setTimeout(() => { S.route = location.hash; if (f === 'toast' || f === 'banner' || f === 'native') toast(true); else if (f === 'full') interstitial(true); else if (f === 'chip') refresh(); }, 700);
 }
-document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[rel~=sponsored]'); if (a) { const x = a.closest('[data-adk]'); if (x) markEng(x.dataset.adk); return; }
+document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[rel~=sponsored]'); if (a) { const x = a.closest('[data-adk]'); if (x) { markEng(x.dataset.adk); alog(x.dataset.adk, 'tapped', a.dataset.med || 'toast'); } return; }
   const w = e.target.closest && e.target.closest('[data-why]'); if (w) { const x = w.closest('[data-adk]'); why(x ? x.dataset.adk : null); return; }
-  const c = e.target.closest && e.target.closest('.ad-x'); if (c) killBanner(); });
+  const c = e.target.closest && e.target.closest('.ad-x'); if (c) { const t = c.closest('.ad-toast'); if (t) alog(t.dataset.adk, 'dismissed', 'toast'); killBanner('x'); } });
 document.addEventListener('keydown', e => {
   if (e.key === 'Tab' && S.full && S.trap && !S.why) { S.trap(e); return; }
   if (e.key !== 'Escape') return; if (S.why) { S.whyClose(); e.stopPropagation(); return; } if (S.esc) S.esc();
 }, true);
 addEventListener('hashchange', onView);
 document.addEventListener('visibilitychange', () => { if (document.hidden) killBanner(); });
-window.__mastAds = { BR, valid, live, state: () => ({ ...S, banner: !!S.banner, cap: capGet(), eng: eng() }), interstitial, banner, native };
+window.__mastAds = { BR, valid, live, state: () => ({ ...S, banner: !!S.banner, cap: capGet(), eng: eng() }), interstitial, toast, chips, deck };
 bind(); onView(); devRun();
