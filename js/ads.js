@@ -42,13 +42,18 @@ export const BR = {
     copy: ['Your opening never looked this pixelated.', 'Press START on a new game. Takebacks not included.', 'Retro handhelds. Zero time scrambles.', 'Insert coin. Or just a better first move.', 'Game over? No. Continue? Yes.'],
     sets: [['Past, played in the present', 'D BoxStation is a retro handheld console. Coming soon.', 'Coming soon'], ['Retro handheld gaming', 'Press START on D BoxStation. Coming soon.', 'Coming soon'], ['Meet D BoxStation', 'The past, played in the present. Coming soon.', 'Coming soon']],
     fu: ['Ready to press START?', 'D BoxStation: the past, played in the present.', 'Coming soon'] },
+  gaffer: { name: 'The Gaffer', sub: 'Your FPL assistant manager', url: '', cta: 'Coming soon', cta2: 'Coming soon', dom: 'The Gaffer', v: null, who: 'Tempo', color: '#00A86B',
+    icon: m('gaffer-icon.webp', 192, 192), hero: m('gaffer-logo.webp', 900, 330), fit: 'cover',
+    shots: ['shot-gaffer-week', 'shot-gaffer-squad'].map(s => A + s + '.webp'),
+    copy: ['Captained the wrong piece again? Let the Gaffer pick your FPL captain.', 'Blunders on the board, blunders in FPL. The Gaffer fixes one of them.', 'From the same crew: your Fantasy Premier League assistant manager.', 'Tal sacrifices queens. The Gaffer never sacrifices your bench.', 'Win chance 60%. Shame your blitz isn\'t.'],
+    sets: [['Your FPL assistant manager', 'The Gaffer plans your transfers, captain and bench every gameweek.', 'Coming soon'], ['Head to head with your mates', 'Win chances, projected points and a crew of pundit managers.', 'Coming soon']] },
   robin: { name: 'Robin', sub: "Malta's electronics and home shops in one app", url: '', cta: 'Coming soon', cta2: 'Coming soon', dom: 'Robin', v: null, who: null, color: '#e8521f',
     icon: m('robin-icon.webp', 192, 192), hero: m('robin-hero.webp', 800, 800), fit: 'cover', shots: ['shot-robin-home', 'shot-robin-compare', 'shot-robin-cats', 'robin-card'].map(s => A + s + '.webp'),
     copy: ['Comparing moves takes time. Comparing prices should not. Robin.', 'Every Malta shop on one board. You pick the best move.', 'Fork the shops, not your budget.', 'One search, every shop: a clean skewer of the price list.', 'Zwischenzug for shoppers: check Robin before you buy.'],
     sets: [['Malta\'s shops in one app', 'Robin searches Malta\'s electronics and home shops at once, so you can compare.', 'Coming soon'], ['Compare. Get alerted. Get it installed.', 'Compare shops, set price alerts, and book delivery with installation. Coming soon.', 'Coming soon'], ['One search for Malta', 'Robin: electronics and home shops, side by side. The shops compete, you choose.', 'Coming soon']],
     fu: ['Still comparing?', 'Robin: Malta\'s electronics and home shops in one app. Coming soon.', 'Coming soon'] },
 };
-export const BR_ORDER = ['brl', 'lispa', 'ldtv', 'n923', 'vdk', 'dbox', 'robin'];
+export const BR_ORDER = ['brl', 'lispa', 'ldtv', 'n923', 'vdk', 'dbox', 'robin', 'gaffer'];
 const valid = k => { const b = BR[k]; return !!(b && b.name && b.sub && b.cta && b.icon && b.hero && Array.isArray(b.copy) && b.copy.length); };
 const live = () => BR_ORDER.filter(valid);
 
