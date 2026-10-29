@@ -412,3 +412,5 @@ Sync.S.ready.then(() => { const rr = Sync.rating(); window.__syncKey = Sync.S.pu
 addEventListener('mast:sync', () => { if (!D) return; D.sets.me = [...Sync.latestPuzzles(), ...D.baseMe]; const h = location.hash, rr = Sync.rating(), key = Sync.S.puzzles.length + '|' + (rr ? rr.blitz : ''); if (key !== window.__syncKey) { const first = window.__syncKey === undefined; window.__syncKey = key; if (!first && (h === '' || h === '#today')) route(); } });
 Sync.maybeAutoSync(); visitNudge(); addEventListener('mast:sync', () => { onSyncAlerts().catch(() => { }); }); onSyncAlerts().catch(() => { });
 route();
+// house ads: lazy, after first paint, never blocks
+(window.requestIdleCallback || (f => setTimeout(f, 2500)))(() => setTimeout(() => import('./ads.js').catch(() => { }), 1500));
