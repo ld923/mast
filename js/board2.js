@@ -50,7 +50,7 @@ const CSS = `
 .mb .rp+.rp{animation-delay:1.3s}
 @keyframes mbrip{0%{transform:scale(.4);opacity:.7}100%{transform:scale(1.5);opacity:0}}
 html:not([data-anim=full]) .mb .rp{animation:none;opacity:.4;transform:scale(.9)}
-.mb .cf,.mb .cr{position:absolute;font:600 2.1cqw/1 Inter,system-ui,sans-serif;opacity:.7;z-index:2;pointer-events:none}
+.mb .cf,.mb .cr{position:absolute;font:600 max(8px,21cqw)/1 Inter,system-ui,sans-serif;opacity:.7;z-index:2;pointer-events:none}
 .mb .cf{right:4%;bottom:3%}.mb .cr{left:4%;top:4%}
 .mb .sq.l .cf,.mb .sq.l .cr{color:var(--dk)}.mb .sq.d .cf,.mb .sq.d .cr{color:var(--lt)}
 .mb .pcs{position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d}

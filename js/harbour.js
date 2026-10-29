@@ -1,3 +1,4 @@
+import { loadJSON } from './data.js';
 // Port-town vignettes for Voyage islands: dock, era buildings, the master on the dock, and their 'open' line.
 import { miniSky } from './sky.js';
 import { portrait } from './portraits.js';
@@ -13,7 +14,7 @@ const TOWN = {
   Leela: { name: 'The Lighthouse Quay', cols: ['#3a3f6a', '#5a5f9a', '#7C6CFF', '#c8c4ff'], roof: 'flat', light: true, hill: '#2a2f4a' }
 };
 let LINES = null;
-const lines = () => LINES || (LINES = fetch('data/characters.json').then(r => r.json()).then(j => j.characters).catch(() => ({})));
+const lines = () => LINES || (LINES = loadJSON('data/characters.json').then(j => j.characters).catch(() => ({})));
 
 function house(x, w, h, col, T, i) {
   const y = 150 - h, gable = T.roof === 'gable';

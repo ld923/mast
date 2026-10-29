@@ -15,7 +15,7 @@ import { full, confetti, wash } from './fx.js';
 import * as Resume from './resume.js';
 
 const $ = s => document.querySelector(s), wait = ms => new Promise(r => setTimeout(r, ms));
-const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
+import { loadJSON as j } from './data.js';
 export const OPP = {
   Morphy: { elo: 1100, rep: 1, style: 'dev', bias: 'Develops fast, opens lines, hunts the king.' },
   Capablanca: { elo: 1250, rep: 1, style: 'simp', bias: 'Trades down when ahead and wins the endgame.' },
@@ -41,7 +41,7 @@ const CSS = `
 .pl-card .pl-fig{height:150px;display:flex;align-items:flex-end;justify-content:center}.pl-card .pl-ph .ph{width:120px;height:120px;margin:0 auto 14px}@media(max-width:560px){.pl-card .pl-ph .ph{width:96px;height:96px}}.pl-card .pl-fig .fig{height:150px;width:auto}
 .pl-card b{font:700 15px var(--f-disp);letter-spacing:.14em;text-transform:uppercase}.pl-card .elo{font:600 12px var(--f-disp);letter-spacing:.1em;color:var(--ac,var(--a))}
 .pl-card .sub{font-size:11.5px;line-height:1.3;color:var(--dim);min-height:2.6em}.pl-card .rec{font-size:11px;color:var(--dim);letter-spacing:.08em}
-.pl-card.lock .pl-fig{filter:brightness(0) opacity(.55)}.pl-card.lock{cursor:default}.pl-card .lk{position:absolute;top:8px;right:10px;font-size:15px}
+.pl-card.lock .pl-fig{filter:brightness(.38) grayscale(1) blur(1.5px)}.pl-card.lock .pl-fig .ph{border-radius:50%}.pl-card.lock .lk{font-size:26px;top:50%;left:50%;right:auto;transform:translate(-50%,-70%);z-index:2;filter:none}.pl-card.lock{cursor:default}.pl-card .lk{position:absolute;top:8px;right:10px;font-size:15px}
 .pl-card.boss{grid-column:1/-1;flex-direction:row;justify-content:center;gap:var(--s3);text-align:left}.pl-card .tx{display:flex;flex-direction:column;align-items:center;gap:2px}.pl-card.boss .tx{align-items:flex-start;max-width:340px}
 .pl-cfg{margin-top:var(--s3);display:flex;flex-direction:column;gap:var(--s2);padding:var(--s3);border-radius:var(--r-lg);background:var(--glass);border:1px solid var(--glass-b)}
 .pl-note{display:flex;gap:var(--s2);align-items:center;font-size:13px;color:var(--dim);padding:8px 12px;border-radius:var(--r-md);border:1px solid var(--glass-b);background:var(--glass-h)}
@@ -278,7 +278,7 @@ async function startGame(ctx, { opp, tc, color, lines, resume }) {
     o.querySelector('#rm').onclick = () => { o.remove(); startGame(ctx, { opp, tc, color: color === 'white' ? 'black' : 'white', lines }); };
     o.querySelector('#cl').onclick = () => o.remove(); o.querySelector('#rv').focus();
   }
-  $('#rs').onclick = e => { const bt = e.currentTarget; if (c.over) return; if (bt.dataset.arm) return end(userW ? '0-1' : '1-0', 'resignation'); bt.dataset.arm = 1; bt.textContent = 'Tap again to resign'; setTimeout(() => { if (bt.isConnected) { delete bt.dataset.arm; bt.textContent = 'Resign'; } }, 3000); };
+  $('#rs').onclick = e => { const bt = e.currentTarget; if (c.over || bt.style.display === "none") return; const box = document.createElement('span'); box.className = 'row tight'; box.setAttribute('role', 'group'); box.innerHTML = '<b style="align-self:center">Resign?</b><button class="btn sm" type="button" data-y>Yes</button><button class="btn ghost sm" type="button" data-n>No</button>'; bt.style.display = "none"; bt.after(box); box.querySelector('[data-y]').onclick = () => { box.remove(); end(userW ? '0-1' : '1-0', 'resignation'); }; box.querySelector('[data-n]').onclick = () => { box.remove(); bt.style.display = ""; bt.focus(); }; box.querySelector('[data-n]').focus(); };
   if (resume && Array.isArray(resume.uci) && resume.uci.length) { // restore a game in progress: silent replay, then hand the move to whoever has it
     let okAll = true; for (const u of resume.uci) { const m = g.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || 'q' }); if (!m) { okAll = false; break; } moves.push({ san: m.san, uci: u }); }
     if (okAll && !g.game_over()) {

@@ -5,6 +5,9 @@ export const store = {
   set(k, v) { try { localStorage.setItem('mast.' + k, JSON.stringify(v)); } catch (e) { /* private mode */ } }
 };
 
+export const getName = () => { const n = String(store.get('user.name', '') || '').trim(); if (n) return n; const u = String(store.get('sync.user', 'congreve274') || '').trim(); return u && u !== 'congreve274' ? u : 'Gerald'; };
+export const setName = v => store.set('user.name', String(v || '').trim().slice(0, 30));
+
 /* ---- theme: 'auto' | 'dark' | 'light' (sunset) ---- */
 export const getTheme = () => { try { return localStorage.getItem('mast.theme') || 'auto'; } catch (e) { return 'auto'; } };
 export function setTheme(t) {
@@ -47,7 +50,7 @@ export function state({ who = 'Skipper', ex = 'neutral', title = '', line = '', 
    ${slot ? `<div class="slot">${avatar(who, ex, 'xl')}</div>` : avatar(who, ex, 'lg')}
    ${title ? `<h2>${title}</h2>` : ''}<p class="line">${line}</p>${action}</div>`;
 }
-let TIPS = []; fetch('data/tips.json').then(r => r.json()).then(t => { TIPS = t; }).catch(() => { });
+let TIPS = []; import('./data.js').then(m => m.loadJSON('data/tips.json')).then(t => { TIPS = t; }).catch(() => { });
 const FALLBACK = { who: 'Skipper', tip: 'Steady as she goes. A decent move now beats a perfect one late.' };
 export const loadingState = (line = 'Scanning the horizon… pulling your games.') => {
   const t = TIPS.length ? TIPS[Math.floor(Math.random() * TIPS.length)] : FALLBACK;

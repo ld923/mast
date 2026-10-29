@@ -81,7 +81,7 @@ let CARDS = null;
 export const RARITY = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
 // rarity = how few positions in the whole master set share this pattern (themes + phase); the Opera game is always Legendary
 export function allCards() {
-  if (CARDS) return CARDS;
+  if (CARDS && DATA.full) return CARDS;
   const L = []; const freq = {}; let N = 0;
   Object.entries(DATA.sets).forEach(([m, list]) => { if (m === 'me') return; list.forEach(p => { freq[key(p)] = (freq[key(p)] || 0) + 1; N++; }); });
   Object.entries(DATA.sets).forEach(([m, list]) => { if (m === 'me') return; list.forEach(p => {
@@ -114,11 +114,12 @@ const rng = s => () => (s = (s * 1664525 + 1013904223) % 4294967296) / 429496729
 let dm = null;
 function dailyMaster() {
   const t = dayKey(), ok = !!Object.keys(DATA.sets).length; if (dm && dm.t === t && dm.ok === ok) return dm;
-  const ms = Object.keys(DATA.sets).filter(k => k !== 'me').sort(), r = rng(dayNum() * 7919 + 13); r(); r();
+  const ms = (DATA.avail || Object.keys(DATA.sets)).filter(k => k !== 'me').sort(), r = rng(dayNum() * 7919 + 13); r(); r();
   let o = { t, ok, m: null, p: null, id: null };
-  if (ms.length) { const m = ms[Math.floor(r() * ms.length)], list = DATA.sets[m], p = list[Math.floor(r() * list.length)]; o = { ...o, m, p, id: pid(m, p) }; }
+  if (ms.length) { const m = ms[Math.floor(r() * ms.length)], list = DATA.sets[m]; if (list && list.length) { const p = list[Math.floor(r() * list.length)]; o = { ...o, m, p, id: pid(m, p) }; } }
   return dm = o;
 }
+export const dailyMasterKey = () => { const ms = (DATA.avail || []).filter(k => k !== 'me').sort(), r = rng(dayNum() * 7919 + 13); r(); r(); return ms.length ? ms[Math.floor(r() * ms.length)] : null; };
 export function daily() {
   if (P.daily.date !== dayKey()) rollDaily();
   const D = P.daily, M = dailyMaster(), set = (k, label, href) => ({ k, label, need: 5, have: Math.min(5, D.have[k] || 0), done: (D.have[k] || 0) >= 5, href });

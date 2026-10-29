@@ -17,7 +17,7 @@ import { cctFlash, cctRecord } from './coach-core.js';
 import { showLog, saveLog, gradeOf } from './captain.js';
 import { getAnim, full, buzz, burst, confetti, shake, floatAt, wash, combo, countUp, countAll, sparkAt, sprayAt } from './fx.js';
 
-const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
+import { loadJSON as j } from './data.js';
 const SIZE = 10, DAYS = { 1: 0, 2: 2, 3: 5, 4: 14 };
 const MODES = {
   convert: { name: 'Convert', k: 'Winning, so finish it', blurb: 'You were winning here and let it slip. Find the move before the clock.', budget: 8, isl: 'Carlsen' },

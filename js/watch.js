@@ -78,7 +78,7 @@ export async function watchScreen({ render, topbar }) {
   upd(c => { (c.watches ||= []).push(cur); c.watches = c.watches.slice(-60); (c.sessions ||= []).push({ t: cur.t, day: cur.day, ok, n, watch: 1 }); c.sessions = c.sessions.slice(-120); });
   try { Pr.addXp(40, 'coach session'); Pr.onSession({ mode: 'coach', ok, n, avg: avg(allRes.map(x => x.secs)) || 0, flags: cur.flags }); } catch (_) { }
   sfx('success');
-  const miss = allRes.find(x => !x.ok && x.fen), good = allRes.filter(x => x.ok).sort((a, b) => a.secs - b.secs)[0], med = null; try { const x = await fetch('data/extra.json').then(r => r.json()); med = x.clock.seconds_per_move_by_bucket['11-20'].median; } catch (_) { }
+  const miss = allRes.find(x => !x.ok && x.fen), good = allRes.filter(x => x.ok).sort((a, b) => a.secs - b.secs)[0], med = null; try { const x = await import('./data.js').then(m => m.loadJSON('data/extra.json')); med = x.clock.seconds_per_move_by_bucket['11-20'].median; } catch (_) { }
   const entry = { t: cur.t, mode: 'coach', name: "Today's", ok, n, avg: avg(allRes.map(x => x.secs)) || 0, real: med || 0, budget: 0, best: 0, worst: miss ? { fen: miss.fen, san: miss.bestSan, played: miss.played || '', swing: 0, mv: miss.best } : null, bestMv: good ? { san: good.bestSan, swing: 0, secs: good.secs } : null, advisor: sent.who, flags: cur.flags, ghosts: cur.ghosts, gtot: Pr.ghostTotal() };
   Resume.clear('watch');
   try { saveLog(entry); } catch (_) { }

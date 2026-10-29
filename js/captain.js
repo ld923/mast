@@ -146,7 +146,7 @@ export function postcardSVG(d, quote, embed = '') {
   ${lines.slice(0, 3).map((l, i) => `<text x="540" y="${1262 + i * 28}" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="25" fill="#3b2a1a">${i === 0 ? '“' : ''}${esc(l)}${i === Math.min(lines.length, 3) - 1 ? '”' : ''}</text>`).join('')}
   <text x="960" y="1296" text-anchor="end" font-family="Cin,Georgia,serif" font-weight="700" font-size="22" fill="#7a5a34">${esc(quote.who)}</text></svg>`;
 }
-let TIPS = null; const tips = async () => TIPS || (TIPS = await fetch('data/tips.json').then(r => r.json()).catch(() => [{ who: 'Skipper', tip: 'Steady as she goes.' }]));
+let TIPS = null; const tips = async () => TIPS || (TIPS = await import('./data.js').then(m => m.loadJSON('data/tips.json')).catch(() => [{ who: 'Skipper', tip: 'Steady as she goes.' }]));
 export async function postcard(ctx) {
   css(); const { render, topbar } = ctx, d = postcardData(), T = await tips(), quote = T[Math.floor(Math.random() * T.length)];
   render(`${topbar}<a class="back" href="#today">&larr; Back</a><span class="k">Weekly</span><h1 style="font-family:var(--f-log)">Voyage recap</h1>

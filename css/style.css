@@ -498,3 +498,9 @@ html[data-anim=full] .chart .rock .glow{transform-box:fill-box;transform-origin:
 html[data-anim="off"] .watch-cta,html[data-anim="calm"] .watch-cta{animation:none}
 @media(prefers-reduced-motion:reduce){.watch-cta{animation:none}}
 @media(max-width:480px){.watch-cta{margin:6px 0;padding:12px 14px;min-height:48px}}
+.co-more-bg{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.5)}.co-more{position:fixed;left:0;right:0;bottom:0;z-index:41;padding:16px 16px calc(16px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;background:var(--nav-bg,#0b1a26);border-top:1px solid var(--glass-b);backdrop-filter:blur(14px)}.co-more a{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;color:var(--fg);text-decoration:none;font:700 14px var(--f-disp);letter-spacing:.14em;text-transform:uppercase}.co-more a svg{width:22px;height:22px}
+#nav a.item.more-btn{background:none;border:0;cursor:pointer}
+@media(min-width:821px){#nav a.item.more-btn{display:none}}@media(max-width:820px){#nav a.item[data-more="1"]{display:none}}
+/* keep content clear of the fixed XP/settings badge on every route */
+main{padding-top:max(var(--s5),68px)}
+@media(max-width:820px){main{padding-top:var(--s2)}main:not(:has(>.m-top:first-child)){padding-top:60px}}

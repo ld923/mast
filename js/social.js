@@ -1,5 +1,5 @@
 // Relationships: per-character affinity, levels, birthdays/anniversaries, crew disagreements.
-import { store } from './ui.js';
+import { store, getName } from './ui.js';
 import { CH } from './portraits.js';
 export const LEVELS = [['Stranger', 0], ['Acquaintance', 8], ['Student', 25], ['Protégé', 60]];
 const get = () => store.get('affinity', {}) || {};
@@ -16,9 +16,9 @@ const BLINE = {
   Leela: 'January 2018: my first commit. I have played many games since. I still learn from every one.'
 };
 const GREET = [
-  n => `Ah, ${n === 'Leela' ? 'Gerald' : 'Gerald'}. Back again.`,
-  () => 'Good to see you on deck, Gerald.',
-  () => 'Gerald! I saved a position for you.',
+  n => `Ah, ${getName()}. Back again.`,
+  () => `Good to see you on deck, ${getName()}.`,
+  () => `${getName()}! I saved a position for you.`,
   () => 'My protégé. The crew talks about your progress.'
 ];
 export const greeting = n => GREET[level(n).i](n);

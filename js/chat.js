@@ -20,7 +20,7 @@ export const memory = n => (ls('crewmem', {}) || {})[n] || { summary: '', facts:
 const setMemory = (n, m) => { const a = ls('crewmem', {}) || {}; a[n] = m; lsSet('crewmem', a); };
 export const forget = n => { const a = ls('crewmem', {}) || {}; delete a[n]; lsSet('crewmem', a); const h = ls('chathist', {}) || {}; delete h[n]; lsSet('chathist', h); };
 const ID2N = { tal: 'Tal', capablanca: 'Capablanca', morphy: 'Morphy', carlsen: 'Carlsen', kasparov: 'Kasparov', leela: 'Leela', skipper: 'Skipper', tempo: 'Tempo' };
-const j = u => fetch(u).then(r => r.ok ? r.json() : null).catch(() => null);
+import { loadJSON } from './data.js'; const j = u => loadJSON(u).catch(() => null);
 let DATA = null;
 const data = () => DATA || (DATA = Promise.all(['data/characters.json', 'data/personas.json', 'data/profile.json', 'data/sources/capablanca.json', 'data/sources/morphy.json'].map(j)).then(([c, p, pr, cap, mor]) => ({ c, p, pr, cap, mor })));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -122,7 +122,8 @@ const CSS = `.chat-h{position:relative;overflow:hidden;border-radius:var(--r-lg)
 const css = () => { if (!document.getElementById('mast-chat-css')) { const s = document.createElement('style'); s.id = 'mast-chat-css'; s.textContent = CSS; document.head.appendChild(s); } };
 
 export async function chatScreen({ render, topbar }, id) {
-  css(); const n = ID2N[id] || 'Tal', cc = CH[n] || {};
+  css(); if (!ID2N[id]) { const ids = Object.keys(ID2N); render(`${topbar}<span class="k">Crew chat</span><h1>Pick someone to talk to</h1><div class="row" style="flex-wrap:wrap;gap:8px;margin-top:14px">${ids.map(k => `<a class="btn ghost" href="#chat/${k}">${esc(ID2N[k])}</a>`).join('')}</div>`); return; }
+  const n = ID2N[id], cc = CH[n] || {};
   let ctx = ls('chatctx', null); if (!ctx || ctx.n !== n || Date.now() - ctx.t > 6e5) ctx = {};
   const hist = (ls('chathist', {}) || {})[n] || [];
   const saveHist = () => { const h = ls('chathist', {}) || {}; h[n] = hist.slice(-20); lsSet('chathist', h); };

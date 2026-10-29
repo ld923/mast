@@ -10,7 +10,7 @@ import { ghostFor } from './clock.js';
 export const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export const TAP = { f: null }; // optional per-result listener (the guided watch)
 export const q = (r, s) => r.querySelector(s);
-export const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
+import { loadJSON } from './data.js'; export const j = loadJSON;
 const DEBUG = () => /[?&]debug=1/.test(location.search);
 export const isDebug = DEBUG;
 
@@ -128,7 +128,7 @@ export function css() {
   s.textContent = `.co-hub{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin-top:14px}
 .co-hub .card{display:block;text-decoration:none;color:inherit}.co-hub h3{margin:2px 0 4px;font-size:18px}.co-hub p{margin:0;font-size:13.5px;line-height:1.4;opacity:.85}
 .co-wrap{max-width:900px}.co-sec{margin-top:22px}.co-sec>h2{margin:0 0 8px;font-size:21px}
-.co-bw{width:100%;max-width:min(100%,520px);margin:0 auto}.co-run{display:grid;gap:10px}
+.co-bw{width:100%;max-width:min(100%,520px,max(280px,calc(100dvh - 360px)));margin:0 auto}.co-run{display:grid;gap:10px}
 .co-hud{display:flex;align-items:center;gap:10px;font:700 13px var(--f-disp,sans-serif);letter-spacing:.08em;text-transform:uppercase}
 .co-hud .co-t{flex:1;height:10px;border-radius:99px;background:var(--glass-h,rgba(255,255,255,.08));overflow:hidden}.co-hud .co-t i{display:block;height:100%;width:100%;background:var(--a);transform-origin:left}
 .co-hud .co-t.low i{background:#e0584a}.co-info{padding:12px 14px;border-radius:14px;background:var(--glass,rgba(255,255,255,.06));border:1px solid var(--glass-b,rgba(255,255,255,.12))}.co-info p{margin:4px 0}
@@ -142,9 +142,6 @@ html[data-anim=off] .co-prog i,html[data-anim=reduced] .co-prog i{transition:non
 .co-cct{position:absolute;left:8px;right:8px;top:8px;z-index:30;display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 12px;border-radius:12px;background:rgba(7,17,26,.88);color:#f1e9d4;font:600 12.5px var(--f-disp,sans-serif);letter-spacing:.04em;pointer-events:none;transition:opacity .35s}.co-cct b{width:100%;color:var(--a,#C9A24B)}.co-cct.out{opacity:0}
 .co-bd{position:relative}.co-bd.blind .pc{opacity:0!important}
 .co-tabs{display:flex;gap:6px;flex-wrap:wrap}.co-tabs .btn.on{background:var(--a);color:var(--on-a,#111)}
-.co-more-bg{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.5)}.co-more{position:fixed;left:0;right:0;bottom:0;z-index:41;padding:16px 16px calc(16px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;background:var(--nav-bg,#0b1a26);border-top:1px solid var(--glass-b);backdrop-filter:blur(14px)}.co-more a{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;color:var(--fg);text-decoration:none;font:700 14px var(--f-disp);letter-spacing:.14em;text-transform:uppercase}.co-more a svg{width:22px;height:22px}
-#nav a.item.more-btn{background:none;border:0;cursor:pointer;font:inherit}
-@media(min-width:821px){#nav .more-btn{display:none}}@media(max-width:820px){#nav a.item[data-more="1"]{display:none}}
 .co-opts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.co-opts .btn{text-align:left}
 .co-sq{outline:3px solid var(--a);outline-offset:-3px}
 @media(max-width:480px){.co-hub{grid-template-columns:1fr}.co-cct{font-size:11.5px}}`;

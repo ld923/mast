@@ -1,3 +1,4 @@
+import { loadJSON } from './data.js';
 // Live crew panel: Skipper (player) + advisors. The phase advisor leans in; events change expressions and show a speech bubble.
 // new Crew(el, linesJson).setAdvisor(name); .react(event, {who, ex, vars}); .silent(name, ex, ms); .think(on)
 import { CH } from './portraits.js';
@@ -11,7 +12,7 @@ import { rankIdx } from './progress.js';
 import { bubbleHook as SXb } from './secrets.js';
 import { speak } from './voice.js';
 import { recordCrew, moodEx, outfitOf, introOnce } from './crewstate.js';
-let CHAT = null; const chatter = () => CHAT || (CHAT = fetch('data/characters.json').then(r => r.json()).then(j => j.chatter || []).catch(() => []));
+let CHAT = null; const chatter = () => CHAT || (CHAT = loadJSON('data/characters.json').then(j => j.chatter || []).catch(() => []));
 const ORDER = ['Skipper', 'Morphy', 'Kasparov', 'Capablanca', 'Tal', 'Carlsen', 'Leela', 'Tempo'];
 const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CSS = `

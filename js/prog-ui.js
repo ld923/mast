@@ -1,3 +1,4 @@
+import { loadJSON } from './data.js';
 import { photo } from './photo.js';
 import { speak } from './voice.js';
 // Progression visuals: rank insignia, sail XP meter, HUD, toasts, ceremonies, chest, cards, collection, trophies, daily route, boss intro, Tempo arrival.
@@ -325,7 +326,7 @@ export function bossResult(id, won) {
 }
 
 /* ---------- Tempo's arrival ---------- */
-let TL = null; const tempoLines = () => TL || (TL = fetch('data/characters.json').then(r => r.json()).then(j => j.characters.Tempo.lines.open).catch(() => ["Yo. Sit down, relax."]));
+let TL = null; const tempoLines = () => TL || (TL = loadJSON('data/characters.json').then(j => j.characters.Tempo.lines.open).catch(() => ["Yo. Sit down, relax."]));
 export async function tempoSequence(chartEl) {
   const wrap = chartEl.querySelector('.chartwrap') || chartEl; wrap.style.position = 'relative'; const lines = await tempoLines();
   const st = document.createElement('div'); st.className = 'storm'; st.setAttribute('aria-hidden', 'true');

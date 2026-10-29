@@ -60,6 +60,7 @@ export function initPWA() {
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (reloading || !window.__hadController) return; reloading = true; location.reload(); });
   window.__hadController = !!navigator.serviceWorker.controller;
   navigator.serviceWorker.register('sw.js').then(reg => {
+    setTimeout(() => { const c = navigator.connection || {}; if (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return; navigator.serviceWorker.ready.then(r => r.active && r.active.postMessage("warm")).catch(() => { }); }, 30000);
     const check = () => { if (reg.waiting && navigator.serviceWorker.controller) updateToast(reg); };
     check();
     reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', () => { if (w.state === 'installed') check(); }); });

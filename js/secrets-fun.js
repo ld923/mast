@@ -209,7 +209,7 @@ export function parrotArrived() { if (ST.parrotSeen) return; ST.parrotSeen = 1; 
 
 /* ================= parrot ================= */
 let CV = null;
-async function blunders() { if (CV) return CV; try { const d = await (await fetch('data/convert.json')).json(); CV = d.filter(x => x.played_san && x.best_san && x.loss > 150).sort((a, b) => b.loss - a.loss).slice(0, 60); } catch (_) { CV = []; } return CV; }
+async function blunders() { if (CV) return CV; try { const d = await (await import('./data.js')).loadJSON('data/convert.json'); CV = d.filter(x => x.played_san && x.best_san && x.loss > 150).sort((a, b) => b.loss - a.loss).slice(0, 60); } catch (_) { CV = []; } return CV; }
 async function squawk(h) {
   S.css(); sfx('squawk'); buzz && buzz([15, 20, 15]); h.classList.remove('jig'); void h.getBoundingClientRect(); const L = await blunders(); const b = L.length ? pick(L) : null;
   find('parrot', { silent: true });

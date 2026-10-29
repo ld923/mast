@@ -8,7 +8,7 @@ export const photoSrc = (n, ex) => { const f = FILE[n]; if (!f) return null; con
 const svgFallback = (n, ex, size = 96) => { try { return CH[n] ? portrait(n, norm(ex), size) : ''; } catch (e) { return ''; } };
 export function photo(n, ex = 'pleased', cls = '') {
   const e = norm(ex), src = photoSrc(n, e), acc = (CH[n] || {}).acc || '#C9A24B';
-  const inner = src ? `<img class="phi" src="${src}" alt="" decoding="async" draggable="false" data-pn="${n}" data-pe="${e}">` : `<span class="phs">${svgFallback(n, e)}</span>`;
+  const inner = src ? `<img class="phi" src="${src}" alt="" loading="lazy" decoding="async" draggable="false" data-pn="${n}" data-pe="${e}">` : `<span class="phs">${svgFallback(n, e)}</span>`;
   return `<span class="ph m-${e} ${cls}" style="--ac:${acc}" data-pn="${n}">${inner}</span>`;
 }
 /* inside an SVG: circular medallion centred at x,y */

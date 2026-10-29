@@ -71,6 +71,7 @@ export async function speak(who, text, cat = 'bubble', { event, sentences = 0 } 
     return say(who, trim(text, sentences));
   } catch (_) { return false; }
 }
-export const test = (who, line) => { stop(); return say(who, line || `Ahoy Gerald. This is ${who}, ready for the watch.`, true); };
+const nm = () => { try { return JSON.parse(localStorage.getItem('mast.user.name')) || 'Gerald'; } catch (e) { return 'Gerald'; } };
+export const test = (who, line) => { stop(); return say(who, line || `Ahoy ${nm()}. This is ${who}, ready for the watch.`, true); };
 addEventListener('hashchange', stop); addEventListener('pagehide', stop);
 try { window.__mastVoices = describe; } catch (_) { }

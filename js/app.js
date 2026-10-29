@@ -6,12 +6,11 @@ import { Crew, advisorFor, fmtEval } from './crew.js';
 import { figure, figCSS } from './figures.js';
 import { CH } from './portraits.js';
 import { mood, moodEx, outfitOf, setOutfit, outfitPicker, introOnce } from './crewstate.js';
-import { drills as drillsScreen, stopDrills } from './drills.js';
 import { md } from './md.js';
-import { store, getTheme, setTheme, loadIcons, icon, avatar, hydrate, state, loadingState, errorState } from './ui.js';
+import { getName, setName, store, getTheme, setTheme, loadIcons, icon, avatar, hydrate, state, loadingState, errorState } from './ui.js';
 import { renderVoyage, bumpIsland } from './voyage.js';
 import * as Pr from './progress.js';
-import { initProgressUI, setBusy, briefHTML, wireBrief, collection as collectionView, trophies as trophiesView, skipperBadge, outfitReveal, bossIntro, bossHud, bossResult } from './prog-ui.js';
+import { toast, initProgressUI, setBusy, briefHTML, wireBrief, collection as collectionView, trophies as trophiesView, skipperBadge, outfitReveal, bossIntro, bossHud, bossResult } from './prog-ui.js';
 import { PressureClock, ghostFor } from './clock.js';
 import * as Resume from './resume.js';
 import { kbTip } from './kb.js';
@@ -27,17 +26,16 @@ import { level, greeting, rareMoment, LEVELS, affinity, disagreement, isAggressi
 import { initPWA, mountInstallUI, briefInstallCard } from './pwa.js';
 import * as Sync from './sync.js';
 import { initSecrets, secretsView, wireBackstory } from './secrets.js';
-import { coachScreen, stopCoach } from './coach.js';
-import { getCCT, setCCT } from './coach-core.js';
+import { getCCT, setCCT, stopCoach, C as coachC, day as coachDay } from './coach-core.js';
 import { onSyncAlerts, visitNudge, briefCoachHTML } from './coach3.js';
-import { watchScreen, watchDone } from './watch.js';
-import { studioScreen } from './voice-studio.js';
+const watchDone = () => (coachC().watches || []).some(w => w.day === coachDay());
 import { getMode as getVoiceMode, setMode as setVoiceMode, test as voiceTest, describe as voiceDescribe } from './voice.js';
 import { initFx, setAnim, getAnim, setHaptics, getHaptics, full, countAll, sparkAt } from './fx.js';
 
 const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));;
 const view = $('#view');
-const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
+import { loadJSON as j } from './data.js';
 const MASTERS = ['Tal', 'Capablanca', 'Morphy', 'Carlsen', 'Kasparov'];
 const ROUTES = [['today', 'Today'], ['drills', 'Drills'], ['puzzles', 'Puzzles'], ['coach', 'Coach'], ['voyage', 'Voyage'], ['masters', 'Crew'], ['review', 'Review'], ['play', 'Play']];
 const MORE = ['voyage', 'review'];
@@ -78,6 +76,7 @@ function buildShell() {
   menu.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { setTheme(b.dataset.t); paint(); });
   document.addEventListener('click', e => { if (!menu.hidden && !menu.contains(e.target)) { menu.hidden = true; gear.setAttribute('aria-expanded', 'false'); } });
   addEventListener('keydown', e => { if (e.key === 'Escape') menu.hidden = true; });
+  const un = $('#uname'); if (un) { un.value = String(store.get('user.name', '') || ''); un.onclick = e => e.stopPropagation(); un.onchange = () => { setName(un.value); const h = location.hash; if (h === '' || h === '#today') route(); }; }
   const ki = $('#apikey'), km = $('#keymsg'), note = km ? km.textContent : '';
   if (ki) { ki.value = getKey(); ki.onchange = () => { setKey(ki.value); if (km) km.textContent = ki.value ? 'Saved on this device. ' + note : note; }; ki.onclick = e => e.stopPropagation(); }
   const kt = $('#keytest'); if (kt) kt.onclick = async e => { e.stopPropagation(); const k = ki.value.trim(); if (!k) { km.textContent = 'Paste a key first.'; return; } setKey(k); km.textContent = 'Testing...'; try { const r = await testKey(k); km.textContent = r.ok ? 'Key works. The crew can talk.' : 'Key rejected: ' + r.msg; } catch (er) { km.textContent = 'Could not reach the API (offline?).'; } };
@@ -87,11 +86,16 @@ function buildShell() {
 
 let D = null;
 async function load() {
-  const [personas, stats, me, extra] = await Promise.all([j('data/personas.json'), j('data/stats.json'), j('data/puzzles_me.json'), j('data/extra.json')]);
-  const sets = { me };
-  const avail = await j('data/sources.json');
-  await Promise.all(avail.map(m => j(`data/puzzles_${m}.json`).then(x => { if (x.length) sets[m] = x; })));
-  await Sync.S.ready; D = { personas, stats, sets, extra, baseMe: me }; D.sets.me = [...Sync.latestPuzzles(), ...me]; Pr.setData(D);
+  const [personas, me, extra, avail] = await Promise.all([j('data/personas.json'), j('data/puzzles_me.json'), j('data/extra.json'), j('data/sources.json')]);
+  await Sync.S.ready; D = { personas, stats: {}, sets: { me }, extra, baseMe: me, avail, full: false }; D.sets.me = [...Sync.latestPuzzles(), ...me]; Pr.setData(D);
+}
+/* master puzzle sets + stats are big: load only what a route needs */
+const loadSet = m => D.sets[m] ? Promise.resolve() : j(`data/puzzles_${m}.json`).then(x => { if (x.length) D.sets[m] = x; }).catch(() => { });
+async function needSets(names) { if (D.full) return; await Promise.all(names.map(loadSet)); Pr.setData(D); }
+async function needAll() {
+  if (D.full) return;
+  await Promise.all([...D.avail.map(loadSet), j('data/stats.json').then(x => { D.stats = x; }).catch(() => { })]);
+  D.full = true; Pr.setData(D);
 }
 const rnd = (a, seed) => { // seeded daily shuffle
   a = [...a]; let s = seed; const r = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
@@ -130,11 +134,11 @@ const formWord = v => v < .34 ? 'Stormy' : v < .67 ? 'Steady' : 'Set fair';
 function today() {
   const h = new Date().getHours(), g = h < 12 ? 'Morning' : h < 18 ? 'Afternoon' : 'Evening';
   const c = D.extra.clock, set = rnd(D.sets.me, daySeed()).slice(0, 10);
-  const ms = MASTERS.filter(m => D.sets[m]);
+  const ms = MASTERS.filter(m => D.avail.includes(m)), dmk = Pr.dailyMasterKey();
   const dr = D.extra.drills, dk = 'convert', drillName = 'Convert when winning';
   let lp = null, lesson = `<p>Master puzzles are still being prepared. Check back soon.</p>`;
   if (ms.length) {
-    const m = ms[daySeed() % ms.length]; lp = { m, p: rnd(D.sets[m], daySeed())[0] };
+    const m = dmk && ms.includes(dmk) ? dmk : ms[daySeed() % ms.length]; lp = { m, p: rnd(D.sets[m], daySeed())[0] };
     lesson = `<div class="row tight">${avatar(m)}<div><b>${m}</b><br><span class="sub sm">${lp.p.phase}, ${gameLine(lp.p)}</span></div></div><p>${themeLine(lp.p)}</p>`;
   }
   const ph = D.extra.phases, weak = Object.keys(ph).sort((a, b) => ph[b] - ph[a])[0];
@@ -143,7 +147,7 @@ function today() {
   const wx = wxNow(), tod = timeOfDay();
   render(`${topbar}
   <header class="bcast deck-hd"><div><div class="k"><span class="live"></span>On deck · ${new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' })} · ${WEATHER_WORD[wx]}</div>
-   <h1>${g} <em>watch</em>, Gerald</h1></div><span class="row"><button class="btn ghost" id="brief-open" aria-haspopup="dialog" aria-controls="brief">Captain's briefing</button></span></header>
+   <h1>${g} <em>watch</em>, ${esc(getName())}</h1></div><span class="row"><button class="btn ghost" id="brief-open" aria-haspopup="dialog" aria-controls="brief">Captain's briefing</button></span></header>
   <a class="watch-cta${watchDone() ? ' done' : ''}" id="watch-cta" href="#watch">${watchDone() ? 'Watch complete ✓ · extra round?' : "START TODAY'S WATCH · 10 min"}</a>
   <div class="deckwrap" id="deck"></div>
   <p class="sub sm deck-hint">Tap the table for today's drill, the chart for the voyage, the wheel to play, a crew member to meet them.</p>
@@ -357,28 +361,36 @@ function voyage() {
 }
 const soon = (title, kicker, who, ex, line) => () => render(`${topbar}<span class="k">${kicker}</span><h1>${title}</h1>
   ${state({ who, ex, title: 'Coming next', line, slot: true, action: '<a class="btn ghost" href="#today">Back to tonight</a>' })}`);
-const drills = arg => drillsScreen({ render, topbar, D }, arg);
+let drillsMod = null;
+const drills = async arg => { drillsMod = await import('./drills.js'); return drillsMod.drills({ render, topbar, D }, arg); };
 const review = arg => reviewScreen({ render, topbar, D }, arg);
 const play = arg => playScreen({ render, topbar, D }, arg);
 const chat = arg => chatScreen({ render, topbar }, arg);
 
 /* ---------- Router ---------- */
+const KNOWN = new Set(['today', 'drills', 'puzzles', 'voyage', 'masters', 'review', 'play', 'chat', 'coach', 'watch', 'studio', 'postcard', 'collection', 'trophies', 'secrets']);
 async function route() {
-  const [r, arg] = (location.hash.slice(1) || 'today').split('/'); Resume.setRoute(location.hash.slice(1) || 'today');
+  let hs = location.hash.slice(1) || 'today'; const h0 = hs.split('/')[0];
+  if (h0 === 'crew') { location.replace('#masters' + hs.slice(4)); return; }
+  if (h0 === 'settings' || h0 === 'more') { history.replaceState(null, '', location.pathname + location.search + '#today'); hs = 'today'; setTimeout(() => { if (h0 === 'settings') { const g = $('#gear'); if (g) g.click(); } else { const b = $('#nav .more-btn'); if (b) b.click(); } }, 60); }
+  else if (!KNOWN.has(h0)) { history.replaceState(null, '', location.pathname + location.search + '#today'); hs = 'today'; setTimeout(() => toast({ k: 'Heads up', title: 'Page not found', line: 'Showing the deck instead.' }), 60); }
+  document.querySelectorAll('.co-more,.co-more-bg').forEach(e => e.remove());
+  const [r, arg] = hs.split('/'); Resume.setRoute(hs);
   document.querySelectorAll('#nav .item').forEach(a => a.classList.toggle('on', (a.dataset.r === 'more' && MORE.includes(r)) || a.dataset.r === (r === 'collection' || r === 'trophies' || r === 'secrets' ? 'masters' : r === 'postcard' ? 'today' : r)));
   navCompass($('#nav'));
   if (!D) {
     render(`${topbar}${loadingState()}`);
     try { await load(); } catch (e) { render(`${topbar}${errorState()}`); const b = $('#retry-load'); if (b) b.onclick = route; return; }
   }
+  if (r === 'today') { const m = Pr.dailyMasterKey(), ms = MASTERS.filter(x => D.avail.includes(x)); await needSets(m && ms.includes(m) ? [m] : [...new Set([m, ms.length ? ms[daySeed() % ms.length] : null].filter(Boolean))]); } else await needAll();
   const run = async () => {
-    stopDrills(); if (r !== 'play') stopPlay(); if (r !== 'review') stopReview(); if (pzBoard && r !== 'puzzles') { try { pzBoard.destroy(); } catch (e) { } pzBoard = null; if (pzCrew) pzCrew.destroy(); }
+    if (drillsMod) drillsMod.stopDrills(); if (r !== 'play') stopPlay(); if (r !== 'review') stopReview(); if (pzBoard && r !== 'puzzles') { try { pzBoard.destroy(); } catch (e) { } pzBoard = null; if (pzCrew) pzCrew.destroy(); }
     if (r !== 'puzzles') killBossClk(); stopCoach();
     window.scrollTo(0, 0); view.classList.remove('in-cabin');
-    await ({ today, drills, puzzles, voyage, masters, review, play, chat, coach: () => coachScreen({ render, topbar, D }), watch: () => { watchScreen({ render, topbar }); }, studio: () => studioScreen({ render, topbar }), postcard: () => postcardView({ render, topbar }), collection: a => collectionView({ render, topbar }, a), trophies: () => trophiesView({ render, topbar }), secrets: () => secretsView({ render, topbar }) }[r] || today)(arg);
+    await ({ today, drills, puzzles, voyage, masters, review, play, chat, coach: async () => (await import('./coach.js')).coachScreen({ render, topbar, D }), watch: async () => { (await import('./watch.js')).watchScreen({ render, topbar }); }, studio: async () => (await import('./voice-studio.js')).studioScreen({ render, topbar }), postcard: () => postcardView({ render, topbar }), collection: a => collectionView({ render, topbar }, a), trophies: () => trophiesView({ render, topbar }), secrets: () => secretsView({ render, topbar }) }[r] || today)(arg);
   };
   const vt = full() && routed && document.startViewTransition;
-  if (vt) { try { await document.startViewTransition(run).updateCallbackDone; } catch (e) { } }
+  if (vt) { try { const t = document.startViewTransition(run); t.ready.catch(() => { }); t.finished.catch(() => { }); await t.updateCallbackDone; } catch (e) { } }
   else { await run(); if (full() && routed && view.animate) view.animate([{ opacity: 0, transform: 'translateY(12px) scale(.992)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' }); }
   routed = true; Resume.disarm();
 }

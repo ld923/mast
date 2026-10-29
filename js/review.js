@@ -15,7 +15,7 @@ import { CH } from './portraits.js';
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
+import { loadJSON as j } from './data.js';
 const V = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
 const DEPTH = 12, TP = 150, cl = x => Math.max(-1000, Math.min(1000, x));
 
