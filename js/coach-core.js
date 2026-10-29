@@ -4,7 +4,8 @@ import { getEngine } from './engine.js';
 import { store, avatar, hydrate } from './ui.js';
 import * as Pr from './progress.js';
 import { play as sfx } from './sound.js';
-import { full } from './fx.js';
+import { full, getAnim, sparkAt } from './fx.js';
+import { ghostFor } from './clock.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export const TAP = { f: null }; // optional per-result listener (the guided watch)
@@ -127,7 +128,7 @@ export function css() {
   s.textContent = `.co-hub{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin-top:14px}
 .co-hub .card{display:block;text-decoration:none;color:inherit}.co-hub h3{margin:2px 0 4px;font-size:18px}.co-hub p{margin:0;font-size:13.5px;line-height:1.4;opacity:.85}
 .co-wrap{max-width:900px}.co-sec{margin-top:22px}.co-sec>h2{margin:0 0 8px;font-size:21px}
-.co-bw{max-width:min(100%,520px);margin:0 auto}.co-run{display:grid;gap:10px}
+.co-bw{width:100%;max-width:min(100%,520px);margin:0 auto}.co-run{display:grid;gap:10px}
 .co-hud{display:flex;align-items:center;gap:10px;font:700 13px var(--f-disp,sans-serif);letter-spacing:.08em;text-transform:uppercase}
 .co-hud .co-t{flex:1;height:10px;border-radius:99px;background:var(--glass-h,rgba(255,255,255,.08));overflow:hidden}.co-hud .co-t i{display:block;height:100%;width:100%;background:var(--a);transform-origin:left}
 .co-hud .co-t.low i{background:#e0584a}.co-info{padding:12px 14px;border-radius:14px;background:var(--glass,rgba(255,255,255,.06));border:1px solid var(--glass-b,rgba(255,255,255,.12))}.co-info p{margin:4px 0}
@@ -164,6 +165,7 @@ export function runSet(root, items, cfg = {}) {
   const stopT = () => { clearInterval(tick); };
   const startT = (secs, onFlag) => { stopT(); t0 = performance.now(); tbar(1); tick = setInterval(() => { const f = 1 - (performance.now() - t0) / 1000 / secs; tbar(f); if (f <= 0) { stopT(); onFlag(); } }, 80); };
   const secsNow = () => (performance.now() - t0) / 1000;
+  const ghostOf = it => (cfg.instinct || cfg.vanish) ? 0 : (cfg.ghost || ghostFor(it.themes, it.kind === 'cv', cfg.timed || 8));
   function load() {
     item = items[i]; g = new Chess(item.fen); first = null; phase = cfg.instinct ? 'first' : 'solve'; board.clearArrows();
     if ((g.turn() === 'w') !== (board.orient === 'white')) board.flip();
@@ -171,6 +173,7 @@ export function runSet(root, items, cfg = {}) {
     $('#r-n').textContent = `${i + 1}/${items.length}`; $('#r-s').textContent = `${results.filter(r => r.ok).length} right`; actions('');
     const side = g.turn() === 'w' ? 'White' : 'Black'; const bd = $('#r-bd'); bd.classList.remove('blind'); memo = false;
     if (cfg.cct) cctFlash(bd, item.fen);
+    { const tb = $('#r-t'), old = tb.querySelector('.gh'); if (old) old.remove(); const gs = ghostOf(item); if (gs && cfg.timed > 0 && gs < cfg.timed) { tb.style.position = 'relative'; tb.insertAdjacentHTML('beforeend', `<b class="gh" title="Ghost: ${gs}s" style="position:absolute;top:-2px;bottom:-2px;width:2px;left:${(1 - gs / cfg.timed) * 100}%;background:#7FD6FF;opacity:.6"></b>`); } }
     if (cfg.vanish) { memo = true; info(`<b>Memorise it.</b> The pieces vanish in ${cfg.vanish / 1000}s.`); tbar(1); later(() => { memo = false; bd.classList.add('blind'); info(`<b>${side} to move. Pieces gone.</b> Play the best move from memory.`); t0 = performance.now(); }, cfg.vanish); }
     else if (cfg.instinct) { info(`<b>${side} to move.</b> First instinct: pick a move in 3 seconds.`); startT(3, () => { first = { uci: null, secs: 3 }; toVerify(); }); }
     else if (cfg.prompt) { info(cfg.prompt(side, item)); t0 = performance.now(); tbar(1); if (cfg.timed) startT(cfg.timed, () => finish(false, null, cfg.timed, true)); }
@@ -194,10 +197,11 @@ export function runSet(root, items, cfg = {}) {
     if (stopped) return; stopT(); board.setLegal({}); const best = item.sol[0];
     const res = { ok, secs, played, flagged: !!flagged, id: item.id, fen: item.fen, best, bestSan: item.san || sanOf(item.fen, best), kind: item.kind };
     if (cfg.instinct) { res.first = first.uci; res.firstSan = first.san; res.firstBest = !!first.uci && item.sol.includes(first.uci); res.changed = !!first.uci && played !== first.uci; res.verifySecs = secsNow(); res.firstSecs = first.secs; }
+    { const gs = ghostOf(item); if (gs && ok && !flagged && !kept && secs <= gs) { res.ghost = true; try { Pr.onGhost(); if (getAnim() !== 'off') sparkAt($('#r-bd')); } catch (_) { } } }
     results.push(res); if (TAP.f) { try { TAP.f(res, item); } catch (_) { } } if (cfg.cct) cctRecord(ok); $('#r-bd').classList.remove('blind');
     if (cfg.silent) { sfx('move'); info('<b>Recorded.</b> Answers come at the end.'); if (cfg.onEach) cfg.onEach(res, item, i); const l2 = i + 1 >= items.length; actions(`<button class="btn" id="r-next" type="button">${l2 ? 'Finish' : 'Next position'}</button>`); const b2 = $('#r-next'); b2.onclick = () => { if (l2) { stopped = true; resolveAll(results); } else { i++; load(); } }; b2.focus({ preventScroll: true }); return; }
     sfx(ok ? 'success' : 'fail'); board.showArrow(best.slice(0, 2), best.slice(2, 4), '#3FB37F');
-    info(`<b>${ok ? 'Right.' : flagged ? 'Out of time.' : 'Not this one.'}</b> Best was <b>${esc(res.bestSan)}</b>${item.played && !ok ? `; in your game you played <b>${esc(item.played)}</b>` : ''}.${cfg.instinct ? (res.firstBest ? ' Your first instinct was already right.' : res.changed && ok ? ' Checking paid off: you improved on your first pick.' : res.changed ? ' You changed it, but not to the best move.' : '') : ''}${item.note ? `<p class="sub sm">${esc(item.note)}</p>` : ''}`, ok ? 'ok' : 'bad');
+    info(`<b>${ok ? 'Right.' :  flagged ? 'Out of time.' : 'Not this one.'}</b>${res.ghost ? ' <i>Beat the ghost.</i>' : ''} Best was <b>${esc(res.bestSan)}</b>${item.played && !ok ? `; in your game you played <b>${esc(item.played)}</b>` : ''}.${cfg.instinct ? (res.firstBest ? ' Your first instinct was already right.' : res.changed && ok ? ' Checking paid off: you improved on your first pick.' : res.changed ? ' You changed it, but not to the best move.' : '') : ''}${item.note ? `<p class="sub sm">${esc(item.note)}</p>` : ''}`, ok ? 'ok' : 'bad');
     if (cfg.onEach) cfg.onEach(res, item, i);
     const last = i + 1 >= items.length; actions(`<button class="btn" id="r-next" type="button">${last ? 'See results' : 'Next position'}</button>`);
     const b = $('#r-next'); b.onclick = () => { if (last) { stopped = true; resolveAll(results); } else { i++; load(); } }; b.focus({ preventScroll: true });

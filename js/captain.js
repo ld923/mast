@@ -67,6 +67,7 @@ export function logHTML(e, cls = '') {
   <div class="cl-k" style="position:relative;z-index:1">Decision time</div>
   <div style="position:relative;z-index:1;font-size:14px">${e.avg.toFixed(1)}s a move against your real median of ${e.real}s.</div>
   <div class="cl-bar" aria-hidden="true"><i style="width:${Math.min(100, e.avg / mx * 100)}%"></i><b style="left:${Math.min(98, e.real / mx * 100)}%"></b></div>
+  ${e.ghosts != null ? `<div style="position:relative;z-index:1;font-size:14px;margin-top:6px">Ghosts beaten: <b>${e.ghosts}</b> this watch${e.gtot != null ? ` · ${e.gtot} all-time` : ''}.</div>` : ''}
   <div class="cl-sign"><div class="cl-sig">${avatar(e.advisor || 'Skipper', 'pleased')}<span>${esc(e.advisor || 'Skipper')}</span></div>${sealSVG(g)}</div>
   ${cls.includes('cl-live') ? '<div class="row" style="margin-top:14px"><button class="btn" id="d-again">Another session</button><a class="btn ghost" href="#today">Back to tonight</a></div>' : ''}</article>`;
 }

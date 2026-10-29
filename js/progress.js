@@ -182,6 +182,8 @@ export function onDrillSolve({ mode, id, spent = 0, budget = 8, streak = 1, sac 
   if (first) { const bonus = Math.max(0, Math.min(5, Math.round(5 * (1 - spent / budget)))); xp = addXp((10 + bonus) * mult(streak), 'drill'); P.daily.have[mode] = (P.daily.have[mode] || 0) + 1; save(); dailyCheck(); }
   save(); check({ mode, spent }); return xp;
 }
+export function onGhost() { load(); P.stats.ghosts = (P.stats.ghosts || 0) + 1; save(); return P.stats.ghosts; }
+export const ghostTotal = () => { load(); return P.stats.ghosts || 0; };
 export function onDrillMiss({ mode }) { if (mode === 'convert') { P.stats.convRun = 0; save(); } }
 export function onSession({ mode, ok, n, avg, flags, best, storm }) {
   P.stats.sessions++; if (ok === n && n >= 10) P.stats.perfect++; touchStreak();

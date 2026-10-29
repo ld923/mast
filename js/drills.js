@@ -1,7 +1,9 @@
 // Drills: Convert / Blitz tactics / Middlegame tempo. 10-position sessions, PressureClock per move, Leitner spaced repetition.
 import { smoothTake } from './secrets.js';
 import { Board } from './board2.js';
-import { PressureClock } from './clock.js';
+import { PressureClock, ghostFor } from './clock.js';
+import { replayRun, noteMiss, clearMiss } from './replay.js';
+import * as Resume from './resume.js';
 import { play } from './sound.js';
 import { Crew, advisorFor, fmtEval } from './crew.js';
 import { store, hydrate } from './ui.js';
@@ -13,7 +15,7 @@ import { storm, closeCall, getClockStyle } from './drama.js';
 import { introUp } from './crewstate.js';
 import { cctFlash, cctRecord } from './coach-core.js';
 import { showLog, saveLog, gradeOf } from './captain.js';
-import { full, buzz, burst, confetti, shake, floatAt, wash, combo, countUp, countAll, sparkAt, sprayAt } from './fx.js';
+import { getAnim, full, buzz, burst, confetti, shake, floatAt, wash, combo, countUp, countAll, sparkAt, sprayAt } from './fx.js';
 
 const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
 const SIZE = 10, DAYS = { 1: 0, 2: 2, 3: 5, 4: 14 };
@@ -52,6 +54,12 @@ function record(mode, p, ok) {
 
 export function stopDrills() { if (live) { live.stop(); live = null; } document.body.classList.remove('critical'); }
 
+function launch(root, mode, D2, clk, resume) {
+  const h = { stopped: false, inner: null, rp: null, stop() { this.stopped = true; this.rp && this.rp.stop(); this.inner && this.inner.stop(); } };
+  const go = () => { if (!h.stopped) h.inner = session(root, mode, D2, clk, resume); };
+  if (resume) go(); else { h.rp = replayRun(root); h.rp.promise.then(go); }
+  return h;
+}
 export async function drills(ctx, arg) {
   stopDrills();
   const { render, topbar, D } = ctx, D2 = await data();
@@ -60,14 +68,17 @@ export async function drills(ctx, arg) {
    <div class="grid g-modes mt2">${Object.entries(MODES).map(([id, m]) => `<div class="card link mode" data-m="${id}" tabindex="0" role="button"><span class="k">${m.k}</span><h2>${m.name}</h2><p>${m.blurb}</p><span class="sub sm">${D2[id].length.toLocaleString()} positions, ${dueCount(id, D2[id])} due</span></div>`).join('')}</div>
    <div id="sess"></div>`);
   const sess = document.querySelector('#sess');
-  const go = id => { document.querySelectorAll('.mode').forEach(c => c.classList.toggle('on', c.dataset.m === id)); stopDrills(); live = session(sess, id, D2, clk); sess.scrollIntoView({ behavior: full() ? 'smooth' : 'auto', block: 'start' }); };
+  const go = (id, resume) => { document.querySelectorAll('.mode').forEach(c => c.classList.toggle('on', c.dataset.m === id)); stopDrills(); live = launch(sess, id, D2, clk, resume); sess.scrollIntoView({ behavior: full() ? 'smooth' : 'auto', block: 'start' }); };
   document.querySelectorAll('.mode').forEach(c => { c.onclick = () => go(c.dataset.m); c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(c.dataset.m); } }; });
-  if (MODES[arg]) go(arg);
+  const rs = Resume.consume('drill');
+  if (rs && MODES[rs.mode]) go(rs.mode, rs); else if (MODES[arg]) go(arg);
 }
 
-function session(root, mode, D2, clk) {
-  const M0 = MODES[mode], M = smoothTake() ? { ...M0, budget: M0.budget + 1 } : M0, list = pick(mode, D2[mode]);
-  const S = { i: 0, ok: 0, streak: 0, best: 0, times: [], stopped: false, flags: 0, mrun: 0, srun: 0, armed: false, storm: false }, timers = new Set();
+function session(root, mode, D2, clk, resume) {
+  const M0 = MODES[mode], M = smoothTake() ? { ...M0, budget: M0.budget + 1 } : M0;
+  let list = null; if (resume && Array.isArray(resume.ids)) { const byId = new Map(D2[mode].map(x => [String(x.id), x])); list = resume.ids.map(id => byId.get(String(id))).filter(Boolean); if (list.length !== resume.ids.length) list = null; }
+  const resumed = !!list; if (!list) list = pick(mode, D2[mode]);
+  const S = { i: resumed ? Math.min(resume.i || 0, list.length - 1) : 0, ghosts: 0, ok: resumed ? resume.ok || 0 : 0, streak: resumed ? resume.streak || 0 : 0, best: resumed ? resume.best || 0 : 0, times: [], stopped: false, flags: 0, mrun: 0, srun: 0, armed: false, storm: false }, timers = new Set();
   const later = (f, ms) => { const t = setTimeout(() => { timers.delete(t); if (!S.stopped) f(); }, ms); timers.add(t); };
   root.innerHTML = `<div class="dr"><div class="dr-hud"><div class="tile"><span class="led" id="d-n">1/${list.length}</span><span class="k">Position</span></div>
    <div class="tile"><span class="led" id="d-s">0</span><span class="k">Score</span></div><div class="tile"><span class="led" id="d-st">0</span><span class="k">Streak</span></div></div>
@@ -83,7 +94,7 @@ function session(root, mode, D2, clk) {
   let p, g, k, t0, locked, spent = 0, tTrouble, clock, ended, heldAt = 0;
   const stormer = storm(board);
   clock = new PressureClock($('#d-clock'), { seconds: M.budget, glass: getClockStyle() === 'glass', onState: st => stormer.set(st), onFlag: () => miss('flag') });
-  let hinted = false, fen0 = '', left = 9;
+  let hinted = false, fen0 = '', left = 9, gh = 6;
   const info = (t, c = '') => $('#d-info').innerHTML = `<div class="status ${c}">${t}</div><div class="sub">${M.name}, ${p ? p.phase : ''}${p && p.kind === 'bt' ? ', move ' + (Math.floor(Math.min(k, p.sol.length - 1) / 2) + 1) + ' of ' + Math.ceil(p.sol.length / 2) : ''}</div>`;
   const legal = () => { const m = {}; g.moves({ verbose: true }).forEach(x => (m[x.from] ??= []).push(x.to)); return m; };
   const col = () => g.turn() === 'w' ? 'white' : 'black';
@@ -94,7 +105,7 @@ function session(root, mode, D2, clk) {
   const onIntro = e => e.detail === 'open' ? holdOn() : holdOff();
   document.addEventListener('mast:intro', onIntro); S.introOff = () => { document.removeEventListener('mast:intro', onIntro); setBusy(false); };
   const ownMove = () => { // arm the clock for the player's next move
-    locked = false; spent = 0; tTrouble = false; heldAt = 0; t0 = performance.now(); clock.reset(M.budget); clock.start(); crew.think(true); setBusy(true); if (introUp()) holdOn();
+    locked = false; spent = 0; tTrouble = false; heldAt = 0; t0 = performance.now(); clock.reset(M.budget); gh = ghostFor(p.themes, mode === 'convert' || p.kind === 'cv', M.budget); clock.setGhost(gh); clock.start(); crew.think(true); setBusy(true); if (introUp()) holdOn();
     clearInterval(S.poll); S.poll = setInterval(() => { if (!locked && !tTrouble && clock.remaining() < 3) { tTrouble = true; crew.react('time_trouble', { who: 'Tempo', ex: 'thinking', vars: { secs: (M.budget - clock.remaining()).toFixed(1) } }); play('tick'); } }, 150);
   };
   const stopClock = () => { stormer.calm(); left = clock.remaining(); clearInterval(S.poll); if (heldAt) { t0 += performance.now() - heldAt; heldAt = 0; } setBusy(false); spent = (performance.now() - t0) / 1000; clock.pause(); crew.think(false); document.body.classList.remove('critical'); locked = true; };
@@ -107,6 +118,7 @@ function session(root, mode, D2, clk) {
     if (p.themes.includes('sacrifice')) crew.silent('Tal', 'excited', 2200);
     if (p.phase === 'endgame') crew.react('endgame', { who: 'Capablanca', ex: 'pleased', vars: vars() });
     $('#d-res').innerHTML = ''; hud(); sync(null, false); cctFlash($('#d-bd'), p.fen); info(`${g.turn() === 'w' ? 'White' : 'Black'} to move.`); ownMove();
+    Resume.save('drill', { mode, ids: list.map(x => x.id), i: S.i, ok: S.ok, streak: S.streak, best: S.best });
     document.dispatchEvent(new CustomEvent('mast:drillload', { detail: { board, p } }));
   }
   function onMove(from, to, promo) {
@@ -129,7 +141,7 @@ function session(root, mode, D2, clk) {
   function solved(m, sac) {
     if (ended) return;
     if (left < 1 && !S.rp && !g.in_checkmate()) { S.rp = true; closeCall(board, { fenBefore: fen0, fenAfter: g.fen(), mv: m, crew, secs: spent.toFixed(1) }).then(() => { if (!S.stopped) solved(m, sac); }); return; }
-    S.rp = false; ended = true; S.ok++; S.streak++; S.best = Math.max(S.best, S.streak); if (!hinted) record(mode, p, true);
+    S.rp = false; ended = true; S.ok++; S.streak++; S.best = Math.max(S.best, S.streak); if (!hinted) { record(mode, p, true); clearMiss('d:' + mode + ':' + p.id); }
     if (!hinted && (!S.bestMv || (p.swing || 0) + (sac ? 50 : 0) > S.bestMv.score)) S.bestMv = { san: p.san, swing: p.swing || 0, secs: spent, score: (p.swing || 0) + (sac ? 50 : 0) };
     S.mrun = 0; S.srun++; if (!hinted) cctRecord(true); if (S.armed && S.srun >= 3) S.storm = true;
     if (!hinted) Pr.onDrillSolve({ mode, id: p.id, spent, budget: M.budget, streak: S.streak, sac });
@@ -141,12 +153,13 @@ function session(root, mode, D2, clk) {
     const el = sqEl(m.to); sparkAt(el || $('#d-bd')); if (p.swing >= 30) floatAt(el, '+' + fmtEval(p.swing), 'pos'); buzz(15);
     crew.cheer(sac ? 'Tal' : crew.adv); if (sac || fast || S.streak % 5 === 0) crew.cheer('Skipper', { sound: false });
     if (S.streak >= 5 && S.streak % 5 === 0) { confetti(S.streak >= 10 ? 2 : 1); wash(); }
-    info(`Solved in ${spent.toFixed(1)}s.`, 'ok'); hud(); next(true, `Played ${p.san}.${sac ? ' A sacrifice, nicely done.' : ''}`);
+    const beat = !hinted && spent <= gh; if (beat) { S.ghosts++; Pr.onGhost(); clock.ghostBeat(); if (getAnim() !== 'off') { try { floatAt(el || $('#d-bd'), 'Beat the ghost', 'pos'); } catch (_) { } } }
+    info(`Solved in ${spent.toFixed(1)}s.${beat ? ` Beat the ghost (${gh}s) · ${S.ghosts} this watch.` : ''}`, 'ok'); hud(); next(true, `Played ${p.san}.${sac ? ' A sacrifice, nicely done.' : ''}`);
   }
   function miss(why, playedSan, toSq) {
     if (ended) return; ended = true; if (!locked) stopClock();
     if (!S.worst || (p.swing || 0) >= S.worst.swing) S.worst = { fen: p.fen, san: p.san, played: p.played, swing: p.swing || 0, mv: p.sol[0] };
-    S.streak = 0; cctRecord(false); record(mode, p, false); S.srun = 0; S.mrun++; if (S.mrun >= 3) S.armed = true; if (why === 'flag') S.flags++; Pr.onDrillMiss({ mode }); document.dispatchEvent(new CustomEvent('mast:drill', { detail: { ok: false, mode, p, played: playedSan } })); play('fail'); buzz([20, 40, 20]); shake($('.dr'));
+    S.streak = 0; cctRecord(false); record(mode, p, false); noteMiss({ k: 'd:' + mode + ':' + p.id, fen: p.fen, sol: p.sol, san: p.san, played: p.played, link: p.src && p.src.Link || '' }); S.srun = 0; S.mrun++; if (S.mrun >= 3) S.armed = true; if (why === 'flag') S.flags++; Pr.onDrillMiss({ mode }); document.dispatchEvent(new CustomEvent('mast:drill', { detail: { ok: false, mode, p, played: playedSan } })); play('fail'); buzz([20, 40, 20]); shake($('.dr'));
     const mate = p.themes.some(t => String(t).startsWith('mate'));
     const ev = mode === 'convert' ? 'blunder_when_winning' : mate ? 'missed_mate' : 'fail';
     crew.react(ev, { who: mate && mode !== 'convert' ? 'Leela' : crew.adv, ex: 'disappointed', vars: vars(playedSan) });
@@ -166,10 +179,11 @@ function session(root, mode, D2, clk) {
     S.mqOff && S.mqOff(); S.introOff && S.introOff(); clock.destroy(); crew.destroy(); stormer.destroy(); board.destroy();
     const avg = S.times.length ? S.times.reduce((a, b) => a + b, 0) / S.times.length : 0;
     const real = mode === 'tempo' ? clk.seconds_per_move_by_bucket['11-20'].median : clk.median_move_s;
-    const entry = { t: Date.now(), mode, name: M.name, ok: S.ok, n: list.length, avg, real, budget: M.budget, best: S.best, worst: S.worst || null, bestMv: S.bestMv || null, advisor: crew.adv || 'Skipper', flags: S.flags };
+    const entry = { t: Date.now(), mode, name: M.name, ok: S.ok, n: list.length, avg, real, budget: M.budget, best: S.best, worst: S.worst || null, bestMv: S.bestMv || null, advisor: crew.adv || 'Skipper', flags: S.flags, ghosts: S.ghosts, gtot: Pr.ghostTotal() };
+    Resume.clear('drill');
     saveLog(entry); showLog(root, entry);
     if (S.ok >= 8) { wash(); confetti(1); } buzz(15);
-    root.querySelector('#d-again').onclick = () => { stopDrills(); live = session(root, mode, D2, clk); };
+    root.querySelector('#d-again').onclick = () => { stopDrills(); live = launch(root, mode, D2, clk); };
     S.stopped = true; S.done = true;
     Pr.onSession({ mode, ok: S.ok, n: list.length, avg, flags: S.flags, best: S.best, storm: S.storm });
     document.dispatchEvent(new CustomEvent('mast:drillend', { detail: { mode } }));

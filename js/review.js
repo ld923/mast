@@ -1,3 +1,4 @@
+import * as Resume from './resume.js';
 import { motifOf, contextLine } from './reviewlines.js';
 import { disagreement, isAggressive, bond } from './social.js';
 import { openChat, hasKey } from './chat.js';
@@ -209,7 +210,7 @@ async function gameScreen({ render, topbar }, g) {
   const refresh = () => { egr(); cgr(); mvl(); sum(); cmPanel(); evUpdate(); };
   const evUpdate = () => { const e = me.E[me.cur]; if (e == null) return; const mate = Math.abs(e) >= 90000 ? (e > 0 ? 1 : -1) * (100000 - Math.abs(e)) : undefined; evb.set(e, mate); };
   me.go = i => {
-    i = Math.max(0, Math.min(n, i)); const old = me.cur; me.cur = i; const m = moves[i - 1];
+    i = Math.max(0, Math.min(n, i)); const old = me.cur; me.cur = i; Resume.patch('review', { ply: i }); const m = moves[i - 1];
     board.setPosition(fens[i], { animate: Math.abs(i - old) === 1, lastMove: m ? { from: m.from, to: m.to } : null, check: new Chess(fens[i]).in_check() });
     mvl(); cmPanel(); evUpdate(); const c = $('#egc'); if (c) { const x = (i / n) * 600; c.setAttribute('x1', x); c.setAttribute('x2', x); }
     const on = $('#mv button.on'); if (on) on.scrollIntoView({ block: 'nearest' });
@@ -218,7 +219,7 @@ async function gameScreen({ render, topbar }, g) {
   $('#bn').onclick = () => { const nx = tps().find(i => i > me.cur); if (nx != null) me.go(nx); };
   $('#bp').onclick = () => { const pv = tps().filter(i => i < me.cur).pop(); if (pv != null) me.go(pv); };
   document.removeEventListener('keydown', onKey); document.addEventListener('keydown', onKey);
-  refresh();
+  refresh(); { Resume.save('review', { ply: 0 }); const rs = Resume.consume('review'); if (rs && rs.ply > 0) me.go(rs.ply); }
   /* ----- analysis ----- */
   const eng = getEngine();
   async function analyse() {

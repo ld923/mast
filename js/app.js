@@ -12,7 +12,9 @@ import { store, getTheme, setTheme, loadIcons, icon, avatar, hydrate, state, loa
 import { renderVoyage, bumpIsland } from './voyage.js';
 import * as Pr from './progress.js';
 import { initProgressUI, setBusy, briefHTML, wireBrief, collection as collectionView, trophies as trophiesView, skipperBadge, outfitReveal, bossIntro, bossHud, bossResult } from './prog-ui.js';
-import { PressureClock } from './clock.js';
+import { PressureClock, ghostFor } from './clock.js';
+import * as Resume from './resume.js';
+import { kbTip } from './kb.js';
 import { storm, getClockStyle, setClockStyle } from './drama.js';
 import { postcard as postcardView, logbook, compass as navCompass } from './captain.js';
 import { BOARD_THEMES, unlockedThemes, getBoardTheme, setBoardTheme, getBoardView, setBoardView, getRipples, setRipples } from './board2.js';
@@ -31,7 +33,7 @@ import { onSyncAlerts, visitNudge, briefCoachHTML } from './coach3.js';
 import { watchScreen, watchDone } from './watch.js';
 import { studioScreen } from './voice-studio.js';
 import { getMode as getVoiceMode, setMode as setVoiceMode, test as voiceTest, describe as voiceDescribe } from './voice.js';
-import { initFx, setAnim, getAnim, setHaptics, getHaptics, full, countAll } from './fx.js';
+import { initFx, setAnim, getAnim, setHaptics, getHaptics, full, countAll, sparkAt } from './fx.js';
 
 const $ = s => document.querySelector(s);
 const view = $('#view');
@@ -193,6 +195,7 @@ const failedPz = new Set(); let bossClk = null;
 document.addEventListener('mast:intro', e => { if (bossClk) e.detail === 'open' ? bossClk.pause() : bossClk.start(); }); // intro cards freeze the boss clock
 function killBossClk() { if (bossClk) { bossClk.destroy(); bossClk = null; } setBusy(false); }
 function puzzles(arg) {
+  { const rs = !arg && Resume.consume('puzzle'); if (rs && D.sets[rs.src]) pzState = { src: rs.src, list: rnd(D.sets[rs.src], daySeed()).slice(0, 200), i: rs.i || 0, seeded: 1 }; }
   if (arg === 'daily') { const M = Pr.daily().master; pzState = M.m ? { src: M.m, list: [M.p], i: 0, daily: 1 } : { src: 'me', list: null, i: 0 }; arg = null; }
   else if (arg && arg.startsWith('boss-')) return bossStart(arg.slice(5));
   if (arg && arg !== pzState.src) {
@@ -203,7 +206,7 @@ function puzzles(arg) {
   }
   const srcs = ['me', ...MASTERS.filter(m => D.sets[m])];
   const st = pzState;
-  if (!st.list) st.list = rnd(D.sets[st.src], daySeed() + st.i).slice(0, 200);
+  if (!st.list) { st.list = rnd(D.sets[st.src], daySeed() + st.i).slice(0, 200); st.seeded = st.i === 0; }
   const label = s => s === 'me' ? 'My games' : s;
   render(`${topbar}<h1>${st.boss ? 'Boss: ' + Pr.BOSSES[st.boss.id].name : 'Puzzles'}</h1>
   ${st.boss ? '' : `<div class="chips mt2">${srcs.map(s => `<button class="chip ${s === st.src ? 'on' : ''}" data-s="${s}">${label(s)}</button>`).join('')}</div>`}
@@ -223,6 +226,7 @@ async function start() {
   let k = 0, busy = false, done = false;
   const bd = $('#bd'), info = $('#info'), res = $('#res');
   if (!bd) return;
+  if (st.seeded && !st.boss && !st.daily) Resume.save('puzzle', { src: st.src, i: st.i }); else Resume.clear('puzzle');
   const side = flip ? 'Black' : 'White';
   const bs = st.boss, psrc = pz.__m || st.src, pkey = Pr.pid(psrc, pz);
   const bh = () => { const h = $('#bhud'); if (h && bs) h.innerHTML = bossHud(Pr.BOSSES[bs.id].name, bs.hp, bs.lives); };
@@ -252,12 +256,12 @@ async function start() {
   const crew = pzCrew = new Crew($('#crew'), lines), adv = advisorFor({ phase: pz.phase, themes: pz.themes });
   crew.board = b; try { const sol = pz.solution && pz.solution[0], t = new Chess(pz.fen), mv = sol && t.move({ from: sol.slice(0, 2), to: sol.slice(2, 4), promotion: sol[4] }); if (mv && Math.random() < .4) setTimeout(() => crew.disagree(disagreement({ bestIsAggressive: isAggressive(mv.san) })), 1200); } catch (e) { }
   crew.setAdvisor(adv); crew.think(true); if ((pz.themes || []).includes('sacrifice')) crew.silent('Tal', 'excited', 2200);
-  if (bs) { const stm = storm(b); bossClk = new PressureClock($('#bclk'), { seconds: Pr.BOSS_CLOCK, onState: s2 => stm.set(s2), onFlag: () => finish(false, '(flag)') }); bossClk.start(); setBusy(true); }
+  if (bs) { const stm = storm(b); bossClk = new PressureClock($('#bclk'), { seconds: Pr.BOSS_CLOCK, onState: s2 => stm.set(s2), onFlag: () => finish(false, '(flag)') }); bossClk.setGhost(ghostFor(pz.themes, false, Pr.BOSS_CLOCK)); bossClk.start(); setBusy(true); }
   let hinted = false; const hb = document.createElement('button'); hb.className = 'btn ghost sm'; hb.type = 'button'; let used = false; try { used = sessionStorage.getItem('mast.hint.pz') === '1'; } catch (e) { }
   hb.textContent = used ? 'Spyglass used' : 'Spyglass'; hb.disabled = used; info.after(hb);
   hb.onclick = () => { if (done || hb.disabled) return; hinted = true; hb.disabled = true; hb.textContent = 'Spyglass used'; try { sessionStorage.setItem('mast.hint.pz', '1'); } catch (e) { } b.spyglass(pz.solution[k].slice(0, 2)); };
   function finish(ok, played) {
-    if (done) return; done = true; killBossClk(); hb.remove(); b.setLegal({}); recordResult(psrc, ok);
+    if (done) return; done = true; let gbeat = false; if (ok && bossClk && !hinted) { const el2 = Pr.BOSS_CLOCK - bossClk.remaining(); if (bossClk.ghost && el2 <= bossClk.ghost) { gbeat = true; Pr.onGhost(); bossClk.ghostBeat(); try { sparkAt(bd); } catch (e) { } } } killBossClk(); hb.remove(); b.setLegal({}); recordResult(psrc, ok);
     document.dispatchEvent(new CustomEvent('mast:puzzle', { detail: { ok, pz, hinted } }));
     if (ok && !hinted && !failedPz.has(pkey)) Pr.onPuzzle({ src: psrc, pz, sac: (pz.themes || []).includes('sacrifice'), boss: !!bs }); else if (!ok) failedPz.add(pkey);
     if (bs) { if (ok) bs.hp--; else { bs.lives--; st.list.push(pz); } bh(); } crew.think(false); sfx(ok ? 'success' : 'fail');
@@ -265,7 +269,7 @@ async function start() {
     const vars = { move: san, played, secs: '', eval: fmtEval(pz.eval || 0), game: gameLine(pz) };
     if (ok) { if (sac) sfx('brilliant'); crew.react(sac ? 'sacrifice' : 'solve', { who: sac ? 'Tal' : adv, ex: 'excited', vars }); crew.silent('Skipper', 'pleased', 2500); }
     else { crew.react(mate ? 'missed_mate' : 'fail', { who: mate ? 'Leela' : adv, ex: 'disappointed', vars }); crew.silent('Skipper', 'disappointed', 3000); const u = pz.solution[k]; b.showArrow(u.slice(0, 2), u.slice(2, 4), '#3FB37F'); }
-    setInfo(ok ? 'Solved.' : 'Not quite.', ok ? 'ok' : 'bad');
+    setInfo(ok ? 'Solved.' + (gbeat ? ' Beat the ghost.' : '') : 'Not quite.', ok ? 'ok' : 'bad');
     const advP = persona(adv), mine = st.src === 'me';
     const hint = ok ? 'Well found. ' : `The best move was <b>${san}</b>. `;
     res.innerHTML = `<div class="panel advisor">${avatar(advP.name, ok ? 'happy' : 'neutral')}<div><b>${advP.name}</b><div class="sub sm">${advP.owns ? 'Owns ' + advP.owns : ''}</div>
@@ -360,7 +364,7 @@ const chat = arg => chatScreen({ render, topbar }, arg);
 
 /* ---------- Router ---------- */
 async function route() {
-  const [r, arg] = (location.hash.slice(1) || 'today').split('/');
+  const [r, arg] = (location.hash.slice(1) || 'today').split('/'); Resume.setRoute(location.hash.slice(1) || 'today');
   document.querySelectorAll('#nav .item').forEach(a => a.classList.toggle('on', (a.dataset.r === 'more' && MORE.includes(r)) || a.dataset.r === (r === 'collection' || r === 'trophies' || r === 'secrets' ? 'masters' : r === 'postcard' ? 'today' : r)));
   navCompass($('#nav'));
   if (!D) {
@@ -376,7 +380,7 @@ async function route() {
   const vt = full() && routed && document.startViewTransition;
   if (vt) { try { await document.startViewTransition(run).updateCallbackDone; } catch (e) { } }
   else { await run(); if (full() && routed && view.animate) view.animate([{ opacity: 0, transform: 'translateY(12px) scale(.992)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' }); }
-  routed = true;
+  routed = true; Resume.disarm();
 }
 let routed = false;
 async function deckMoment() {
@@ -389,7 +393,8 @@ async function deckMoment() {
 }
 await loadIcons([...ROUTES.map(r => r[0]), 'settings', 'more']);
 buildShell(); initFx(); initProgressUI(); await initSecrets();
-addEventListener('hashchange', route);
+Resume.onFresh(() => route()); Resume.arm();
+addEventListener('hashchange', route); kbTip();
 initPWA();
 Sync.S.ready.then(() => { const rr = Sync.rating(); window.__syncKey = Sync.S.puzzles.length + '|' + (rr ? rr.blitz : ''); });
 addEventListener('mast:sync', () => { if (!D) return; D.sets.me = [...Sync.latestPuzzles(), ...D.baseMe]; const h = location.hash, rr = Sync.rating(), key = Sync.S.puzzles.length + '|' + (rr ? rr.blitz : ''); if (key !== window.__syncKey) { const first = window.__syncKey === undefined; window.__syncKey = key; if (!first && (h === '' || h === '#today')) route(); } });

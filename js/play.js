@@ -12,6 +12,7 @@ import * as Pr from './progress.js';
 import { store, avatar, hydrate, state, loadingState, errorState } from './ui.js';
 import { getEngine, engineLoading, EvalBar, scoreWhite, fen4 } from './engine.js';
 import { full, confetti, wash } from './fx.js';
+import * as Resume from './resume.js';
 
 const $ = s => document.querySelector(s), wait = ms => new Promise(r => setTimeout(r, ms));
 const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
@@ -71,6 +72,7 @@ const modal = html => { const o = document.createElement('div'); o.className = '
 /* ---------- select screen ---------- */
 export async function playScreen(ctx, arg) {
   css(); stopPlay(); const { render, topbar, D } = ctx; figCSS();
+  { const rs = !arg && Resume.consume('play'); if (rs && OPP[rs.opp] && TCS.find(t => t.id === rs.tc)) return startGame(ctx, { opp: rs.opp, tc: TCS.find(t => t.id === rs.tc), color: rs.color, lines: await chars().catch(() => ({})), resume: rs }); }
   const pick = arg && OPP[arg[0].toUpperCase() + arg.slice(1)] ? arg[0].toUpperCase() + arg.slice(1) : null;
   const tempoOK = Pr.tempoUnlocked();
   if (arg === 'tempo' && !tempoOK) {
@@ -120,7 +122,7 @@ const BIAS = {
 };
 
 /* ---------- the game ---------- */
-async function startGame(ctx, { opp, tc, color, lines }) {
+async function startGame(ctx, { opp, tc, color, lines, resume }) {
   const { render, topbar } = ctx; css(); stopPlay();
   render(`${topbar}${loadingState('Waking the engine room...')}`);
   const eng = getEngine();
@@ -172,6 +174,7 @@ async function startGame(ctx, { opp, tc, color, lines }) {
     if (g.in_draw()) return end('1/2-1/2', g.in_threefold_repetition() ? 'repetition' : g.insufficient_material() ? 'insufficient material' : '50-move rule');
     if (moves.length >= 1) other.start(); turnUI();
     if (!endg && matDown() <= 14 && moves.length > 20) { endg = true; react('endgame'); }
+    Resume.save('play', { opp, tc: tc.id, color, uci: moves.map(x => x.uci), clk: clk.slice(), clkM: clkM.remaining(), clkO: clkO.remaining() });
     if (by === 'user') { b.setLegal({}); b.setTurn(userW ? 'black' : 'white', false); status(opp + ' is thinking...'); judgeAndReply(m); }
     else { b.setLegal(legal()); b.setTurn(color, true); status('Your move.'); background(); }
   }
@@ -241,7 +244,7 @@ async function startGame(ctx, { opp, tc, color, lines }) {
   }
   /* ---------- end ---------- */
   async function end(result, reason) {
-    if (c.over) return; c.over = true; clkM.pause(); clkO.pause(); eng.stop(); stm.set('calm'); b.setLegal({}); b.setTurn(color, false); document.body.classList.remove('critical', 'hb');
+    if (c.over) return; c.over = true; Resume.clear('play'); clkM.pause(); clkO.pause(); eng.stop(); stm.set('calm'); b.setLegal({}); b.setTurn(color, false); document.body.classList.remove('critical', 'hb');
     const win = result === (userW ? '1-0' : '0-1'), draw = result === '1/2-1/2', score = win ? 1 : draw ? .5 : 0;
     status(win ? 'You won.' : draw ? 'Drawn.' : 'You lost.');
     // rating, record, xp
@@ -276,6 +279,20 @@ async function startGame(ctx, { opp, tc, color, lines }) {
     o.querySelector('#cl').onclick = () => o.remove(); o.querySelector('#rv').focus();
   }
   $('#rs').onclick = e => { const bt = e.currentTarget; if (c.over) return; if (bt.dataset.arm) return end(userW ? '0-1' : '1-0', 'resignation'); bt.dataset.arm = 1; bt.textContent = 'Tap again to resign'; setTimeout(() => { if (bt.isConnected) { delete bt.dataset.arm; bt.textContent = 'Resign'; } }, 3000); };
+  if (resume && Array.isArray(resume.uci) && resume.uci.length) { // restore a game in progress: silent replay, then hand the move to whoever has it
+    let okAll = true; for (const u of resume.uci) { const m = g.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || 'q' }); if (!m) { okAll = false; break; } moves.push({ san: m.san, uci: u }); }
+    if (okAll && !g.game_over()) {
+      (resume.clk || []).forEach(x => clk.push(x)); const last = g.history({ verbose: true }).pop();
+      const setC = (cl, v) => { cl.ms = Math.max(1, v) * 1000; cl.total = Math.max(tc.s, v); cl._render(true); }; setC(clkM, resume.clkM); setC(clkO, resume.clkO);
+      b.setPosition(g.fen(), { animate: false, lastMove: last ? { from: last.from, to: last.to } : null, check: g.in_check() }); sanList(); book = false;
+      Resume.save('play', { opp, tc: tc.id, color, uci: resume.uci, clk: clk.slice(), clkM: resume.clkM, clkO: resume.clkO });
+      turnUI(); react('open', { force: true, ex: 'pleased' });
+      if (g.turn() === userColor) { status('Your move. Game resumed.'); b.setLegal(legal()); b.setTurn(color, true); clkM.start(); background(); }
+      else { status(opp + ' is thinking...'); b.setLegal({}); b.setTurn(userW ? 'black' : 'white', false); clkO.start(); judgeAndReply({ san: '', from: '', to: '' }); }
+      return;
+    }
+    while (moves.length) { moves.pop(); } g.reset(); Resume.clear('play');
+  }
   // go
   turnUI(); status(userW ? 'Your move.' : opp + ' opens...');
   react('open', { force: true, ex: 'pleased' });

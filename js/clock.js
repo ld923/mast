@@ -18,7 +18,8 @@ body.critical::after{content:"";position:fixed;inset:0;pointer-events:none;z-ind
 body.critical.hb::after{animation:none;opacity:.35}
 #hb-edge{position:fixed;inset:0;pointer-events:none;z-index:51;opacity:0;box-shadow:inset 0 0 14vmin 2vmin rgba(220,30,30,.85)}
 .pclk.glass svg{transform:none;height:72%;top:0;bottom:auto}.pclk.glass .dg{top:auto;bottom:0;height:26%;justify-content:center}
-.pclk.glass .arc{display:none}
+.pclk.glass .arc,.pclk.glass .gh{display:none}
+.pclk .gh{stroke:#7FD6FF;fill:none;stroke-width:1.6;stroke-linecap:round;opacity:.42;transition:opacity .5s,stroke .3s}.pclk .gh.gone{opacity:.12}.pclk.gbeat .gh{stroke:#FFE9A8;opacity:1;filter:drop-shadow(0 0 3px #FFE9A8)}
 .pclk.glass .t{font-size:17cqw}.pclk.glass .st{display:none}
 .pclk .gl{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.55);stroke-width:2.2;stroke-linejoin:round}.pclk .sand{fill:var(--c);transition:fill .4s}
 .pclk .strm{stroke:var(--c);stroke-width:1.6;stroke-dasharray:3 3;opacity:0}.pclk.glass:not(.paused):not(.flagged) .strm{opacity:.9;animation:pclks .5s linear infinite}
@@ -29,7 +30,9 @@ function edgePulse() {
   let e = document.getElementById('hb-edge'); if (!e) { e = document.createElement('div'); e.id = 'hb-edge'; e.setAttribute('aria-hidden', 'true'); document.body.appendChild(e); }
   if (e.animate) e.animate(full() ? [{ opacity: 0 }, { opacity: .95, offset: .12 }, { opacity: .25, offset: .3 }, { opacity: .7, offset: .42 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: .5, offset: .3 }, { opacity: 0 }], { duration: full() ? 620 : 700, easing: 'ease-out' });
 }
-const R = 54, C = 2 * Math.PI * R;
+const R = 54, C = 2 * Math.PI * R, RG = 46, CG = 2 * Math.PI * RG;
+/* ghost target: the time a strong player needs. check/capture/mate 3s, convert 4s, quiet 6s; never above the position budget */
+export function ghostFor(themes, convert, budget) { const T = (themes || []).map(String), s = T.some(t => t === 'check' || t === 'capture' || t.startsWith('mate')) ? 3 : convert ? 4 : 6; return budget ? Math.min(s, budget) : s; }
 export class PressureClock {
   constructor(el, o = {}) {
     if (!document.getElementById('mast-clock-css')) { const s = document.createElement('style'); s.id = 'mast-clock-css'; s.textContent = CSS; document.head.appendChild(s); }
@@ -37,8 +40,12 @@ export class PressureClock {
     el.classList.add('pclk'); if (this.glass) el.classList.add('glass');
     el.innerHTML = `<svg viewBox="0 0 120 120"><circle class="trk" ${this.glass ? 'style="display:none"' : ''} cx="60" cy="60" r="${R}" fill="none" stroke-width="5"/>${this.glass ? '<defs><clipPath id="gc' + (PressureClock.n = (PressureClock.n || 0) + 1) + '"><path id="gp' + PressureClock.n + '" d="M30 8H90C90 36 66 52 62 60C66 68 90 84 90 112H30C30 84 54 68 58 60C54 52 30 36 30 8Z"/></clipPath></defs><g clip-path="url(#gc' + PressureClock.n + ')"><rect class="sand st1" x="20" width="80"/><rect class="sand st2" x="20" width="80"/></g><path class="gl" d="M30 8H90C90 36 66 52 62 60C66 68 90 84 90 112H30C30 84 54 68 58 60C54 52 30 36 30 8Z" fill="none"/><line class="strm" x1="60" x2="60" y1="60"/>' : ''}<circle class="arc" cx="60" cy="60" r="${R}" fill="none" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="0"/></svg><div class="dg" role="timer" aria-live="off"><span class="t"></span><span class="st"></span></div>`;
     this.arc = el.querySelector('.arc'); this.s1 = el.querySelector('.st1'); this.s2 = el.querySelector('.st2'); this.sm = el.querySelector('.strm'); this.tEl = el.querySelector('.t'); this.sEl = el.querySelector('.st');
+    this.ghost = null;
+    if (!this.glass) { const sv = el.querySelector('svg'); sv.insertAdjacentHTML('beforeend', `<circle class="gh" cx="60" cy="60" r="${RG}" stroke-dasharray="${CG}" stroke-dashoffset="${CG}" style="display:none"/>`); this.gh = sv.lastElementChild; }
     this._tick = this._tick.bind(this); this._render(true);
   }
+  setGhost(sec) { this.ghost = sec > 0 ? sec : null; if (this.gh) { this.gh.style.display = this.ghost ? '' : 'none'; this.gh.classList.remove('gone'); } this.el.classList.remove('gbeat'); this._render(); }
+  ghostBeat() { if (getAnim() === 'off') return; this.el.classList.add('gbeat'); setTimeout(() => this.el.classList.remove('gbeat'), 900); }
   remaining() { return this.run ? Math.max(0, this.ms - (performance.now() - this.t0)) / 1000 : this.ms / 1000; }
   start() { if (this.run || this.flagged) return; this.run = true; this.t0 = performance.now(); this.base = this.ms; if (this._st === 'critical') document.body.classList.add('critical'); this.el.classList.remove('paused'); this.raf = requestAnimationFrame(this._tick); }
   pause() { if (!this.run) return; this.ms = Math.max(0, this.base - (performance.now() - this.t0)); this.run = false; cancelAnimationFrame(this.raf); this.el.classList.add('paused'); this._render(); }
@@ -62,6 +69,7 @@ export class PressureClock {
     const m = Math.floor(rem / 60), s = Math.floor(rem % 60), txt = rem < 10 ? `${Math.floor(rem)}.${Math.floor((rem % 1) * 10)}` : `${m}:${String(s).padStart(2, '0')}`;
     if (txt !== this._txt) { const flip = this._txt != null && (this._txt.split('.')[0] !== txt.split('.')[0]); this.tEl.textContent = txt; this._txt = txt; if (flip && full() && this.tEl.animate) this.tEl.animate([{ transform: 'perspective(200px) rotateX(-70deg)', opacity: .3 }, { transform: 'none', opacity: 1 }], { duration: 180, easing: 'ease-out' }); }
     if (this.s1) { const f = Math.min(1, rem / this.total), yb = 112 - 50 * (1 - f); this.s1.setAttribute('y', 8 + 52 * (1 - f)); this.s1.setAttribute('height', 52 * f + 1); this.s2.setAttribute('y', yb); this.s2.setAttribute('height', 112 - yb + 1); this.sm.setAttribute('y2', f > 0.01 ? yb : 60); }
+    if (this.ghost && this.gh) { const f = Math.max(0, 1 - Math.max(0, this.total - rem) / this.ghost); this.gh.style.strokeDashoffset = CG * (1 - f); this.gh.classList.toggle('gone', f <= 0); }
     this.arc.style.strokeDashoffset = C * (1 - Math.min(1, rem / this.total));
     if (this.run) { const sec = Math.ceil(rem); if (sec !== this.lastSec) { this.lastSec = sec; if (sec <= 5 && sec > 0) { play('heartbeat'); buzz(10); edgePulse(); } } }
   }

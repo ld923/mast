@@ -38,7 +38,7 @@ export async function leakAct(root, { motif, n = 6 } = {}) {
   } finally { }
   if (dead) return { title: MOTIF[motif][0], ok: 0, n: 0 };
   if (items.length < 3) { root.innerHTML = empty('Kasparov', 'neutral', 'Not enough clean examples yet', `The engine rejected ${drop} of ${tried} examples tagged <i>${esc(MOTIF[motif][0])}</i> as unclear. Try another leak, or sync more games.`); return { title: MOTIF[motif][0], ok: 0, n: 0 }; }
-  const run = runSet(root, items, { timed: 0, cct: true }); const res = await run.promise; const ok = res.filter(r => r.ok).length;
+  const run = runSet(root, items, { timed: 0, cct: true, ghost: 4 }); const res = await run.promise; const ok = res.filter(r => r.ok).length;
   upd(c => { (c.leakHist ||= []).push({ t: Date.now(), motif, ok, n: res.length }); c.leakHist = c.leakHist.slice(-100); }); xp(ok * 2, 'coach');
   return { title: MOTIF[motif][0], ok, n: res.length, dropped: drop };
 }
@@ -137,7 +137,7 @@ export async function sessionSteps({ watch = false } = {}) {
   const top = await topLeak(), due = Object.values((C().openings || {}).box || {}).filter(b => b.due <= Date.now()).length, lbl = MOTIF[top][0], dbg = isDebug();
   const W = { k: 'First instinct', mins: watch ? 2 : 3, who: 'Kasparov', why: 'Three seconds to pick, then time to verify: it is the habit that stops rushed blunders.', run: r => instinctAct(r, { n: dbg ? 2 : watch ? 5 : 6 }) };
   const L = { k: 'Your leak: ' + lbl.toLowerCase(), mins: 3, who: 'Tal', why: `${lbl} is the mistake that costs you most in your recent games, so we drill exactly that.`, motif: top, run: r => leakAct(r, { motif: top, n: dbg ? 3 : 5 }) };
-  const V = { k: 'Finish the win', mins: 2, who: 'Carlsen', why: 'These are positions you were winning and let slip; decide fast and decide right.', win: true, run: async r => { const P = await errorPool(null); const items = shuffle(P.convert).slice(0, dbg ? 3 : 5); const res = await runSet(r, items, { timed: 0, cct: true }).promise; const ok = res.filter(x => x.ok).length; return { title: 'Finish the win', ok, n: res.length }; } };
+  const V = { k: 'Finish the win', mins: 2, who: 'Carlsen', why: 'These are positions you were winning and let slip; decide fast and decide right.', win: true, run: async r => { const P = await errorPool(null); const items = shuffle(P.convert).slice(0, dbg ? 3 : 5); const res = await runSet(r, items, { timed: 0, cct: true, ghost: 4 }).promise; const ok = res.filter(x => x.ok).length; return { title: 'Finish the win', ok, n: res.length }; } };
   const E = { k: 'Endgame practice', mins: watch ? 3 : 4, who: 'Capablanca', why: 'Endgames are where a calm technique turns a small edge into a full point.', run: r => endgameAct(r) };
   if (watch) return { steps: [W, L, V, E], top, lbl };
   return { top, lbl, steps: [W, L, E,

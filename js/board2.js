@@ -94,6 +94,8 @@ export const getBoardTheme = () => { const t = LSg('boardTheme', 'night'); if (u
 export const getBoardView = () => { const v = LSg('boardView', null); return v === 'tilt' || v === 'flat' ? v : (innerWidth < 480 ? 'flat' : 'tilt'); };
 export const getRipples = () => LSg('ripples', '0') === '1';
 const boards = new Set();
+/* the board a keyboard move should go to: visible, awaiting the user's move */
+export function activeBoard() { let b = null; boards.forEach(x => { if (x.root.isConnected && x.userTurn && x.legal && x.fen && x.root.offsetParent !== null) b = x; }); return b; }
 function pref(k, v) { try { localStorage.setItem('mast.' + k, v); } catch (_) { } boards.forEach(b => b._prefs()); }
 export const setBoardTheme = t => { if (unlockedThemes().includes(t)) pref('boardTheme', t); };
 export const setBoardView = v => pref('boardView', v);
@@ -362,6 +364,20 @@ export class Board {
     this.turn = p.c === 'w' ? 'b' : 'w'; this.userTurn = false; this._threats(); this._applyLocal(from, to, promo, fromDrag ? 'settle' : true); this._hl();
     let ok; try { ok = await this.onMove(from, to, promo || undefined); } catch (_) { ok = false; }
     if (ok === false) { this.lastMove = prevLast; this._reconcile(saved, true); this._hl(); }
+  }
+  /* play a move typed as SAN or UCI; returns an error string or null */
+  typeMove(txt) {
+    if (!this.userTurn || !this.legal || this._promoOpen) return 'Not your move yet';
+    let g; try { g = new Chess(this.fen); } catch (_) { return 'No position'; }
+    const raw = String(txt || '').trim().replace(/0/g, 'O'); if (!raw) return 'Type a move';
+    const ms = g.moves({ verbose: true }), u = raw.toLowerCase().replace(/[-=\s]/g, ''), cl = s => s.replace(/[+#!?=]/g, '').replace(/\s/g, '');
+    let m = null;
+    if (/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(u)) m = ms.find(x => x.from + x.to === u.slice(0, 4) && (u[4] ? x.promotion === u[4] : true));
+    if (!m) m = ms.find(x => cl(x.san) === cl(raw));
+    if (!m) { const c = ms.filter(x => cl(x.san).toLowerCase() === cl(raw).toLowerCase()); if (c.length === 1) m = c[0]; }
+    if (!m) return `"${raw}" is not legal here`;
+    if (!(this.legal[m.from] || []).includes(m.to)) return 'That move is not allowed now';
+    this.sel = null; this._attempt(m.from, m.to, m.promotion || null, false); return null;
   }
   _pickPromo(to, color) {
     return new Promise(res => {
