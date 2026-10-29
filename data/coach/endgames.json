@@ -1,0 +1,302 @@
+[
+ {
+  "id": "eg01",
+  "name": "Queen mate: walk the king in",
+  "fen": "8/8/8/4k3/8/8/3K4/6Q1 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Use the queen to box the king in, then bring your own king close. Always check that you leave the enemy king a square to move, or it is stalemate.",
+  "owner": "Capablanca",
+  "difficulty": 1
+ },
+ {
+  "id": "eg02",
+  "name": "Queen mate in one (beware stalemate)",
+  "fen": "k7/8/1K6/8/8/8/8/6Q1 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Qg8 is mate. Some other queen moves, like Qc7, are stalemate. Count the king's escape squares before you move.",
+  "owner": "Capablanca",
+  "difficulty": 1
+ },
+ {
+  "id": "eg03",
+  "name": "Rook mate in one",
+  "fen": "4k3/R7/4K3/8/8/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Your king holds the squares in front, the rook checks on the back rank. Ra8 is mate.",
+  "owner": "Capablanca",
+  "difficulty": 1
+ },
+ {
+  "id": "eg04",
+  "name": "Rook mate: cut off and shrink the box",
+  "fen": "8/8/8/8/4k3/8/R7/4K3 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Cut the king off with the rook, march your king up, and use the opposition to force it back one rank at a time.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg05",
+  "name": "Two bishops mate",
+  "fen": "8/8/8/3k4/8/8/3BB3/4K3 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Two bishops on neighbouring diagonals make a wall. Herd the king to the edge, then to a corner, and bring your king to help.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg06",
+  "name": "King and pawn: king in front wins",
+  "fen": "4k3/8/4K3/4P3/8/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Your king stands two squares in front of the pawn on the 6th rank. Play Kd6 and keep the opposition and the pawn walks in.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg07",
+  "name": "Key square: reach it and win",
+  "fen": "4k3/8/3K4/8/4P3/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "d6 is a key square for the e4 pawn. If your king gets to a key square you win, wherever the enemy king is.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg08",
+  "name": "Defender in front of the pawn: draw",
+  "fen": "8/8/8/8/8/4k3/4P3/4K3 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "The black king sits right in front of the pawn and blocks it. Without a king ahead of the pawn you cannot win here.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg09",
+  "name": "Opposition: the side to move loses it",
+  "fen": "8/8/8/4k3/8/4K3/4P3/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "Kings face each other with one square between. You must move, so you lose the opposition and cannot make progress. Same position with Black to move is a win for White.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg10",
+  "name": "Win the opposition with Kd5",
+  "fen": "8/8/8/4Pk2/2K5/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Kd5 takes the opposition and keeps the enemy king off the pawn's path. Wrong king moves let it draw.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg11",
+  "name": "Sidestep to gain the opposition",
+  "fen": "8/8/8/2k1P3/4K3/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "No pawn push works yet. Find a king move that takes the key squares in front of the pawn. Pushing too early draws.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg12",
+  "name": "Tempo moves (triangulation idea)",
+  "fen": "8/8/8/4P1k1/4K3/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Several king moves win, but you must keep ahead of the pawn. The aim of triangulation is to lose a move so the other side is in zugzwang.",
+  "owner": "Capablanca",
+  "difficulty": 4
+ },
+ {
+  "id": "eg13",
+  "name": "Rook pawn: draw by the corner",
+  "fen": "k7/8/P7/K7/8/8/8/6B1 b - - 0 1",
+  "goal": "draw",
+  "side": "black",
+  "note": "Wrong-coloured bishop: the bishop does not control a8, the queening square. Black heads for the corner and cannot be driven out. Draw.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg14",
+  "name": "Rook pawn on the 6th: stalemate trick",
+  "fen": "7k/8/6KP/8/8/8/8/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "A rook pawn with the defender in the corner is a draw. If White pushes, the black king has no moves and it is stalemate.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg15",
+  "name": "Rule of the square",
+  "fen": "8/4k3/8/P7/8/8/8/7K b - - 0 1",
+  "goal": "draw",
+  "side": "black",
+  "note": "Draw an imaginary square from the pawn to its queening square. If the king can step into it, the pawn is caught. Kd6 does that.",
+  "owner": "Capablanca",
+  "difficulty": 1
+ },
+ {
+  "id": "eg16",
+  "name": "Lucena position",
+  "fen": "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Build a bridge: Rc4 and then Rb4, so your king can step out of the pawn's path and the rook blocks checks.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg17",
+  "name": "Philidor position (defence)",
+  "fen": "4k3/8/r7/3KP3/8/8/8/7R b - - 0 1",
+  "goal": "draw",
+  "side": "black",
+  "note": "Keep your rook on the 6th rank so the enemy king cannot advance. When the pawn reaches the 6th, switch to checks from behind.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg18",
+  "name": "Rook behind the passed pawn",
+  "fen": "8/8/P7/8/8/6k1/8/R3K3 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Rooks belong behind passed pawns, yours or theirs. The pawn can run while the rook protects it from behind.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg19",
+  "name": "Outside passed pawn",
+  "fen": "8/5ppp/4k3/8/P3K3/8/5PPP/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "The a-pawn drags the enemy king away, then your king walks in to eat the kingside pawns. A far-away passed pawn is a huge asset.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg20",
+  "name": "Pawn breakthrough 3 v 3",
+  "fen": "7k/ppp5/8/PPP5/8/8/8/4K3 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Sacrifice one pawn to make a passed pawn: b6! forces a path through. Count the moves before you start.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg21",
+  "name": "Queen vs pawn on the 7th: win with checks",
+  "fen": "8/6Q1/7K/8/8/8/3p4/4k3 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "With a central pawn the queen wins by checking and pulling the king in front of the pawn, then your king arrives.",
+  "owner": "Capablanca",
+  "difficulty": 4
+ },
+ {
+  "id": "eg22",
+  "name": "Queen vs rook pawn on the 7th: draw",
+  "fen": "8/8/8/8/4K2Q/1k6/p7/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "A rook or bishop pawn on the 7th with its king nearby draws because of stalemate tricks. You need your own king close to win.",
+  "owner": "Capablanca",
+  "difficulty": 4
+ },
+ {
+  "id": "eg23",
+  "name": "King, bishop and knight mate",
+  "fen": "8/8/8/4k3/8/3K4/3B4/3N4 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Drive the king to the corner of your bishop's colour. Use the W-manoeuvre with the knight and bishop. It takes about 30 moves, so study it.",
+  "owner": "Capablanca",
+  "difficulty": 5
+ },
+ {
+  "id": "eg24",
+  "name": "Opposite-coloured bishops: fortress draw",
+  "fen": "8/8/4k3/3p4/3P1b2/5B2/5PK1/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "With bishops on opposite colours the defender often draws even a pawn down, by blocking pawns on the colour of their bishop.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg25",
+  "name": "Queen vs rook",
+  "fen": "8/4k3/3r4/8/2Q5/8/6K1/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Win by forks and skewers. The rook must stay protected by its king, so drive the king away from it.",
+  "owner": "Capablanca",
+  "difficulty": 5
+ },
+ {
+  "id": "eg26",
+  "name": "King ahead of the pawn wins",
+  "fen": "8/8/5K2/8/2k1P3/8/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Your king is in front of the pawn, so the enemy king cannot stop it. Push when the opposition is yours.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg27",
+  "name": "Pawn far ahead of its king: draw",
+  "fen": "8/8/8/6k1/8/4P3/6K1/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "The black king gets in front of the pawn first. A king behind its pawn cannot make progress.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg28",
+  "name": "Pawn behind the defender's king: draw",
+  "fen": "8/8/8/2k5/4P3/8/3K4/8 w - - 0 1",
+  "goal": "draw",
+  "side": "white",
+  "note": "Black's king reaches the squares in front of the pawn and holds the opposition. Do not rush the pawn.",
+  "owner": "Capablanca",
+  "difficulty": 3
+ },
+ {
+  "id": "eg29",
+  "name": "Win by taking the key squares",
+  "fen": "8/8/8/5K2/3P4/2k5/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Your king is already on a key square in front of the pawn. Escort it up the board.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ },
+ {
+  "id": "eg30",
+  "name": "Pawn on the 5th with a supporting king",
+  "fen": "8/5K2/8/5P2/8/6k1/8/8 w - - 0 1",
+  "goal": "win",
+  "side": "white",
+  "note": "Your king leads the pawn. Keep it in front and avoid stalemate when the pawn gets to the 7th.",
+  "owner": "Capablanca",
+  "difficulty": 2
+ }
+]

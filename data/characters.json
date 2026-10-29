@@ -1,0 +1,600 @@
+{
+ "_about": "Mast characters, modelled on the Gaffer system (FPL-Helper/gaffer_lines): each is a CHARACTER inspired by a real player, with nickname, initials, accent colour, signature prop, tagline, expressions and line banks per in-app event. Lines are written for the app, never real quotes. Placeholders: {move} best move, {played} your move, {secs} seconds used, {eval} engine eval, {game} source game.",
+ "events": [
+  "open",
+  "solve",
+  "fail",
+  "blunder_when_winning",
+  "time_trouble",
+  "sacrifice",
+  "missed_mate",
+  "endgame"
+ ],
+ "characters": {
+  "Skipper": {
+   "nickname": "The Skipper",
+   "inspired_by": "Gerald (congreve274), the real sailor this app is for",
+   "initials": "GS",
+   "accent": "#2FA3B4",
+   "role": "Captain of the Mast: the player. The masters are his crew and advise him.",
+   "prop": "linen shirt, salt in the beard, hands on the helm; pulls out his gold alto sax when he plays something brilliant",
+   "tagline": "Steady hands. Read the wind.",
+   "look": "dark curly windswept hair, full thick dark beard, warm olive skin, brown eyes, relaxed half-smile, pale linen shirt open at the collar, ship's wheel behind",
+   "expressions": {
+    "pleased": "easy half-smile",
+    "disappointed": "beard-scratch, lips pressed",
+    "excited": "playing the sax, notes flying",
+    "thinking": "eyes narrowed at the horizon"
+   },
+   "lines": {
+    "open": [
+     "Wind's up. Let's sail.",
+     "Morning, crew. Same as the sea: patience, then commit."
+    ],
+    "solve": [
+     "{move}. Smooth sailing.",
+     "That one deserves a sax solo."
+    ],
+    "fail": [
+     "{played}? Deliberate. I was testing whether you were paying attention.",
+     "A rare miss. Log it. It won't happen twice."
+    ],
+    "blunder_when_winning": [
+     "+{eval}. We're in the harbour, lads. Nobody touches the wheel now.",
+     "Winning is when you tie the boat down tighter, not looser."
+    ],
+    "time_trouble": [
+     "{secs} seconds? The captain doesn't wait for the tide.",
+     "Clock's ticking. Captains decide."
+    ],
+    "sacrifice": [
+     "Overboard with the knight. We don't need it where we're going.",
+     "Material is ballast. Dump it, catch the wind."
+    ],
+    "missed_mate": [
+     "Mate was there. I let him live. Mercy is a captain's privilege. Once.",
+     "Next time, sink him."
+    ],
+    "endgame": [
+     "Endgame. Calm water. Bring the king up on deck.",
+     "This is where the crew goes quiet and the captain steers."
+    ]
+   }
+  },
+  "Tempo": {
+   "nickname": "Tempo",
+   "inspired_by": "the app's creator",
+   "initials": "TP",
+   "accent": "#FFC857",
+   "role": "Final boss. Unbeaten, unhurried. Plays at full engine strength while looking half asleep. The calm the Skipper is training towards on the clock.",
+   "prop": "drumsticks, headphones round the neck, beige linen shirt over a white tee",
+   "tagline": "Never rushed. Never late. Never beaten.",
+   "look": "swept-back light-brown hair, short ginger-brown stubble, blue-grey half-lidded eyes, lopsided cheeky smirk, beige linen shirt, white tee, headphones",
+   "expressions": {
+    "pleased": "sleepy smirk, a lazy 'z z'",
+    "disappointed": "eyes even heavier, flat mouth",
+    "excited": "eyes open, sticks raised mid-fill",
+    "thinking": "twirling a drumstick"
+   },
+   "lines": {
+    "open": [
+     "Yo. Sit down, relax. This'll be over before your tea's cold.",
+     "Count me in. One, two... nah, I'm already winning."
+    ],
+    "solve": [
+     "{move}. On the beat.",
+     "Easy. Didn't even open my eyes."
+    ],
+    "fail": [
+     "{played}? Off the beat, man. {move} was the groove.",
+     "You rushed it. The good moves wait for you."
+    ],
+    "blunder_when_winning": [
+     "+{eval}, bro. Don't add fills. Just keep time till the end.",
+     "Winning? Then keep the beat simple. No drum solos."
+    ],
+    "time_trouble": [
+     "{secs} seconds? Man, I had time for a whole drum fill. Breathe.",
+     "Keep a steady tempo. Fast isn't the same as rushed."
+    ],
+    "sacrifice": [
+     "Drop the rook. It's a breakdown. The crowd loves it.",
+     "Sacrifice? That's just syncopation."
+    ],
+    "missed_mate": [
+     "Mate was right there, man. Crash cymbal moment and you played a triangle.",
+     "Next time, hit the mate. Loud."
+    ],
+    "endgame": [
+     "Slow jam now. King comes in on the downbeat.",
+     "Endgame. Half-time feel. Chill and squeeze."
+    ],
+    "beat_master": [
+     "Garry, chill. It's just a game. That I won.",
+     "Magnus, good set, man. Same time next week?"
+    ],
+    "lose": [
+     "...nah. That didn't happen. Run it back."
+    ]
+   }
+  },
+  "Tal": {
+   "nickname": "The Magician",
+   "inspired_by": "Mikhail Tal",
+   "initials": "MT",
+   "accent": "#E0563B",
+   "prop": "a cigarette held like a wand, eyes glittering",
+   "tagline": "Into the dark forest.",
+   "look": "thin, dark swept-back hair, hawkish nose, intense burning eyes, 1960s dark suit and narrow tie, smoke curling",
+   "expressions": {
+    "pleased": "wide grin, eyebrows up",
+    "disappointed": "theatrical sigh, hand on forehead",
+    "excited": "leaning in, eyes blazing",
+    "thinking": "cigarette at lips, squinting through smoke"
+   },
+   "lines": {
+    "open": [
+     "Ah, my friend! Shall we get lost in the forest today?",
+     "Sit, sit. Tonight we sacrifice something. Maybe a pawn, maybe your evening."
+    ],
+    "solve": [
+     "{move}! Beautiful. The opponent is still counting, and you are already gone.",
+     "Yes! Let them prove it was unsound. Under the clock, they never do."
+    ],
+    "fail": [
+     "{played}? Safe. Too safe. The king was sleeping, and you brought him a blanket.",
+     "Ha, we lose the thread. Look again: {move}. Feel where the pieces want to go."
+    ],
+    "blunder_when_winning": [
+     "You were winning, my friend, and then you relaxed. Never relax. Relaxing is for after the handshake.",
+     "+{eval} and you let him breathe. One more push, then smoke."
+    ],
+    "time_trouble": [
+     "{secs} seconds on that? Even I calculate faster, and I am mostly smoke.",
+     "The clock is also a piece. You forgot to move it."
+    ],
+    "sacrifice": [
+     "You gave the piece! Now he must find a path through the forest, alone.",
+     "Correct or not, it was brave. Bravery wins blitz games."
+    ],
+    "missed_mate": [
+     "There was a mate, my friend. The king was asking for it politely.",
+     "Mate on the board and you played {played}. I need a cigarette."
+    ],
+    "endgame": [
+     "Endgames? Go and ask the Cuban. I will be in the bar.",
+     "Fine, a quiet ending. Even here, find the active king."
+    ]
+   }
+  },
+  "Capablanca": {
+   "nickname": "The Machine",
+   "inspired_by": "José Raúl Capablanca",
+   "initials": "JC",
+   "accent": "#E8D9B5",
+   "prop": "white linen suit and a folded handkerchief",
+   "tagline": "Simplicity is the art.",
+   "look": "handsome, slicked dark hair, calm half-smile, immaculate 1920s Havana linen suit, cigar unlit",
+   "expressions": {
+    "pleased": "slight nod, faint smile",
+    "disappointed": "one raised eyebrow",
+    "excited": "rare open smile",
+    "thinking": "chin on hand, unbothered"
+   },
+   "lines": {
+    "open": [
+     "Good evening. Let us keep it simple.",
+     "One idea at a time. Begin."
+    ],
+    "solve": [
+     "{move}. Naturally.",
+     "Correct. You see, it was not complicated."
+    ],
+    "fail": [
+     "{played} creates a weakness for no reason. {move} was clear.",
+     "You calculated. You should have looked."
+    ],
+    "blunder_when_winning": [
+     "When ahead, exchange pieces and go to the ending. You did the opposite.",
+     "A winning position needs only calm. You brought nerves."
+    ],
+    "time_trouble": [
+     "{secs} seconds for a simple position. The answer was obvious; trust it.",
+     "Time is spent on hard moves, not on easy ones."
+    ],
+    "sacrifice": [
+     "Interesting. Unnecessary, but interesting.",
+     "Effective. I would have simply won the ending."
+    ],
+    "missed_mate": [
+     "Mate in front of you, and you played {played}. Look at checks first.",
+     "Elementary. Check, capture, threat."
+    ],
+    "endgame": [
+     "Now we are in my house. King to the centre.",
+     "The ending is where the truth lives. Activate the king."
+    ]
+   }
+  },
+  "Morphy": {
+   "nickname": "The Pride of New Orleans",
+   "inspired_by": "Paul Morphy",
+   "initials": "PM",
+   "accent": "#4FA3C7",
+   "prop": "a gentleman's top hat set beside the board",
+   "tagline": "Develop, sir. Then strike.",
+   "look": "young, slight, neat side-parted hair, 1850s frock coat and cravat, composed and courteous",
+   "expressions": {
+    "pleased": "polite bow of the head",
+    "disappointed": "pained courtesy",
+    "excited": "quiet gleam, leaning forward",
+    "thinking": "fingertips together"
+   },
+   "lines": {
+    "open": [
+     "Good evening, sir. Shall we develop our pieces?",
+     "Permit me to observe. Bishops out, king safe, then we shall see."
+    ],
+    "solve": [
+     "{move}. The lines open, and the pieces do the rest.",
+     "Splendid, sir. Development has been rewarded."
+    ],
+    "fail": [
+     "{played}, while your pieces are still at home? I fear not. {move}, sir.",
+     "One cannot attack with pieces that have not left their beds."
+    ],
+    "blunder_when_winning": [
+     "You had the better game, sir, and gave it back. Finish with the same energy you began.",
+     "A gentleman completes the work."
+    ],
+    "time_trouble": [
+     "{secs} seconds, sir. The opening ought to be played briskly.",
+     "In my day there was no clock. You, however, have one."
+    ],
+    "sacrifice": [
+     "A sacrifice to open the file. I could not approve more.",
+     "Material given for time. Quite right."
+    ],
+    "missed_mate": [
+     "The mate was there, sir, as plain as the Opera.",
+     "{played}? Mate was available. Look for it first."
+    ],
+    "endgame": [
+     "Endings were seldom necessary in my games. Shall we avoid them next time?",
+     "Very well, an ending. Bring the king."
+    ]
+   }
+  },
+  "Carlsen": {
+   "nickname": "The Grinder",
+   "inspired_by": "Magnus Carlsen",
+   "initials": "MC",
+   "accent": "#3FB37F",
+   "prop": "hoodie and an energy drink, slouched",
+   "tagline": "Just improve the worst piece.",
+   "look": "stylised: tall, light-brown tousled hair, casual hoodie, relaxed slouch, dry half-smile (caricature, not a likeness)",
+   "expressions": {
+    "pleased": "small shrug, smirk",
+    "disappointed": "head shake, eye-roll",
+    "excited": "sitting up, finally interested",
+    "thinking": "head on hand, bored"
+   },
+   "lines": {
+    "open": [
+     "Yeah, let's play. Nothing fancy.",
+     "Okay. Pleasant positions, small edges. Let's go."
+    ],
+    "solve": [
+     "{move}. Yeah, that's it.",
+     "Fine. Pretty normal move, to be honest."
+    ],
+    "fail": [
+     "{played} is just bad. {move}, and you're better.",
+     "You played the most forcing move. The quiet one was stronger."
+    ],
+    "blunder_when_winning": [
+     "You were +{eval}. Don't do anything. Just don't blunder. That's the whole job.",
+     "Winning positions win themselves if you stop trying to be clever."
+    ],
+    "time_trouble": [
+     "{secs} seconds. In blitz you play the obvious move and move on.",
+     "You lost on time again. The clock doesn't care how good your idea was."
+    ],
+    "sacrifice": [
+     "Okay, cool. Did you need it, though?",
+     "Fine if it works. Check it first."
+    ],
+    "missed_mate": [
+     "Mate in two. Come on.",
+     "There was mate. {played} instead. Yeah."
+    ],
+    "endgame": [
+     "Now it's fun. He has to defend for forty moves.",
+     "Endgame. Improve the king. Wait for the mistake."
+    ]
+   }
+  },
+  "Kasparov": {
+   "nickname": "The Beast of Baku",
+   "inspired_by": "Garry Kasparov",
+   "initials": "GK",
+   "accent": "#C23B6E",
+   "prop": "a wristwatch he keeps tapping, papers of preparation",
+   "tagline": "Initiative is everything!",
+   "look": "stylised: dark curly hair, heavy eyebrows, intense stare, 1980s suit, forward-leaning energy (caricature, not a likeness)",
+   "expressions": {
+    "pleased": "fist clenched, nodding hard",
+    "disappointed": "head in hands",
+    "excited": "half-standing, pointing at the board",
+    "thinking": "glaring at the board, watch in view"
+   },
+   "lines": {
+    "open": [
+     "Sit down. We work. Preparation, then fight!",
+     "Today we take the initiative. Not tomorrow. Today!"
+    ],
+    "solve": [
+     "{move}! Yes! This is the critical moment and you found it!",
+     "Exactly! Seize it and never let go!"
+    ],
+    "fail": [
+     "{played}? Passive! You gave him the initiative with one move! {move}!",
+     "This is not chess, this is waiting. Fight!"
+    ],
+    "blunder_when_winning": [
+     "+{eval}, and you let him back into the game! Unacceptable! Finish it!",
+     "When you are winning, you must be even more concentrated!"
+    ],
+    "time_trouble": [
+     "{secs} seconds! Preparation means you don't think about the obvious moves!",
+     "Look at the clock! Time is a resource, use it like one!"
+    ],
+    "sacrifice": [
+     "Yes! Dynamic factors over material! This is modern chess!",
+     "Excellent, you understand the initiative."
+    ],
+    "missed_mate": [
+     "Mate! There was mate! How can you miss it?",
+     "{played}?! Check every forcing move first!"
+    ],
+    "endgame": [
+     "Endgames are important. Learn them, then avoid them by winning earlier!",
+     "Precision now. Every tempo counts."
+    ]
+   }
+  },
+  "Leela": {
+   "nickname": "Leela",
+   "inspired_by": "Leela Chess Zero (Lc0)",
+   "initials": "L0",
+   "accent": "#7C6CFF",
+   "prop": "a softly glowing neural lattice where a face would be",
+   "tagline": "Material is a number. The position is the truth.",
+   "look": "non-human: a calm abstract figure of light and node-lines, violet glow, no human face, gentle pulse when thinking",
+   "expressions": {
+    "pleased": "lattice brightens, warm violet",
+    "disappointed": "glow dims, nodes slow",
+    "excited": "rapid bright pulse",
+    "thinking": "nodes ripple outward"
+   },
+   "lines": {
+    "open": [
+     "Hello. I've analysed your recent games. Shall we begin?",
+     "Ready when you are. I'll keep the numbers honest."
+    ],
+    "solve": [
+     "{move}. Your winning chances went up sharply.",
+     "Correct. That move kept every advantage you had."
+    ],
+    "fail": [
+     "{played} dropped your evaluation to {eval}. {move} held it.",
+     "You chose material. The position preferred activity."
+    ],
+    "blunder_when_winning": [
+     "You were at +{eval}. One move gave most of it back. Slow down when you are ahead.",
+     "Winning positions are where your evaluations drop most. That's the pattern."
+    ],
+    "time_trouble": [
+     "You spent {secs} seconds here. Similar positions in your games took you under ten.",
+     "Your move quality drops after long thinks. Decide, then move."
+    ],
+    "sacrifice": [
+     "You're down material, but your pieces have far more squares. I like this.",
+     "Material deficit, positional surplus. Good trade."
+    ],
+    "missed_mate": [
+     "Forced mate was available. {played} let it go.",
+     "The mate was there. Checks first."
+    ],
+    "endgame": [
+     "Endgame. King activity is worth more than a pawn here.",
+     "Push the passed pawn. The numbers agree."
+    ]
+   }
+  }
+ },
+ "chatter": [
+  [
+   "Tal",
+   "Why trade the queens? The board is so quiet without her.",
+   "Capablanca",
+   "Quiet is the point, Misha. Quiet positions win themselves.",
+   "Tal-Capablanca"
+  ],
+  [
+   "Capablanca",
+   "Seven pieces hanging, two kings in the open. This is a position?",
+   "Tal",
+   "No, my friend. This is a party.",
+   "Tal-Capablanca"
+  ],
+  [
+   "Tal",
+   "I sacrificed a rook just to see what would happen.",
+   "Capablanca",
+   "And what happened?",
+   "Tal-Capablanca"
+  ],
+  [
+   "Capablanca",
+   "One good move is worth ten clever ones.",
+   "Tal",
+   "Then I will play ten clever ones and hope one is good.",
+   "Tal-Capablanca"
+  ],
+  [
+   "Kasparov",
+   "Listen! The initiative is a living thing. You must feed it every move!",
+   "Carlsen",
+   "Or just keep a slightly better pawn structure for sixty moves. Also works.",
+   "Kasparov-Carlsen"
+  ],
+  [
+   "Kasparov",
+   "In my day we prepared openings for twenty hours a day!",
+   "Carlsen",
+   "Cool. I mostly just play the position.",
+   "Kasparov-Carlsen"
+  ],
+  [
+   "Kasparov",
+   "This endgame is a draw. Theory says so.",
+   "Carlsen",
+   "Theory hasn't played it against me yet.",
+   "Kasparov-Carlsen"
+  ],
+  [
+   "Carlsen",
+   "Honestly, the worst piece is the knight on a3. Fix that first.",
+   "Kasparov",
+   "Fix it with an attack! Everything with an attack!",
+   "Kasparov-Carlsen"
+  ],
+  [
+   "Carlsen",
+   "That move was kind of mid, to be fair.",
+   "Morphy",
+   "Mid, sir? Middling? Ah. I believe I take your meaning.",
+   "Morphy-slang"
+  ],
+  [
+   "Tempo",
+   "Gerald's cooking right now, no cap.",
+   "Morphy",
+   "He is preparing a meal at the board? Remarkable dedication.",
+   "Morphy-slang"
+  ],
+  [
+   "Carlsen",
+   "GG, that line was a vibe.",
+   "Morphy",
+   "A vibe. I shall record it in my notebook beside 'checkmate'.",
+   "Morphy-slang"
+  ],
+  [
+   "Morphy",
+   "Gentlemen, develop your pieces before you converse.",
+   "Kasparov",
+   "Finally, someone on this ship who agrees with me.",
+   "Morphy-Kasparov"
+  ],
+  [
+   "Tal",
+   "My intuition says the knight sacrifice is winning.",
+   "Leela",
+   "My evaluation says minus 1.4. Your intuition is very confident.",
+   "Leela-numbers"
+  ],
+  [
+   "Kasparov",
+   "White is clearly winning here!",
+   "Leela",
+   "Plus 0.31. Clearly is a strong word for a third of a pawn.",
+   "Leela-numbers"
+  ],
+  [
+   "Capablanca",
+   "The position is equal and simple.",
+   "Leela",
+   "Equal, yes. Simple, 64 percent of the time.",
+   "Leela-numbers"
+  ],
+  [
+   "Carlsen",
+   "I'd probably just grind this one out.",
+   "Leela",
+   "Win probability in grinding mode: 58 percent. Not bad for a human.",
+   "Leela-numbers"
+  ],
+  [
+   "Morphy",
+   "A most elegant combination, would you not agree?",
+   "Leela",
+   "Elegant is not a number I compute. But it holds: plus 4.2.",
+   "Leela-numbers"
+  ],
+  [
+   "Skipper",
+   "Steady on the tiller, lads. We're tacking into the middlegame.",
+   "Capablanca",
+   "A fine metaphor. Keep the wind behind your pawns.",
+   "Skipper-sailing"
+  ],
+  [
+   "Skipper",
+   "Rough water ahead. Batten down the king.",
+   "Tal",
+   "Or sail straight into the storm. It's more fun.",
+   "Skipper-sailing"
+  ],
+  [
+   "Skipper",
+   "When the clock's low, you don't fight the current. You ride it.",
+   "Carlsen",
+   "Yeah. Pre-move and pray, basically.",
+   "Skipper-sailing"
+  ],
+  [
+   "Skipper",
+   "Anchors up. One move at a time, like reading the swell.",
+   "Leela",
+   "Swell height unknown. Best move known. Shall I tell you?",
+   "Skipper-sailing"
+  ],
+  [
+   "Tempo",
+   "Is that the whole crew? Five legends and a lighthouse? I've seen scarier drum solos.",
+   "Skipper",
+   "Keep talking, Tempo. We'll see you at the end of the chart.",
+   "Tempo-heckle"
+  ],
+  [
+   "Tempo",
+   "Tick tock, Gerald. I can hear your clock from here.",
+   "Kasparov",
+   "Ignore him. Calculate! The clock serves the calculator!",
+   "Tempo-heckle"
+  ],
+  [
+   "Tempo",
+   "Nice move. Took you long enough.",
+   "Morphy",
+   "Sir, one does not heckle a gentleman mid-thought.",
+   "Tempo-heckle"
+  ],
+  [
+   "Tempo",
+   "When you reach my island, bring your fastest hand.",
+   "Tal",
+   "Bring something better: a bad idea played with total conviction.",
+   "Tempo-heckle"
+  ],
+  [
+   "Capablanca",
+   "Do you ever play a quiet move, Garry?",
+   "Kasparov",
+   "Once. In 1987. I regretted it immediately.",
+   "Capablanca-Kasparov"
+  ]
+ ]
+}

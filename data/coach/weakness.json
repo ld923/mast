@@ -1,0 +1,770 @@
+{
+ "total_records": 4786,
+ "overall": {
+  "positional/other": 2556,
+  "hanging_piece": 1089,
+  "missed_fork": 576,
+  "bad_trade_when_ahead": 487,
+  "missed_capture": 307,
+  "king_safety": 278,
+  "pin_skewer": 141,
+  "missed_promotion/passed_pawn": 129,
+  "missed_check_mate": 128,
+  "back_rank": 3
+ },
+ "by_phase": {
+  "middlegame": {
+   "positional/other": 1236,
+   "hanging_piece": 723,
+   "missed_fork": 348,
+   "bad_trade_when_ahead": 329,
+   "missed_capture": 186,
+   "king_safety": 178,
+   "pin_skewer": 85,
+   "missed_check_mate": 82,
+   "missed_promotion/passed_pawn": 61,
+   "back_rank": 3
+  },
+  "opening": {
+   "positional/other": 997,
+   "hanging_piece": 272,
+   "missed_fork": 140,
+   "bad_trade_when_ahead": 98,
+   "missed_capture": 83,
+   "pin_skewer": 51,
+   "missed_promotion/passed_pawn": 40,
+   "king_safety": 33,
+   "missed_check_mate": 14
+  },
+  "endgame": {
+   "positional/other": 323,
+   "hanging_piece": 94,
+   "missed_fork": 88,
+   "king_safety": 67,
+   "bad_trade_when_ahead": 60,
+   "missed_capture": 38,
+   "missed_check_mate": 32,
+   "missed_promotion/passed_pawn": 28,
+   "pin_skewer": 5
+  }
+ },
+ "by_month": {
+  "2018-12": {
+   "positional/other": 4,
+   "hanging_piece": 3,
+   "missed_promotion/passed_pawn": 2,
+   "missed_fork": 2,
+   "king_safety": 1,
+   "missed_check_mate": 1
+  },
+  "2019-06": {
+   "positional/other": 5,
+   "king_safety": 1
+  },
+  "2019-07": {
+   "positional/other": 3,
+   "pin_skewer": 1
+  },
+  "2020-02": {
+   "positional/other": 20,
+   "hanging_piece": 8,
+   "bad_trade_when_ahead": 3,
+   "missed_fork": 3,
+   "king_safety": 2,
+   "missed_capture": 1,
+   "missed_check_mate": 1
+  },
+  "2020-04": {
+   "hanging_piece": 3,
+   "positional/other": 2,
+   "missed_capture": 2,
+   "bad_trade_when_ahead": 2,
+   "missed_fork": 1
+  },
+  "2020-05": {
+   "positional/other": 7,
+   "hanging_piece": 5,
+   "bad_trade_when_ahead": 3,
+   "missed_capture": 1
+  },
+  "2020-07": {
+   "positional/other": 2
+  },
+  "2020-08": {
+   "bad_trade_when_ahead": 2,
+   "missed_fork": 2,
+   "positional/other": 2,
+   "missed_capture": 1
+  },
+  "2020-09": {
+   "positional/other": 2,
+   "hanging_piece": 1,
+   "bad_trade_when_ahead": 1,
+   "missed_check_mate": 1,
+   "missed_fork": 1
+  },
+  "2020-11": {
+   "positional/other": 6,
+   "hanging_piece": 3,
+   "missed_fork": 2,
+   "king_safety": 1
+  },
+  "2020-12": {
+   "positional/other": 3,
+   "hanging_piece": 3,
+   "bad_trade_when_ahead": 1,
+   "missed_check_mate": 1,
+   "missed_fork": 1
+  },
+  "2021-01": {
+   "positional/other": 23,
+   "hanging_piece": 21,
+   "missed_fork": 9,
+   "bad_trade_when_ahead": 8,
+   "missed_promotion/passed_pawn": 5,
+   "pin_skewer": 2,
+   "missed_capture": 2,
+   "missed_check_mate": 1,
+   "king_safety": 1
+  },
+  "2021-02": {
+   "hanging_piece": 9,
+   "positional/other": 6,
+   "missed_fork": 2,
+   "bad_trade_when_ahead": 2,
+   "missed_capture": 1,
+   "pin_skewer": 1
+  },
+  "2021-12": {
+   "missed_fork": 4,
+   "hanging_piece": 2,
+   "missed_capture": 2,
+   "bad_trade_when_ahead": 2,
+   "missed_check_mate": 1,
+   "positional/other": 1
+  },
+  "2022-07": {
+   "missed_fork": 4,
+   "positional/other": 4,
+   "bad_trade_when_ahead": 2,
+   "missed_capture": 2,
+   "hanging_piece": 2,
+   "missed_check_mate": 1
+  },
+  "2022-11": {
+   "positional/other": 5,
+   "missed_fork": 1,
+   "hanging_piece": 1,
+   "missed_capture": 1
+  },
+  "2023-03": {
+   "positional/other": 6,
+   "hanging_piece": 5,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2023-07": {
+   "hanging_piece": 6,
+   "positional/other": 4,
+   "bad_trade_when_ahead": 3,
+   "king_safety": 2,
+   "pin_skewer": 2,
+   "missed_fork": 1,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2023-08": {
+   "positional/other": 41,
+   "hanging_piece": 14,
+   "missed_fork": 6,
+   "bad_trade_when_ahead": 6,
+   "missed_capture": 5,
+   "missed_check_mate": 1,
+   "pin_skewer": 1,
+   "missed_promotion/passed_pawn": 1,
+   "back_rank": 1,
+   "king_safety": 1
+  },
+  "2023-09": {
+   "positional/other": 26,
+   "hanging_piece": 14,
+   "missed_fork": 9,
+   "missed_capture": 6,
+   "missed_promotion/passed_pawn": 6,
+   "bad_trade_when_ahead": 5,
+   "missed_check_mate": 2,
+   "king_safety": 1,
+   "pin_skewer": 1
+  },
+  "2023-10": {
+   "positional/other": 6,
+   "missed_fork": 2,
+   "bad_trade_when_ahead": 2,
+   "hanging_piece": 2,
+   "king_safety": 1,
+   "missed_capture": 1
+  },
+  "2023-11": {
+   "positional/other": 5,
+   "missed_capture": 2,
+   "missed_fork": 1,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2023-12": {
+   "positional/other": 5,
+   "missed_fork": 1,
+   "king_safety": 1
+  },
+  "2024-01": {
+   "positional/other": 3,
+   "hanging_piece": 1
+  },
+  "2024-02": {
+   "positional/other": 7,
+   "hanging_piece": 2,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2024-03": {
+   "positional/other": 50,
+   "hanging_piece": 26,
+   "missed_fork": 9,
+   "bad_trade_when_ahead": 8,
+   "king_safety": 6,
+   "missed_capture": 4,
+   "pin_skewer": 2,
+   "missed_check_mate": 2,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2024-04": {
+   "hanging_piece": 12,
+   "positional/other": 6,
+   "king_safety": 5,
+   "missed_capture": 4,
+   "missed_fork": 3,
+   "bad_trade_when_ahead": 2,
+   "pin_skewer": 1,
+   "missed_check_mate": 1
+  },
+  "2024-05": {
+   "positional/other": 4,
+   "missed_fork": 2,
+   "king_safety": 1,
+   "bad_trade_when_ahead": 1,
+   "hanging_piece": 1
+  },
+  "2024-06": {
+   "positional/other": 9,
+   "hanging_piece": 1
+  },
+  "2024-08": {
+   "hanging_piece": 5,
+   "missed_fork": 3,
+   "bad_trade_when_ahead": 2,
+   "missed_capture": 2,
+   "pin_skewer": 2,
+   "positional/other": 1,
+   "missed_check_mate": 1
+  },
+  "2024-09": {
+   "positional/other": 36,
+   "hanging_piece": 20,
+   "missed_capture": 17,
+   "missed_fork": 5,
+   "missed_promotion/passed_pawn": 5,
+   "bad_trade_when_ahead": 5,
+   "king_safety": 3,
+   "missed_check_mate": 2,
+   "pin_skewer": 1
+  },
+  "2024-12": {
+   "positional/other": 73,
+   "hanging_piece": 35,
+   "bad_trade_when_ahead": 16,
+   "missed_capture": 15,
+   "missed_fork": 13,
+   "king_safety": 9,
+   "missed_promotion/passed_pawn": 7,
+   "missed_check_mate": 5
+  },
+  "2025-01": {
+   "positional/other": 507,
+   "hanging_piece": 206,
+   "missed_fork": 120,
+   "bad_trade_when_ahead": 103,
+   "missed_capture": 59,
+   "king_safety": 49,
+   "pin_skewer": 35,
+   "missed_promotion/passed_pawn": 26,
+   "missed_check_mate": 26,
+   "back_rank": 2
+  },
+  "2025-02": {
+   "positional/other": 479,
+   "hanging_piece": 198,
+   "missed_fork": 115,
+   "bad_trade_when_ahead": 99,
+   "king_safety": 61,
+   "missed_capture": 58,
+   "pin_skewer": 26,
+   "missed_check_mate": 23,
+   "missed_promotion/passed_pawn": 12
+  },
+  "2025-03": {
+   "positional/other": 287,
+   "hanging_piece": 130,
+   "bad_trade_when_ahead": 64,
+   "missed_fork": 58,
+   "king_safety": 40,
+   "missed_capture": 31,
+   "missed_check_mate": 18,
+   "missed_promotion/passed_pawn": 15,
+   "pin_skewer": 15
+  },
+  "2025-04": {
+   "positional/other": 52,
+   "hanging_piece": 28,
+   "missed_fork": 16,
+   "bad_trade_when_ahead": 12,
+   "pin_skewer": 6,
+   "missed_capture": 5,
+   "missed_check_mate": 4,
+   "missed_promotion/passed_pawn": 2,
+   "king_safety": 2
+  },
+  "2025-05": {
+   "positional/other": 14,
+   "hanging_piece": 7,
+   "bad_trade_when_ahead": 5,
+   "pin_skewer": 4,
+   "missed_promotion/passed_pawn": 3,
+   "missed_fork": 3,
+   "missed_capture": 2
+  },
+  "2025-06": {
+   "positional/other": 92,
+   "hanging_piece": 40,
+   "king_safety": 19,
+   "missed_fork": 19,
+   "bad_trade_when_ahead": 15,
+   "missed_capture": 14,
+   "pin_skewer": 5,
+   "missed_check_mate": 5,
+   "missed_promotion/passed_pawn": 4
+  },
+  "2025-07": {
+   "positional/other": 135,
+   "hanging_piece": 47,
+   "missed_fork": 25,
+   "bad_trade_when_ahead": 19,
+   "missed_capture": 15,
+   "king_safety": 9,
+   "pin_skewer": 5,
+   "missed_check_mate": 4,
+   "missed_promotion/passed_pawn": 2
+  },
+  "2025-08": {
+   "positional/other": 471,
+   "hanging_piece": 175,
+   "missed_fork": 114,
+   "bad_trade_when_ahead": 81,
+   "king_safety": 47,
+   "missed_capture": 42,
+   "missed_promotion/passed_pawn": 31,
+   "pin_skewer": 27,
+   "missed_check_mate": 21
+  },
+  "2025-09": {
+   "positional/other": 4,
+   "hanging_piece": 4,
+   "king_safety": 2,
+   "missed_fork": 1,
+   "missed_promotion/passed_pawn": 1,
+   "missed_check_mate": 1
+  },
+  "2025-10": {
+   "positional/other": 4
+  },
+  "2025-11": {
+   "positional/other": 8,
+   "missed_fork": 7,
+   "hanging_piece": 4,
+   "missed_capture": 4,
+   "king_safety": 3,
+   "missed_check_mate": 1,
+   "bad_trade_when_ahead": 1
+  },
+  "2025-12": {
+   "positional/other": 25,
+   "hanging_piece": 10,
+   "missed_fork": 3,
+   "bad_trade_when_ahead": 2,
+   "missed_capture": 1,
+   "king_safety": 1,
+   "pin_skewer": 1
+  },
+  "2026-01": {
+   "positional/other": 4,
+   "hanging_piece": 3,
+   "pin_skewer": 2,
+   "king_safety": 2,
+   "bad_trade_when_ahead": 2,
+   "missed_check_mate": 1,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2026-04": {
+   "positional/other": 78,
+   "hanging_piece": 24,
+   "king_safety": 5,
+   "missed_fork": 5,
+   "missed_capture": 5,
+   "bad_trade_when_ahead": 4,
+   "missed_check_mate": 2,
+   "pin_skewer": 1,
+   "missed_promotion/passed_pawn": 1
+  },
+  "2026-05": {
+   "positional/other": 5,
+   "hanging_piece": 2,
+   "missed_capture": 2,
+   "missed_fork": 1,
+   "bad_trade_when_ahead": 1
+  },
+  "2026-08": {
+   "positional/other": 12,
+   "hanging_piece": 6,
+   "bad_trade_when_ahead": 3,
+   "missed_fork": 2,
+   "king_safety": 2,
+   "missed_check_mate": 1
+  },
+  "2026-09": {
+   "positional/other": 2
+  }
+ },
+ "last3_months": [
+  "2026-05",
+  "2026-08",
+  "2026-09"
+ ],
+ "top3_last3_months": [
+  [
+   "positional/other",
+   19
+  ],
+  [
+   "hanging_piece",
+   8
+  ],
+  [
+   "bad_trade_when_ahead",
+   4
+  ]
+ ],
+ "top3_all_time": [
+  [
+   "positional/other",
+   2556
+  ],
+  [
+   "hanging_piece",
+   1089
+  ],
+  [
+   "missed_fork",
+   576
+  ]
+ ],
+ "examples": {
+  "hanging_piece": [
+   "https://www.chess.com/game/live/122236123758#52",
+   "https://www.chess.com/game/live/143308346408#26",
+   "https://www.chess.com/game/live/122223973774#49",
+   "https://www.chess.com/game/live/122089385062#39",
+   "https://www.chess.com/game/live/136730175254#56",
+   "https://www.chess.com/game/live/139408256244#25",
+   "https://www.chess.com/game/live/141594327872#26",
+   "https://www.chess.com/game/live/136660327316#44",
+   "https://www.chess.com/game/live/121803535034#75",
+   "https://www.chess.com/game/live/121890325022#62",
+   "https://www.chess.com/game/live/139183291368#30",
+   "https://www.chess.com/game/live/142314310182#47",
+   "https://www.chess.com/game/live/136615708784#43",
+   "https://www.chess.com/game/live/122278135094#70",
+   "https://www.chess.com/game/live/121813112000#57",
+   "https://www.chess.com/game/live/141946065008#15",
+   "https://www.chess.com/game/live/110145086733#94",
+   "https://www.chess.com/game/live/122978509528#45",
+   "https://www.chess.com/game/live/84298836305#86",
+   "https://www.chess.com/game/live/122274334044#27",
+   "https://www.chess.com/game/live/142525576822#47",
+   "https://www.chess.com/game/live/122549020066#72",
+   "https://www.chess.com/game/live/136636600588#33",
+   "https://www.chess.com/game/live/141631315794#55",
+   "https://www.chess.com/game/live/136636439030#32",
+   "https://www.chess.com/game/live/88628421615#37",
+   "https://www.chess.com/game/live/141600652446#32",
+   "https://www.chess.com/game/live/122612217818#41",
+   "https://www.chess.com/game/live/143818813965#70",
+   "https://www.chess.com/game/live/143316553106#23"
+  ],
+  "positional/other": [
+   "https://www.chess.com/game/live/136767699338#35",
+   "https://www.chess.com/game/live/122224499606#90",
+   "https://www.chess.com/game/live/139589404276#32",
+   "https://www.chess.com/game/live/121800633346#52",
+   "https://www.chess.com/game/live/122970940968#26",
+   "https://www.chess.com/game/live/122139943798#49",
+   "https://www.chess.com/game/live/123277900674#42",
+   "https://www.chess.com/game/live/121816576812#53",
+   "https://www.chess.com/game/live/121800712728#61",
+   "https://www.chess.com/game/live/101359333103#43",
+   "https://www.chess.com/game/live/141597702648#12",
+   "https://www.chess.com/game/live/142391619262#34",
+   "https://www.chess.com/game/live/122069345372#54",
+   "https://www.chess.com/game/live/122549020066#80",
+   "https://www.chess.com/game/live/122413228754#56",
+   "https://www.chess.com/game/live/141784321524#51",
+   "https://www.chess.com/game/live/122612812292#25",
+   "https://www.chess.com/game/live/141529364302#44",
+   "https://www.chess.com/game/live/104784044769#35",
+   "https://www.chess.com/game/live/4842439276#6",
+   "https://www.chess.com/game/live/136031700530#18",
+   "https://www.chess.com/game/live/122556293522#35",
+   "https://www.chess.com/game/live/104784044769#33",
+   "https://www.chess.com/game/live/136104219830#39",
+   "https://www.chess.com/game/live/122612445634#41",
+   "https://www.chess.com/game/live/141595793142#9",
+   "https://www.chess.com/game/live/142214742696#45",
+   "https://www.chess.com/game/live/141675481156#26",
+   "https://www.chess.com/game/live/122228813642#52",
+   "https://www.chess.com/game/live/141629824578#50"
+  ],
+  "bad_trade_when_ahead": [
+   "https://www.chess.com/game/live/122223973774#49",
+   "https://www.chess.com/game/live/136321626514#74",
+   "https://www.chess.com/game/live/121890325022#62",
+   "https://www.chess.com/game/live/139183291368#30",
+   "https://www.chess.com/game/live/142314310182#47",
+   "https://www.chess.com/game/live/4873539795#37",
+   "https://www.chess.com/game/live/142525576822#47",
+   "https://www.chess.com/game/live/121800712728#63",
+   "https://www.chess.com/game/live/121982061286#42",
+   "https://www.chess.com/game/live/141631315794#55",
+   "https://www.chess.com/game/live/137584813970#45",
+   "https://www.chess.com/game/live/137998636622#42",
+   "https://www.chess.com/game/live/122249291894#54",
+   "https://www.chess.com/game/live/142036806414#22",
+   "https://www.chess.com/game/live/130879199185#20",
+   "https://www.chess.com/game/live/122274832788#56",
+   "https://www.chess.com/game/live/122249117194#24",
+   "https://www.chess.com/game/live/136618675256#31",
+   "https://www.chess.com/game/live/88626731333#36",
+   "https://www.chess.com/game/live/122551306022#32",
+   "https://www.chess.com/game/live/123534646250#21",
+   "https://www.chess.com/game/live/6196496731#46",
+   "https://www.chess.com/game/live/90223178413#26",
+   "https://www.chess.com/game/live/143818813965#68",
+   "https://www.chess.com/game/live/122555611688#37",
+   "https://www.chess.com/game/live/122509370206#16",
+   "https://www.chess.com/game/live/142282514698#17",
+   "https://www.chess.com/game/live/122290879464#36",
+   "https://www.chess.com/game/live/122918080672#49",
+   "https://www.chess.com/game/live/84649448713#34"
+  ],
+  "missed_capture": [
+   "https://www.chess.com/game/live/122236123758#52",
+   "https://www.chess.com/game/live/122223973774#49",
+   "https://www.chess.com/game/live/136730175254#56",
+   "https://www.chess.com/game/live/139408256244#25",
+   "https://www.chess.com/game/live/121803535034#75",
+   "https://www.chess.com/game/live/4873539795#37",
+   "https://www.chess.com/game/live/136614684076#82",
+   "https://www.chess.com/game/live/142525576822#47",
+   "https://www.chess.com/game/live/123055835848#78",
+   "https://www.chess.com/game/live/88628421615#37",
+   "https://www.chess.com/game/live/143818813965#70",
+   "https://www.chess.com/game/live/142036806414#22",
+   "https://www.chess.com/game/live/143818813965#72",
+   "https://www.chess.com/game/live/122249117194#24",
+   "https://www.chess.com/game/live/119911870977#37",
+   "https://www.chess.com/game/live/129586421211#52",
+   "https://www.chess.com/game/live/122224648930#71",
+   "https://www.chess.com/game/live/90223178413#26",
+   "https://www.chess.com/game/live/143818813965#68",
+   "https://www.chess.com/game/live/34549872527#32",
+   "https://www.chess.com/game/live/85256032129#8",
+   "https://www.chess.com/game/live/142282514698#17",
+   "https://www.chess.com/game/daily/566697137#44",
+   "https://www.chess.com/game/live/122827176270#47",
+   "https://www.chess.com/game/live/123067850276#41",
+   "https://www.chess.com/game/live/122551993076#34",
+   "https://www.chess.com/game/live/122235025760#51",
+   "https://www.chess.com/game/live/84650003471#63",
+   "https://www.chess.com/game/live/122235025760#53",
+   "https://www.chess.com/game/live/136614684076#80"
+  ],
+  "king_safety": [
+   "https://www.chess.com/game/live/143308346408#26",
+   "https://www.chess.com/game/live/136730175254#56",
+   "https://www.chess.com/game/live/136321626514#74",
+   "https://www.chess.com/game/live/145274888128#57",
+   "https://www.chess.com/game/live/136615708784#43",
+   "https://www.chess.com/game/live/121813112000#57",
+   "https://www.chess.com/game/live/136614684076#82",
+   "https://www.chess.com/game/live/145274888128#61",
+   "https://www.chess.com/game/live/123055835848#78",
+   "https://www.chess.com/game/live/141260325908#12",
+   "https://www.chess.com/game/live/123100047242#12",
+   "https://www.chess.com/game/live/140647580516#35",
+   "https://www.chess.com/game/live/122505264660#27",
+   "https://www.chess.com/game/live/122915819940#63",
+   "https://www.chess.com/game/live/136730175254#44",
+   "https://www.chess.com/game/live/139589404276#24",
+   "https://www.chess.com/game/live/122235025760#51",
+   "https://www.chess.com/game/live/141593017778#56",
+   "https://www.chess.com/game/live/136614684076#80",
+   "https://www.chess.com/game/live/141320076042#49",
+   "https://www.chess.com/game/live/122612445634#45",
+   "https://www.chess.com/game/live/122733084884#26",
+   "https://www.chess.com/game/live/122612855390#43",
+   "https://www.chess.com/game/live/139183414256#25",
+   "https://www.chess.com/game/live/139844795804#30",
+   "https://www.chess.com/game/live/172980345802#40",
+   "https://www.chess.com/game/live/84299491427#52",
+   "https://www.chess.com/game/live/5855494535#49",
+   "https://www.chess.com/game/live/136730175254#42",
+   "https://www.chess.com/game/live/139422429736#32"
+  ],
+  "missed_fork": [
+   "https://www.chess.com/game/live/121965553786#50",
+   "https://www.chess.com/game/live/122089385062#39",
+   "https://www.chess.com/game/live/122969594660#41",
+   "https://www.chess.com/game/live/141594327872#26",
+   "https://www.chess.com/game/live/136614457750#42",
+   "https://www.chess.com/game/live/136660327316#44",
+   "https://www.chess.com/game/live/142391445494#39",
+   "https://www.chess.com/game/live/142314310182#47",
+   "https://www.chess.com/game/live/122278135094#70",
+   "https://www.chess.com/game/live/110145086733#94",
+   "https://www.chess.com/game/live/122549020066#72",
+   "https://www.chess.com/game/live/141550732988#35",
+   "https://www.chess.com/game/live/122612217818#41",
+   "https://www.chess.com/game/live/122274334044#29",
+   "https://www.chess.com/game/live/122458764690#65",
+   "https://www.chess.com/game/live/123419593352#22",
+   "https://www.chess.com/game/live/122463549146#25",
+   "https://www.chess.com/game/live/123419748222#29",
+   "https://www.chess.com/game/live/88626731333#36",
+   "https://www.chess.com/game/live/136619895926#11",
+   "https://www.chess.com/game/live/119911870977#37",
+   "https://www.chess.com/game/live/141806350550#33",
+   "https://www.chess.com/game/live/123214642752#72",
+   "https://www.chess.com/game/live/141599671774#32",
+   "https://www.chess.com/game/live/142282514698#17",
+   "https://www.chess.com/game/live/132484214229#30",
+   "https://www.chess.com/game/live/139589472130#53",
+   "https://www.chess.com/game/live/104780486159#38",
+   "https://www.chess.com/game/live/142399526024#48",
+   "https://www.chess.com/game/live/121890307004#10"
+  ],
+  "missed_check_mate": [
+   "https://www.chess.com/game/live/121965553786#50",
+   "https://www.chess.com/game/live/143308346408#26",
+   "https://www.chess.com/game/live/136321626514#74",
+   "https://www.chess.com/game/live/122969594660#41",
+   "https://www.chess.com/game/live/141594327872#26",
+   "https://www.chess.com/game/live/136614457750#42",
+   "https://www.chess.com/game/live/136660327316#44",
+   "https://www.chess.com/game/live/142391445494#39",
+   "https://www.chess.com/game/live/139183291368#30",
+   "https://www.chess.com/game/live/142314310182#47",
+   "https://www.chess.com/game/live/122278135094#70",
+   "https://www.chess.com/game/live/133139366487#54",
+   "https://www.chess.com/game/live/136636600588#33",
+   "https://www.chess.com/game/live/141562282052#50",
+   "https://www.chess.com/game/live/122224781108#39",
+   "https://www.chess.com/game/live/122463549146#25",
+   "https://www.chess.com/game/live/88626731333#36",
+   "https://www.chess.com/game/live/123214642752#72",
+   "https://www.chess.com/game/live/141599671774#32",
+   "https://www.chess.com/game/live/132484214229#30",
+   "https://www.chess.com/game/live/122290879464#36",
+   "https://www.chess.com/game/live/139589472130#53",
+   "https://www.chess.com/game/live/123214642752#74",
+   "https://www.chess.com/game/live/136614684076#80",
+   "https://www.chess.com/game/live/140687602280#35",
+   "https://www.chess.com/game/live/123048145714#33",
+   "https://www.chess.com/game/live/6275586922#68",
+   "https://www.chess.com/game/live/137195506060#42",
+   "https://www.chess.com/game/live/51193832427#44",
+   "https://www.chess.com/game/live/147494048050#51"
+  ],
+  "missed_promotion/passed_pawn": [
+   "https://www.chess.com/game/live/121803535034#75",
+   "https://www.chess.com/game/live/142282514698#17",
+   "https://www.chess.com/game/live/136657312204#35",
+   "https://www.chess.com/game/live/136614684076#80",
+   "https://www.chess.com/game/live/141320076042#49",
+   "https://www.chess.com/game/live/122481593528#71",
+   "https://www.chess.com/game/live/136035247608#74",
+   "https://www.chess.com/game/live/122427742360#44",
+   "https://www.chess.com/game/live/122509160016#5",
+   "https://www.chess.com/game/live/142525576822#45",
+   "https://www.chess.com/game/live/141613738412#29",
+   "https://www.chess.com/game/live/105132697743#56",
+   "https://www.chess.com/game/live/119911870977#47",
+   "https://www.chess.com/game/live/136035247608#86",
+   "https://www.chess.com/game/live/121807047674#56",
+   "https://www.chess.com/game/live/166778060464#48",
+   "https://www.chess.com/game/live/137195506060#18",
+   "https://www.chess.com/game/live/141602685172#59",
+   "https://www.chess.com/game/live/141865951940#84",
+   "https://www.chess.com/game/live/141750506796#35",
+   "https://www.chess.com/game/live/89299893665#50",
+   "https://www.chess.com/game/live/121807047674#80",
+   "https://www.chess.com/game/live/122507093862#20",
+   "https://www.chess.com/game/live/122248998834#23",
+   "https://www.chess.com/game/live/6330818270#16",
+   "https://www.chess.com/game/live/122481931536#20",
+   "https://www.chess.com/game/live/119471703078#70",
+   "https://www.chess.com/game/live/136614684076#74",
+   "https://www.chess.com/game/live/123091439292#37",
+   "https://www.chess.com/game/live/88627280215#13"
+  ],
+  "pin_skewer": [
+   "https://www.chess.com/game/live/141631315794#55",
+   "https://www.chess.com/game/live/122482291734#37",
+   "https://www.chess.com/game/live/122290879464#36",
+   "https://www.chess.com/game/live/122549211208#35",
+   "https://www.chess.com/game/live/140899604450#48",
+   "https://www.chess.com/game/live/123048145714#33",
+   "https://www.chess.com/game/live/122101439118#35",
+   "https://www.chess.com/game/live/122225235468#51",
+   "https://www.chess.com/game/live/122464163542#49",
+   "https://www.chess.com/game/live/84299491427#52",
+   "https://www.chess.com/game/live/122234319656#18",
+   "https://www.chess.com/game/live/108054700249#25",
+   "https://www.chess.com/game/live/122225108258#24",
+   "https://www.chess.com/game/live/122511438560#18",
+   "https://www.chess.com/game/live/136255287846#36",
+   "https://www.chess.com/game/live/122969070396#14",
+   "https://www.chess.com/game/live/122612445634#27",
+   "https://www.chess.com/game/live/136211973528#23",
+   "https://www.chess.com/game/live/142153949820#26",
+   "https://www.chess.com/game/live/122846817940#54",
+   "https://www.chess.com/game/live/136616368024#27",
+   "https://www.chess.com/game/live/141749955460#33",
+   "https://www.chess.com/game/live/122006029510#40",
+   "https://www.chess.com/game/live/105554976439#40",
+   "https://www.chess.com/game/live/141613180764#39",
+   "https://www.chess.com/game/live/122528075006#54",
+   "https://www.chess.com/game/live/122464163542#51",
+   "https://www.chess.com/game/live/142390683978#44",
+   "https://www.chess.com/game/live/122227561096#24",
+   "https://www.chess.com/game/live/123579627776#47"
+  ],
+  "back_rank": [
+   "https://www.chess.com/game/live/121890325022#62",
+   "https://www.chess.com/game/live/121956729372#60",
+   "https://www.chess.com/game/live/84650625755#47"
+  ]
+ }
+}

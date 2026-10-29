@@ -1,0 +1,162 @@
+[
+ {
+  "who": "Capablanca",
+  "tip": "Bring your king to the middle once the queens leave. He is a fighting piece, not a passenger."
+ },
+ {
+  "who": "Capablanca",
+  "tip": "In a won endgame, simplify first and look for tricks last."
+ },
+ {
+  "who": "Capablanca",
+  "tip": "A rook belongs behind a passed pawn. Yours or theirs."
+ },
+ {
+  "who": "Capablanca",
+  "tip": "Ask what the opponent's worst piece is, then make yours better than it."
+ },
+ {
+  "who": "Capablanca",
+  "tip": "Trade when ahead. Every swap makes the win plainer."
+ },
+ {
+  "who": "Morphy",
+  "tip": "Develop a piece every move before the centre opens. Do not move the same piece twice without a reason."
+ },
+ {
+  "who": "Morphy",
+  "tip": "Castle early. A king in the middle is a target by move ten."
+ },
+ {
+  "who": "Morphy",
+  "tip": "Open lines toward an uncastled king, and bring every piece to the party."
+ },
+ {
+  "who": "Morphy",
+  "tip": "If your opponent has not developed, attack at once. Time is the only currency."
+ },
+ {
+  "who": "Morphy",
+  "tip": "Do not grab a pawn while your rooks sleep at home."
+ },
+ {
+  "who": "Carlsen",
+  "tip": "No need to rush. The position rarely runs away in five seconds."
+ },
+ {
+  "who": "Carlsen",
+  "tip": "Keep making small, safe improvements. Opponents crack first."
+ },
+ {
+  "who": "Carlsen",
+  "tip": "When you are winning, play the move that takes away their counterplay, not the flashy one."
+ },
+ {
+  "who": "Carlsen",
+  "tip": "Stay patient in equal endgames. Most games are lost by someone getting bored."
+ },
+ {
+  "who": "Carlsen",
+  "tip": "Check one thing before you move: what does my opponent want now?"
+ },
+ {
+  "who": "Tal",
+  "tip": "Calculate the forcing moves first: checks, captures, threats. Then decide if the sacrifice works."
+ },
+ {
+  "who": "Tal",
+  "tip": "A sacrifice you have calculated to the end is not a gamble."
+ },
+ {
+  "who": "Tal",
+  "tip": "Sometimes the move that complicates things is simply the best one. Make the board messy for them."
+ },
+ {
+  "who": "Tal",
+  "tip": "If you cannot find the refutation, neither can the clock-strapped opponent."
+ },
+ {
+  "who": "Tal",
+  "tip": "Look at the squares around the king, and count your attackers against their defenders."
+ },
+ {
+  "who": "Kasparov",
+  "tip": "Take the initiative and do not hand it back. A tempo is worth a pawn."
+ },
+ {
+  "who": "Kasparov",
+  "tip": "Every move should create a threat or prepare one. Aimless moves lose games."
+ },
+ {
+  "who": "Kasparov",
+  "tip": "Pressure first, then conversion. Do not relax after a good move."
+ },
+ {
+  "who": "Kasparov",
+  "tip": "Know your plan before you take a long think, so the long think is for a decision, not a search."
+ },
+ {
+  "who": "Kasparov",
+  "tip": "When they defend passively, add one more attacker."
+ },
+ {
+  "who": "Leela",
+  "tip": "Evaluate with the whole board. Who has the better pieces, the safer king, the more space?"
+ },
+ {
+  "who": "Leela",
+  "tip": "A pawn can be worth less than activity. Weigh both before you grab."
+ },
+ {
+  "who": "Leela",
+  "tip": "Small edges add up. Keep the ones you have."
+ },
+ {
+  "who": "Leela",
+  "tip": "Quiet moves are often best. Look for the move that improves without committing."
+ },
+ {
+  "who": "Leela",
+  "tip": "Before every capture, count what recaptures."
+ },
+ {
+  "who": "Skipper",
+  "tip": "Check the wind before you leave harbour: look for checks and captures before any plan."
+ },
+ {
+  "who": "Skipper",
+  "tip": "Steady as she goes. Pick a decent move and keep sailing."
+ },
+ {
+  "who": "Skipper",
+  "tip": "Don't chase the horizon. A good move now beats a perfect one when the flag is down."
+ },
+ {
+  "who": "Skipper",
+  "tip": "Keep your ship tidy: every piece protected, every sail set."
+ },
+ {
+  "who": "Skipper",
+  "tip": "When the sea is rough, simplify. Fewer waves, fewer wrecks."
+ },
+ {
+  "who": "Tempo",
+  "tip": "Keep a steady tempo: a few seconds a move in the opening, then spend your time where it matters."
+ },
+ {
+  "who": "Tempo",
+  "tip": "If your clock is lower than theirs, make your next three moves quickly."
+ },
+ {
+  "who": "Tempo",
+  "tip": "The first instinct is right more often than you think. Check it for a safe square, then play."
+ },
+ {
+  "who": "Tempo",
+  "tip": "Decide on the move, then spend one second on a blunder check."
+ },
+ {
+  "who": "Tempo",
+  "tip": "Time is a piece. Do not leave it on the bench."
+ }
+]

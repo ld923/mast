@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mast</title>
+<meta name="theme-color" content="#07111A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mast"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="preload" href="fonts/oswald-700.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script>
+// apply saved theme before paint; skip splash on repeat visits / reduced motion
+try{var t=localStorage.getItem('mast.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}
+try{var a=JSON.parse(localStorage.getItem('mast.anim'));if(a!=='full'&&a!=='reduced'&&a!=='off')a=matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'full';document.documentElement.dataset.anim=a}catch(e){}
+try{if(sessionStorage.getItem('mast.splash')||document.documentElement.dataset.anim!=='full')document.documentElement.classList.add('nosplash');else sessionStorage.setItem('mast.splash','1')}catch(e){}
+</script>
+</head><body>
+<div id="stage"></div>
+<div id="splash" aria-hidden="true">
+ <svg viewBox="0 0 64 64"><g pathLength="1">
+  <path class="st fl-p" pathLength="1" d="M31 3h2v15h-2z"/><path class="st" pathLength="1" d="M34 5c7 3 11 8 12 13H34z"/><path class="st" pathLength="1" d="M29 8c-4 3-7 6-8 10h8z"/>
+  <path class="st" pathLength="1" d="M14 20h6v4h4v-4h6v4h4v-4h6v4h4v-4h6v8l-5 3 2 18h4v7H13v-7h4l2-18-5-3z"/></g>
+  <g><path class="fl" d="M34 5c7 3 11 8 12 13H34z"/><path class="fl" d="M29 8c-4 3-7 6-8 10h8z" style="opacity:.55"/><path class="fl" d="M31 3h2v15h-2z"/></g>
+ </svg>
+ <div class="wm">MAST</div>
+</div>
+<nav id="nav" aria-label="Main"></nav>
+<button class="gear" id="gear" aria-label="Settings" aria-haspopup="true" aria-expanded="false"></button>
+<div class="menu" id="menu" hidden role="dialog" aria-label="Settings">
+ <span class="k">Theme</span>
+ <div class="seg" id="theme-seg"><button data-t="auto">Auto</button><button data-t="dark">Night</button><button data-t="light">Sunset</button></div>
+ <span class="k" style="margin-top:14px">Animations</span>
+ <div class="seg" id="anim-seg"><button data-a="full">Full</button><button data-a="reduced">Reduced</button><button data-a="off">Off</button></div>
+ <span class="k" style="margin-top:14px">Haptics</span>
+ <div class="seg" id="hap-seg"><button data-h="1">On</button><button data-h="0">Off</button></div>
+ <span class="k" style="margin-top:14px">Sea sounds</span>
+ <div class="seg" id="amb-seg"><button data-s="1">On</button><button data-s="0">Off</button></div>
+ <span class="k" style="margin-top:14px">Board view</span>
+ <div class="seg"><button data-bv="tilt">Tilted</button><button data-bv="flat">Flat</button></div>
+ <span class="k" style="margin-top:14px">Board theme</span>
+ <div class="bthemes" id="bthemes"></div>
+ <span class="k" style="margin-top:14px">Threat ripples</span>
+ <div class="seg"><button data-rp="1">On</button><button data-rp="0">Off</button></div>
+ <span class="k" style="margin-top:14px">Drill clock</span>
+ <div class="seg"><button data-cs="ring">Ring</button><button data-cs="glass">Hourglass</button></div>
+ <span class="k" style="margin-top:14px">Blunder-check prompt (CCT) in drills</span>
+ <div class="seg"><button data-cct="1">On</button><button data-cct="0">Off</button></div>
+ <span class="k" style="margin-top:14px">Crew chat &mdash; Anthropic API key</span>
+ <div class="keyrow" style="display:flex;gap:6px;margin-top:4px"><input id="apikey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-..." aria-label="Anthropic API key" style="flex:1;min-width:0;padding:8px;border-radius:10px;border:1px solid var(--glass-b);background:var(--glass-h);color:var(--fg)"><button class="btn ghost sm" type="button" id="keytest">Test key</button></div>
+ <p class="sub sm" id="keymsg" style="margin:4px 0 0;line-height:1.4">The key is stored only in this browser on this device and sent only to api.anthropic.com. Usage is billed to the key's owner. Leave empty to turn chat off.</p>
+ <span class="k" style="margin-top:14px">Chess.com sync</span>
+ <div id="sync-box"></div>
+ <span class="k" style="margin-top:14px">Install</span>
+ <div id="pwa-box"></div>
+ <span class="k" style="margin-top:14px">Secrets</span>
+ <div class="row tight" style="margin-top:4px"><a class="btn ghost sm" href="#secrets">The ship's hidden things</a></div>
+ <span class="k" style="margin-top:14px">About</span>
+ <p class="sub sm" style="margin:4px 0 0;line-height:1.4">Engine: Stockfish 18 (stockfish.js 18.0.5, lite single-thread WASM), free software under the <a href="vendor/stockfish/LICENSE" target="_blank" rel="noopener">GNU GPLv3</a>. It runs entirely in your browser.</p>
+ <p class="sub sm" style="margin:4px 0 0;line-height:1.4">Master portraits are AI-generated artistic interpretations; Carlsen- and Kasparov-inspired characters are fictional archetypes. Capablanca excerpts: <i>Chess Fundamentals</i> (1921), Project Gutenberg eBook #33870, public domain in the USA.</p>
+</div>
+<main id="view"></main>
+<script src="vendor/chess.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body></html>

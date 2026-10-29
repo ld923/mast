@@ -1,0 +1,152 @@
+{
+ "source": "José Raúl Capablanca, Chess Fundamentals (1921). Project Gutenberg eBook #33870, public domain in the USA.",
+ "ebook": 33870,
+ "title": "Chess Fundamentals",
+ "year": 1921,
+ "excerpts": [
+  {
+   "text": "The first thing a student should do, is to familiarise himself with the power of the pieces. This can best be done by learning how to accomplish quickly some of the simple mates.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 33
+  },
+  {
+   "text": "The principle is to drive the opposing King to the last line on any side of the board.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 18
+  },
+  {
+   "text": "It has taken fourteen moves to force the mate and, in any position, it should be done in under thirty.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 20
+  },
+  {
+   "text": "If the opposing King is directly in front of the Pawn, then the game cannot be won. This can best be explained by the following examples.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 26
+  },
+  {
+   "text": "For all general theoretical purposes the Bishop and the Knight have to be considered as of the same value, though it is my opinion that the Bishop will prove the more valuable piece in most cases; and it is well known that two Bishops are almost always better than two Knights.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 51
+  },
+  {
+   "text": "A Bishop and a Rook are also stronger than a Knight and a Rook, but a Queen and a Knight may be stronger than a Queen and a Bishop.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 29
+  },
+  {
+   "text": "A Bishop will often be worth more than three Pawns, but a Knight very seldom so, and may even not be worth so much.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 24
+  },
+  {
+   "text": "A Rook will be worth a Knight and two Pawns, or a Bishop and two Pawns, but, as said before, the Bishop will be a better piece against the Rook.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 30
+  },
+  {
+   "text": "Two Rooks are slightly stronger than a Queen. They are slightly weaker than two Knights and a Bishop, and a little more so than two Bishops and a Knight. The power of the Knight decreases as the pieces are changed off. The power of the Rook, on the contrary, increases.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 50
+  },
+  {
+   "text": "The King, a purely defensive piece throughout the middle-game, becomes an offensive piece once all the pieces are off the board, and sometimes even when there are one or two minor pieces left. The handling of the King becomes of paramount importance once the end-game stage is reached.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Middlegame",
+   "words": 48
+  },
+  {
+   "text": "The main thing is to develop the pieces quickly. Get them into play as fast as you can.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Opening",
+   "words": 18
+  },
+  {
+   "text": "Before development has been completed no piece should be moved more than once, unless it is essential in order to obtain either material advantage or to secure freedom of action.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Opening",
+   "words": 30
+  },
+  {
+   "text": "The beginner would do well to remember this, as well as what has already been stated: viz., bring out the Knights before bringing out the Bishops.",
+   "chapter": "Chapter I: First Principles: Endings, Middle-Game and Openings",
+   "phase": "Endgame",
+   "words": 26
+  },
+  {
+   "text": "It is in this analytical way that the student should try to learn. He will thus train his mind to follow a logical sequence in reasoning out any position. This example is excellent training, since it is easy to divide it into three stages and to explain the main point of each part.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "General",
+   "words": 53
+  },
+  {
+   "text": "When two Pawns are free, or will be free, to advance to Queen, you can find out, by counting, which Pawn will be the first to succeed.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 27
+  },
+  {
+   "text": "When Kings have to be moved, and one player can, by force, bring his King into a position similar to the one shown in the following diagram, so that his adversary is forced to move and make way for him, the player obtaining that advantage is said to have the opposition.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 51
+  },
+  {
+   "text": "Before turning our attention to this matter it is well to state now that two Knights alone cannot mate, but, under certain conditions of course, they can do so if the opponent has one or more Pawns.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 37
+  },
+  {
+   "text": "When the opponent has a Bishop, keep your Pawns on squares of the same colour as your opponent's Bishop.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 19
+  },
+  {
+   "text": "Whenever you have a Bishop, whether the opponent has also one or not, keep your Pawns on squares of the opposite colour to that of your own Bishop.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 28
+  },
+  {
+   "text": "With a Knight and a Bishop the mate can only be given in the corners of the same colour as the Bishop.",
+   "chapter": "Chapter II: Further Principles in End-Game Play",
+   "phase": "Endgame",
+   "words": 22
+  },
+  {
+   "text": "The winning of a Pawn among good players of even strength often means the winning of the game.",
+   "chapter": "Chapter III: Planning a Win in Middle-Game Play",
+   "phase": "Endgame",
+   "words": 18
+  },
+  {
+   "text": "Direct and violent attacks against the King must be carried en masse, with full force, to ensure their success. The opposition must be overcome at all cost; the attack cannot be broken off, since in all such cases that means defeat.",
+   "chapter": "Chapter IV: General Theory",
+   "phase": "Middlegame",
+   "words": 41
+  },
+  {
+   "text": "The fact that out of one apparently simple ending we have been able to work out several most unusual and difficult endings should be sufficient to impress upon the student's mind the necessity of becoming well acquainted with all kinds of endings, and especially with endings of Rook and Pawns.",
+   "chapter": "Chapter V: End-Game Strategy",
+   "phase": "Endgame",
+   "words": 50
+  },
+  {
+   "text": "There is one more thing of great importance, and that is that the winning side has always had a general strategical plan capable of being carried out with the means at his disposal, while often the losing side had no plan at all, but simply moved according to the needs of the moment.",
+   "chapter": "Chapter V: End-Game Strategy",
+   "phase": "General",
+   "words": 53
+  }
+ ]
+}

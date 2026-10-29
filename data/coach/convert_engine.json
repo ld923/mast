@@ -1,0 +1,1052 @@
+[
+ {
+  "id": "cv000",
+  "fen": "8/2k4p/6p1/pp3n2/8/P2RB3/1bP2PPP/6K1 w - - 5 29",
+  "before": 558,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122458764690"
+ },
+ {
+  "id": "cv001",
+  "fen": "8/p3k3/1pp1P3/4K2p/1P2R2P/1r6/8/8 b - - 0 42",
+  "before": 385,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123048974544"
+ },
+ {
+  "id": "cv002",
+  "fen": "8/8/8/2K5/4qk2/8/3b4/8 b - - 3 71",
+  "before": 986,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122882481998"
+ },
+ {
+  "id": "cv003",
+  "fen": "1N6/8/K7/2kP1p2/3R1P2/8/8/8 w - - 1 52",
+  "before": 1000,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123179725986"
+ },
+ {
+  "id": "cv004",
+  "fen": "5Q2/5p1p/5kp1/2Q2p2/8/6PP/5P1K/4q3 w - - 3 44",
+  "before": 997,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123063511762"
+ },
+ {
+  "id": "cv005",
+  "fen": "8/5R2/2pk4/2Np4/1p1P3P/8/1P2n1K1/8 w - - 7 39",
+  "before": 999,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122466482172"
+ },
+ {
+  "id": "cv006",
+  "fen": "8/8/8/2k5/4Q3/4K3/8/8 w - - 7 56",
+  "before": 1000,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/121890468714"
+ },
+ {
+  "id": "cv007",
+  "fen": "r5k1/ppp3pp/8/3PR3/3R4/5B2/PPb4r/K7 b - - 0 21",
+  "before": 585,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/140713681636"
+ },
+ {
+  "id": "cv008",
+  "fen": "8/5R2/8/3N4/2P5/KP1r2k1/P4p2/8 w - - 0 61",
+  "before": 529,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122428618492"
+ },
+ {
+  "id": "cv009",
+  "fen": "1k6/5r2/8/p1Q5/6P1/2P2K2/PP6/8 w - - 1 48",
+  "before": 820,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122738180642"
+ },
+ {
+  "id": "cv010",
+  "fen": "8/8/8/5p2/6Pp/1KR5/P5k1/8 w - - 6 50",
+  "before": 876,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/6196579198"
+ },
+ {
+  "id": "cv011",
+  "fen": "8/7p/p7/6p1/1NP1k1P1/5pKP/PP2r3/8 b - - 2 41",
+  "before": 999,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122505964626"
+ },
+ {
+  "id": "cv012",
+  "fen": "8/5p1p/p1k1b3/2P3p1/1P1Kp3/4P1P1/P6P/8 b - - 0 33",
+  "before": 513,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/132484789123"
+ },
+ {
+  "id": "cv013",
+  "fen": "8/5RR1/6bk/8/4pPpp/P7/2P3P1/2K5 w - - 2 32",
+  "before": 795,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/140440453134"
+ },
+ {
+  "id": "cv014",
+  "fen": "8/8/8/KPq5/8/2P3k1/8/8 b - - 6 46",
+  "before": 634,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122841564748"
+ },
+ {
+  "id": "cv015",
+  "fen": "8/8/8/3k4/6Q1/4K3/8/8 w - - 5 55",
+  "before": 993,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/121890468714"
+ },
+ {
+  "id": "cv016",
+  "fen": "8/1p6/p2N4/7p/7P/PPk1p3/8/4K3 w - - 6 52",
+  "before": 481,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123092744478"
+ },
+ {
+  "id": "cv017",
+  "fen": "8/8/8/8/2K2k2/8/3b4/4q3 b - - 1 70",
+  "before": 982,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122882481998"
+ },
+ {
+  "id": "cv018",
+  "fen": "8/pR1R2pk/7p/8/8/P1P1N3/2PK1P2/6r1 w - - 4 36",
+  "before": 964,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/141613180764"
+ },
+ {
+  "id": "cv019",
+  "fen": "3r1k2/5N1p/4Pp2/p1r2P2/8/2P3RP/P6K/8 w - - 0 36",
+  "before": 641,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122224648930"
+ },
+ {
+  "id": "cv020",
+  "fen": "8/p7/1p4P1/8/2P5/1BP1n3/P3rkRp/7K b - - 2 41",
+  "before": 733,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136614684076"
+ },
+ {
+  "id": "cv021",
+  "fen": "R7/8/p7/k7/4P1Kp/4r2P/6P1/8 w - - 10 46",
+  "before": 477,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136615380084"
+ },
+ {
+  "id": "cv022",
+  "fen": "8/8/8/8/3K2k1/5q2/8/8 b - - 5 53",
+  "before": 991,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136466688870"
+ },
+ {
+  "id": "cv023",
+  "fen": "8/8/8/5p2/6Pp/4R3/PK1R4/5k2 w - - 4 46",
+  "before": 997,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/6196579198"
+ },
+ {
+  "id": "cv024",
+  "fen": "8/8/KP4q1/P7/8/5k2/8/8 b - - 0 45",
+  "before": 574,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/140242633676"
+ },
+ {
+  "id": "cv025",
+  "fen": "8/pp4R1/2p5/8/6P1/1P3k2/PKP5/6r1 w - - 1 40",
+  "before": 545,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122291133840"
+ },
+ {
+  "id": "cv026",
+  "fen": "1R3b1r/1p1k1p1p/1p2pp2/7P/2B5/2K3B1/7P/8 w - - 2 26",
+  "before": 998,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/121965710108"
+ },
+ {
+  "id": "cv027",
+  "fen": "8/6pp/8/8/1k2B3/1pp1P3/5PPP/2K5 w - - 0 32",
+  "before": 480,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123349150856"
+ },
+ {
+  "id": "cv028",
+  "fen": "5r1k/p4ppp/8/1pPN4/1P2b3/8/P6P/2R3K1 w - - 2 31",
+  "before": 309,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122225235468"
+ },
+ {
+  "id": "cv029",
+  "fen": "6k1/p1p1p3/4bp2/8/2PK4/3N4/2P2PPP/4r3 b - - 0 27",
+  "before": 650,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/84299491427"
+ },
+ {
+  "id": "cv030",
+  "fen": "8/pp5p/4k1p1/7r/6K1/PR5P/8/8 b - - 7 41",
+  "before": 500,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/123267619032"
+ },
+ {
+  "id": "cv031",
+  "fen": "8/8/6p1/2p4p/1pP4P/1P3KP1/1k2Q3/q7 b - - 1 45",
+  "before": 657,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122503630762"
+ },
+ {
+  "id": "cv032",
+  "fen": "8/p1r3pp/6k1/1B3p2/2PB4/1P6/P4PPP/4R1K1 w - - 5 37",
+  "before": 919,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/6509678159"
+ },
+ {
+  "id": "cv033",
+  "fen": "8/1Q6/2K5/8/8/k7/8/8 w - - 7 58",
+  "before": 997,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/119404468932"
+ },
+ {
+  "id": "cv034",
+  "fen": "8/8/8/8/6k1/4K3/8/7q b - - 1 51",
+  "before": 995,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136466688870"
+ },
+ {
+  "id": "cv035",
+  "fen": "3r4/6pk/5p1p/pRP4P/P5P1/3r4/1PKp4/3R4 w - - 4 34",
+  "before": 426,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/141946065008"
+ },
+ {
+  "id": "cv036",
+  "fen": "5r2/1p2n2R/2p1B3/p6R/5k2/1KP5/PP4r1/8 w - - 2 35",
+  "before": 614,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/140691817098"
+ },
+ {
+  "id": "cv037",
+  "fen": "3R4/6pk/6p1/6Pp/5P1P/pPPK4/P7/4r3 w - - 3 33",
+  "before": 469,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136616078478"
+ },
+ {
+  "id": "cv038",
+  "fen": "2k5/1pr2ppp/pR2p3/P7/3K4/P6P/5PP1/8 b - - 6 37",
+  "before": 485,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122291995822"
+ },
+ {
+  "id": "cv039",
+  "fen": "8/4k2p/R5p1/5p2/P7/6P1/1r3PKP/8 w - - 3 34",
+  "before": 362,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122549211208"
+ },
+ {
+  "id": "cv040",
+  "fen": "rr6/4p2p/3k4/3P1pN1/1pn5/5B1P/5PP1/2R3K1 b - - 1 32",
+  "before": 530,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122505083414"
+ },
+ {
+  "id": "cv041",
+  "fen": "8/4P1N1/2p5/8/p1kP4/1p3K2/P7/3B4 w - - 0 42",
+  "before": 885,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122249643414"
+ },
+ {
+  "id": "cv042",
+  "fen": "3r4/5ppp/5k2/8/4n3/1P1bN3/P4PPP/4R1K1 b - - 3 23",
+  "before": 449,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/112131618445"
+ },
+ {
+  "id": "cv043",
+  "fen": "r4rk1/3p1pbp/p5p1/6B1/8/3P4/5P1P/R3RK2 b - - 0 22",
+  "before": 674,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/136810547782"
+ },
+ {
+  "id": "cv044",
+  "fen": "8/2k4p/3n2p1/pp6/6P1/P2RB3/1bP2P1P/6K1 w - - 1 30",
+  "before": 701,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122458764690"
+ },
+ {
+  "id": "cv045",
+  "fen": "6k1/7p/2p2p2/1p2pP1P/1P1nK3/P1r5/5P2/7R b - - 0 33",
+  "before": 995,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122912669992"
+ },
+ {
+  "id": "cv046",
+  "fen": "5rk1/6pp/4b3/8/Pp1B1N2/6KP/3r2P1/2R5 b - - 2 27",
+  "before": 567,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/141612640248"
+ },
+ {
+  "id": "cv047",
+  "fen": "8/1PKb4/6pp/k7/8/6P1/7P/8 w - - 1 50",
+  "before": 956,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/139589472130"
+ },
+ {
+  "id": "cv048",
+  "fen": "8/8/8/8/1r4p1/6K1/2k5/1R6 b - - 0 76",
+  "before": 616,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122466622306"
+ },
+ {
+  "id": "cv049",
+  "fen": "8/4r1p1/4k2p/8/6KP/5R2/8/4b3 b - - 6 45",
+  "before": 527,
+  "phase": "endgame",
+  "src": "https://www.chess.com/game/live/122829053446"
+ },
+ {
+  "id": "cv050",
+  "fen": "2b1k2r/3pbppp/1B5n/1R6/8/4P3/P4PPP/3K1B1R w - - 1 19",
+  "before": 697,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/136104219830"
+ },
+ {
+  "id": "cv051",
+  "fen": "6k1/pppq1ppp/8/3p4/3n4/P3rP2/2Q1B1PP/R3R1K1 w - - 0 21",
+  "before": 661,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/123168771618"
+ },
+ {
+  "id": "cv052",
+  "fen": "r5k1/6bp/3p2p1/2pNn3/p1P1P3/P7/1P2pNPP/2R3K1 b - - 1 31",
+  "before": 598,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/142105795936"
+ },
+ {
+  "id": "cv053",
+  "fen": "rr4k1/p2bq1bp/R2p2p1/2pP1p2/4p3/2NnP1PP/1PQPRPB1/2B3K1 b - - 0 19",
+  "before": 880,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122194229818"
+ },
+ {
+  "id": "cv054",
+  "fen": "3r2k1/p3r1pp/4Pp2/2P2P2/2n1N1P1/2Pp3P/P7/3RK2R w K - 1 27",
+  "before": 506,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122224648930"
+ },
+ {
+  "id": "cv055",
+  "fen": "r1bqnrk1/4b1pp/p1n4B/2pNp3/2p5/3P1NQ1/PPP3PP/R4RK1 b - - 1 15",
+  "before": 776,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/137998636622"
+ },
+ {
+  "id": "cv056",
+  "fen": "1rn3k1/pN3p1p/P1p1p1p1/1r1pP3/8/4P3/3B1PPP/R4K2 b - - 0 24",
+  "before": 578,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/121890595684"
+ },
+ {
+  "id": "cv057",
+  "fen": "3r2nr/pp2kp1p/6p1/1b1P4/1Q1bPq2/3p1P2/PP4PP/R3K2R b KQ - 1 19",
+  "before": 783,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/88626731333"
+ },
+ {
+  "id": "cv058",
+  "fen": "r4rk1/pp2npb1/2ppp3/q3n1Q1/4P3/1BNP3P/PPP2PP1/R3R1K1 b - - 0 16",
+  "before": 855,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141994771938"
+ },
+ {
+  "id": "cv059",
+  "fen": "7k/pp2r3/2q1b1p1/4Pp2/8/3B4/PPPQ4/2K4R b - - 1 27",
+  "before": 797,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/136031941320"
+ },
+ {
+  "id": "cv060",
+  "fen": "R4b1r/1p3ppp/1p1kpr2/4N2P/2B5/2K3B1/7P/8 w - - 0 23",
+  "before": 718,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/121965710108"
+ },
+ {
+  "id": "cv061",
+  "fen": "r5k1/5pp1/pr1pq2p/3R4/3P4/2P1P2P/1PQ2PP1/R5K1 w - - 3 23",
+  "before": 543,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141995084496"
+ },
+ {
+  "id": "cv062",
+  "fen": "2kr4/ppp3p1/3b1qpr/3P1p2/8/P2P1Q2/1P2NPPP/R4RK1 b - - 2 19",
+  "before": 707,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/123365139680"
+ },
+ {
+  "id": "cv063",
+  "fen": "r2qr1k1/ppp2ppp/3b4/4n3/1PP1P3/P4NP1/1B3P1P/2RQ1RK1 w - - 1 19",
+  "before": 304,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122089052898"
+ },
+ {
+  "id": "cv064",
+  "fen": "6rr/pp1kb2p/2b1p3/2p1P3/3p1Q2/P2q3P/3N1PP1/R1R1N1K1 b - - 3 21",
+  "before": 579,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122521975282"
+ },
+ {
+  "id": "cv065",
+  "fen": "3r3r/p1R2ppp/1p6/2p5/2k2B2/2N5/PPP4P/2KR4 w - - 7 24",
+  "before": 1000,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/88628421615"
+ },
+ {
+  "id": "cv066",
+  "fen": "r4k1r/p2nn1p1/1p1Np1bp/4Pp2/1P6/Q5P1/P1P4P/2KR3R w - - 3 21",
+  "before": 841,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/139589472130"
+ },
+ {
+  "id": "cv067",
+  "fen": "3r3r/2pkq3/Q1p2n1p/3p2p1/2NR4/2P5/PP3PPP/R5K1 w - - 2 19",
+  "before": 472,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141783500292"
+ },
+ {
+  "id": "cv068",
+  "fen": "1r3rk1/q4ppp/1R2pn2/1nPpN3/1Q6/1P2P3/2B2PPP/5RK1 w - - 3 23",
+  "before": 754,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122939812848"
+ },
+ {
+  "id": "cv069",
+  "fen": "2r1r1k1/5pp1/p1pBp2p/qpP5/1n1P1PP1/2N5/1Q5P/2KR3R w - - 5 27",
+  "before": 476,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141597814346"
+ },
+ {
+  "id": "cv070",
+  "fen": "r2q1rk1/pp2nppp/2n5/2Pbp3/3p4/P1PB3Q/1B1P1PPP/RN2K2R b KQ - 2 13",
+  "before": 465,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122970940968"
+ },
+ {
+  "id": "cv071",
+  "fen": "1k2r2r/ppp2pp1/8/2qp4/8/1PNQ2p1/P1P1RPP1/R5K1 w - - 2 22",
+  "before": 340,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/101359333103"
+ },
+ {
+  "id": "cv072",
+  "fen": "r3q2k/3R2bp/p5p1/3Q1p2/3P3N/6P1/PP3P1P/6K1 w - - 0 25",
+  "before": 624,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122549211208"
+ },
+ {
+  "id": "cv073",
+  "fen": "2kr1b1r/pp2n1pp/2pp1p2/qP2p2b/P1B1P3/1QP1BN1P/3N1PP1/R4RK1 w - - 4 16",
+  "before": 935,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122829494512"
+ },
+ {
+  "id": "cv074",
+  "fen": "2rqk2r/pp2bppB/3p4/3np3/2P3b1/P4N2/2Q2PPP/R1B1K2R b KQk - 0 15",
+  "before": 533,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/136763541016"
+ },
+ {
+  "id": "cv075",
+  "fen": "r2qr1k1/1b3pbp/pp4p1/2pn2N1/5P2/1P6/P3PPBP/2QR1RK1 b - - 6 21",
+  "before": 529,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122278135094"
+ },
+ {
+  "id": "cv076",
+  "fen": "6k1/4qpbR/6R1/5p2/2N2P2/2nrPQ2/r6P/2B1K3 b - - 0 25",
+  "before": 907,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/129586421211"
+ },
+ {
+  "id": "cv077",
+  "fen": "rnb2rk1/1p3p1p/p1p1pQpB/3pN3/3q4/1Pb1P3/P1P2PPP/R2K1B1R w - - 0 13",
+  "before": 998,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/139408256244"
+ },
+ {
+  "id": "cv078",
+  "fen": "6k1/3q1ppp/1p2p3/2b1P3/3pP3/6P1/rBQ2PKP/1R6 b - - 3 27",
+  "before": 561,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122528075006"
+ },
+ {
+  "id": "cv079",
+  "fen": "6k1/5pbp/3p2p1/1q2p3/4P3/P1pP3P/1r3PP1/R1BQ2K1 b - - 2 32",
+  "before": 566,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141631670632"
+ },
+ {
+  "id": "cv080",
+  "fen": "r2q1rk1/5pbp/3pbnp1/2p5/p1BpP3/P2Q1P2/1PP1N1PP/R2N1RK1 b - - 3 17",
+  "before": 420,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/142105795936"
+ },
+ {
+  "id": "cv081",
+  "fen": "rnbq1rk1/4pp1p/p1p2np1/1p1pN3/3PP3/2NB4/PPPQ1PP1/2KR3R w - - 1 14",
+  "before": 551,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141891666462"
+ },
+ {
+  "id": "cv082",
+  "fen": "2r3k1/5ppp/pq1p1b2/1p1Pp3/8/N1PP1Q1P/P4PP1/2R3K1 b - - 2 22",
+  "before": 310,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122882481998"
+ },
+ {
+  "id": "cv083",
+  "fen": "1r2kbnr/Nb1pp2p/1qp3p1/p3P3/3PQN2/8/PPP2PPP/R3K2R b KQk - 2 14",
+  "before": 821,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/128453029991"
+ },
+ {
+  "id": "cv084",
+  "fen": "r5k1/p1p3pp/3p4/1p2p3/4P3/7P/Pq4P1/2R1Q2K b - - 0 24",
+  "before": 423,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/140763198920"
+ },
+ {
+  "id": "cv085",
+  "fen": "r2q1r2/p2b1pk1/1p1Pp1p1/4P1Nn/2BpN2Q/8/PP3P1P/5RK1 w - - 0 24",
+  "before": 328,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/142365637644"
+ },
+ {
+  "id": "cv086",
+  "fen": "5rk1/pb2q3/1p4rp/2pP1pp1/2P1p3/2Q4R/PPB3PP/5RK1 b - - 3 26",
+  "before": 322,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122842583488"
+ },
+ {
+  "id": "cv087",
+  "fen": "r1b2knr/p6p/1pP2p2/2bNp1B1/8/5Q2/PqP3PP/3RKB1R w - - 2 17",
+  "before": 841,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/daily/0"
+ },
+ {
+  "id": "cv088",
+  "fen": "1q5r/pp3kpp/4p3/8/1Q6/6P1/P1P1PPBP/4K2R w K - 6 24",
+  "before": 875,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/141784002976"
+ },
+ {
+  "id": "cv089",
+  "fen": "2b1k2r/pp2bppp/4p3/1N1pP3/QP1q4/3B4/P4PPP/4K2R w Kk - 0 17",
+  "before": 841,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122612445634"
+ },
+ {
+  "id": "cv090",
+  "fen": "r2qr1k1/ppp1ppb1/2n3p1/6N1/3P3P/2PBP3/P1Q2PP1/3K3R b - - 0 14",
+  "before": 313,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122425890804"
+ },
+ {
+  "id": "cv091",
+  "fen": "3r4/5pk1/R6p/1p6/1Pb1PN2/2P2P2/3r2PP/R5K1 w - - 1 28",
+  "before": 576,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122418225672"
+ },
+ {
+  "id": "cv092",
+  "fen": "2krr3/Qpp3pp/3b1p2/3Pp3/1q6/3P2N1/PP1B1PPP/n2R2K1 b - - 1 20",
+  "before": 399,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/123423381094"
+ },
+ {
+  "id": "cv093",
+  "fen": "r6r/p3n1pp/2pk4/2N2p2/1n1P4/4P3/PP3PPP/R3K1NR w KQ - 0 18",
+  "before": 585,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122139943798"
+ },
+ {
+  "id": "cv094",
+  "fen": "5rk1/1p1P1ppp/p3p3/P2p4/5r2/8/P1P2PPP/R3R1K1 b - - 0 21",
+  "before": 501,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122291995822"
+ },
+ {
+  "id": "cv095",
+  "fen": "2kr1b1r/pbp2p1p/1p3np1/1q1p2N1/5B2/P7/B1Q1RPPP/R5K1 w - - 0 20",
+  "before": 999,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122224781108"
+ },
+ {
+  "id": "cv096",
+  "fen": "2k2r1r/ppp2qp1/3p2pp/4p3/1b2P1P1/3P1N1P/PPP1Q1B1/2KR3R w - - 0 17",
+  "before": 645,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122429105796"
+ },
+ {
+  "id": "cv097",
+  "fen": "r3k3/1pq2p1r/6bp/p1b3p1/PnQ1P1P1/1BP4P/1P3P2/2KR3R b q - 2 22",
+  "before": 734,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/136473334306"
+ },
+ {
+  "id": "cv098",
+  "fen": "3k4/2r2p1p/1Q2p1p1/p2p4/P7/7P/3q1PP1/1R4K1 b - - 3 35",
+  "before": 305,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/110145086733"
+ },
+ {
+  "id": "cv099",
+  "fen": "2kr1b1r/ppq1n1pp/2pp1p2/1P2p2b/PQB1P3/2P1BN1P/3N1PP1/R4RK1 w - - 6 17",
+  "before": 963,
+  "phase": "middlegame",
+  "src": "https://www.chess.com/game/live/122829494512"
+ },
+ {
+  "id": "cv100",
+  "fen": "r1bqk2r/ppppnppp/3b4/8/3QP3/2N5/PPP2PPP/R1B1KB1R w KQkq - 3 7",
+  "before": 343,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122501097208"
+ },
+ {
+  "id": "cv101",
+  "fen": "r1bqkb1r/pp1p1pp1/4pn1p/2p1n3/2B1P3/1Q1P3N/PPP2PPP/RNB1K1R1 b Qkq - 0 7",
+  "before": 389,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122547873456"
+ },
+ {
+  "id": "cv102",
+  "fen": "3q1bnr/ppN1pppp/5k2/3p1b2/Q2P1B2/8/PP1KPPPP/n4BNR w - - 4 10",
+  "before": 678,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/136636600588"
+ },
+ {
+  "id": "cv103",
+  "fen": "1rbq1knr/ppN2pbp/6p1/3p4/5B2/4PP2/PPP2P1P/R2QKB1R w KQ - 1 10",
+  "before": 673,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/139183684910"
+ },
+ {
+  "id": "cv104",
+  "fen": "r1bqk2r/2p1n1bp/2nPp1p1/1p6/8/1P3N2/PBP2PPP/RN1Q1RK1 b kq - 0 12",
+  "before": 820,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122249117194"
+ },
+ {
+  "id": "cv105",
+  "fen": "r2qk1nr/pb2ppbp/npp3p1/3P4/2B5/BPN1P3/P2P1PPP/R2QK1NR w KQkq - 2 8",
+  "before": 364,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/88627280215"
+ },
+ {
+  "id": "cv106",
+  "fen": "r3kb2/1pp2Npr/p1npqn1p/3Np3/4P3/P2P4/1PP2PPP/R1BQK2R b KQq - 1 11",
+  "before": 599,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/136662892650"
+ },
+ {
+  "id": "cv107",
+  "fen": "rnb1kb1r/pppp1ppp/5n2/4q3/2B5/3PB3/PPP2PPP/RN1Q1RK1 b kq - 1 7",
+  "before": 588,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/121890325022"
+ },
+ {
+  "id": "cv108",
+  "fen": "r2q4/ppp2kpp/1bn1bn2/3pp3/1P2P3/2PPB2P/P4PP1/RN1Q1RK1 b - - 2 12",
+  "before": 573,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/123069052008"
+ },
+ {
+  "id": "cv109",
+  "fen": "rnbqk1nr/p1p2ppp/1p2p3/8/1b1P4/2N1PN2/PP3PPP/R1BQKB1R w KQkq - 4 7",
+  "before": 785,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122918308910"
+ },
+ {
+  "id": "cv110",
+  "fen": "rn1qk1nr/3p1pbp/ppp1p1p1/4P3/2BP4/2N2Q2/PPP2PPP/R1B2RK1 w kq - 0 9",
+  "before": 546,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122458764690"
+ },
+ {
+  "id": "cv111",
+  "fen": "rnb1kbnr/pp3ppp/8/q1PpP3/8/4BN2/3N1PPP/1R1QKB1R w Kkq - 1 11",
+  "before": 343,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122504751916"
+ },
+ {
+  "id": "cv112",
+  "fen": "rnb1kbnr/pp3ppp/8/1RPpP3/8/q3BN2/3N1PPP/3QKB1R w Kkq - 3 12",
+  "before": 354,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122504751916"
+ },
+ {
+  "id": "cv113",
+  "fen": "r3kb1r/1p2pppp/1pn2n2/4N2b/3PPB2/2N5/PP3PPP/R3KB1R w KQkq - 0 12",
+  "before": 607,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/121965710108"
+ },
+ {
+  "id": "cv114",
+  "fen": "r1bqkbnr/pp3ppp/2n5/2pP4/2p5/2P2N2/PP3PPP/RNBQK2R b KQkq - 0 7",
+  "before": 647,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122841564748"
+ },
+ {
+  "id": "cv115",
+  "fen": "r1bqkbnr/ppp2ppp/2n5/8/3PP3/8/PP4PP/RNBQKBNR b KQkq - 0 6",
+  "before": 438,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/51193832427"
+ },
+ {
+  "id": "cv116",
+  "fen": "1q2kb1r/2p1pppp/p4n2/3p1b2/3P1B2/8/PPP1PPPP/R2QKB1R w KQk - 0 11",
+  "before": 414,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141634159764"
+ },
+ {
+  "id": "cv117",
+  "fen": "rnbq1rk1/pp1nb1pp/4p3/3pp3/2PN4/3B1N2/PP3PPP/R1BQR1K1 w - - 0 12",
+  "before": 750,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/140944100860"
+ },
+ {
+  "id": "cv118",
+  "fen": "r1bqkb1r/1p3ppp/p1n1p1n1/3pP1B1/3p4/NB1Q1N2/PPP2PPP/R4RK1 b kq - 5 10",
+  "before": 348,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/136471934590"
+ },
+ {
+  "id": "cv119",
+  "fen": "r2qkb1r/pp2npp1/2n3b1/2pp2Pp/7P/P2P1N2/BPP2P2/RNBQK2R b KQkq - 0 11",
+  "before": 309,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141607058302"
+ },
+ {
+  "id": "cv120",
+  "fen": "r2qkbnr/ppp3pp/2n5/3pB3/6b1/P1N1PN2/1PP2PPP/R2QKB1R w KQkq - 1 9",
+  "before": 463,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/123525659606"
+ },
+ {
+  "id": "cv121",
+  "fen": "rnbqk1nr/ppp3pp/8/b2pB3/8/P3P3/2PP1PPP/RN1QKB1R b KQkq - 0 7",
+  "before": 550,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122504619298"
+ },
+ {
+  "id": "cv122",
+  "fen": "r1bqk2r/ppp4p/2np2p1/3Npp2/1PPb4/P4N2/3PQ1PP/R1BK1B1R w kq - 2 12",
+  "before": 312,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/132756540605"
+ },
+ {
+  "id": "cv123",
+  "fen": "rnb1kb1r/pp2q1pp/2p1p3/4P3/3PpB2/6P1/PPP1Q2P/R3KBNR w KQkq - 1 11",
+  "before": 558,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141606435546"
+ },
+ {
+  "id": "cv124",
+  "fen": "rnbqk1nr/p1p3pp/1p3p2/b2pp3/1P1P4/P1P1PP2/5KPP/RNBQ1BNR w kq - 0 8",
+  "before": 732,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/119566268225"
+ },
+ {
+  "id": "cv125",
+  "fen": "rn2kb1r/ppp1qp1p/3p2p1/3P4/4p3/5P2/PPP1Q1PP/RNB1K2R b KQkq - 0 10",
+  "before": 373,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/6196496731"
+ },
+ {
+  "id": "cv126",
+  "fen": "rnbqkbnr/ppppp2p/5p2/6p1/4PP2/8/PPPP2PP/RNBQKBNR w KQkq - 0 3",
+  "before": 999,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/143818811205"
+ },
+ {
+  "id": "cv127",
+  "fen": "r1bqkbnr/ppp3pp/2n5/1B1ppP2/8/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 5",
+  "before": 528,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/121813112000"
+ },
+ {
+  "id": "cv128",
+  "fen": "r4rk1/pbp1npbp/1pn1p1p1/3q2B1/3P4/2PB1N2/PP1N1PPP/R2QR1K1 w - - 0 11",
+  "before": 713,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/166776715776"
+ },
+ {
+  "id": "cv129",
+  "fen": "rnb1kb1r/1p3p1p/pqp1p1p1/3pN1Q1/3P1B2/2N1P3/PPP2PPP/R3KB1R w KQkq - 2 9",
+  "before": 900,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/139408256244"
+ },
+ {
+  "id": "cv130",
+  "fen": "r3kbnr/5ppp/pQ1pbq2/1p6/4P3/1P6/1PP2PPP/RNB1K2R b KQkq - 2 12",
+  "before": 304,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/119463686578"
+ },
+ {
+  "id": "cv131",
+  "fen": "rn1qr1k1/pppb1pbp/3p1np1/4p1B1/3P4/2PBPN1P/PP3PP1/RN1Q1RK1 b - - 1 9",
+  "before": 579,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/136649595730"
+ },
+ {
+  "id": "cv132",
+  "fen": "r1bqk1nr/ppp2ppp/3p4/8/1bnP4/2N2N2/PP2P1PP/R1BQKB1R w KQkq - 0 7",
+  "before": 584,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122842936262"
+ },
+ {
+  "id": "cv133",
+  "fen": "r1b2rk1/pp1p1ppp/2n2p2/q1b5/8/P1N1P3/1PP1NPPP/R2QKB1R w KQ - 1 10",
+  "before": 619,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141600757792"
+ },
+ {
+  "id": "cv134",
+  "fen": "r2qkbnr/ppp2ppp/2np4/4N3/2B1P1b1/2N5/PPPP1PPP/R1BQK2R b KQkq - 0 5",
+  "before": 478,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/4690978974"
+ },
+ {
+  "id": "cv135",
+  "fen": "r3k2r/pppb1ppp/1qn2n2/1N2p3/Q7/P3PN2/3P1PPP/R1B1KB1R w KQkq - 6 12",
+  "before": 522,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122918080672"
+ },
+ {
+  "id": "cv136",
+  "fen": "r2qk1nr/pp3ppp/n1p1p3/3pPb2/1bPP4/P4N2/1P3PPP/RNBQKB1R w KQkq - 1 7",
+  "before": 647,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122466104310"
+ },
+ {
+  "id": "cv137",
+  "fen": "r1bq1bnr/ppp2kp1/2np3p/4p3/2BPP3/8/PPP2PPP/RNBQK2R b KQ - 1 6",
+  "before": 400,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/123100047242"
+ },
+ {
+  "id": "cv138",
+  "fen": "Nn1k1b1r/pp2pppp/2pp4/5b2/2qP4/5P2/PPPQN1PP/R3K2R w KQ - 1 12",
+  "before": 344,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122291058032"
+ },
+ {
+  "id": "cv139",
+  "fen": "r1b1k1nr/pppp1ppp/8/2b1P3/1n1N4/q1N5/P1PBPPPP/1R1QKB1R w Kkq - 6 9",
+  "before": 777,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122069500104"
+ },
+ {
+  "id": "cv140",
+  "fen": "r3kbnr/pp3ppp/1qn1p1b1/2ppP3/3P4/2NBBN2/PPP2PPP/R2Q1RK1 w kq - 4 9",
+  "before": 329,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141749955460"
+ },
+ {
+  "id": "cv141",
+  "fen": "r1bqkb1r/pp1p1ppp/4pn2/1B6/N2pP3/8/PPPP1PPP/R1BQ1RK1 b kq - 1 7",
+  "before": 507,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/141612925210"
+ },
+ {
+  "id": "cv142",
+  "fen": "r2q1bnr/ppNkpppp/8/3p1b2/1n1P1B2/8/PPP1PPPP/R2QKBNR w KQ - 1 6",
+  "before": 375,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/136636600588"
+ },
+ {
+  "id": "cv143",
+  "fen": "rn1qkbnr/ppp4p/3p4/4p1pb/2B1Pp2/2NP1NPP/PPP2P2/R1BQK2R w KQkq - 1 8",
+  "before": 781,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122548211026"
+ },
+ {
+  "id": "cv144",
+  "fen": "N2q1b1r/pp2kp1p/4b1p1/3pP2n/4P3/8/PPP2PPP/R2QKBNR w KQ - 0 10",
+  "before": 920,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/140973638200"
+ },
+ {
+  "id": "cv145",
+  "fen": "r1bq1rk1/ppp2ppp/1b1p3B/7n/2nNP3/2P2Q2/PP3PPP/RN2R1K1 b - - 3 12",
+  "before": 846,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/123055835848"
+ },
+ {
+  "id": "cv146",
+  "fen": "r1bq1rk1/p4ppp/1pn2n2/2bPp3/8/1P1B1Q1P/PBP2PP1/RN2K1NR b KQ - 0 10",
+  "before": 431,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/122458491878"
+ },
+ {
+  "id": "cv147",
+  "fen": "r2qkb1r/ppp1p1pp/3p4/3P4/1nBNb3/8/PPPK1PPP/R1BQ3R w kq - 0 11",
+  "before": 567,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/5732702035"
+ },
+ {
+  "id": "cv148",
+  "fen": "r1bqk2r/pp1nbppp/2p1P3/1N1Q4/8/8/PPP1PPPP/R3KBNR w KQkq - 0 9",
+  "before": 738,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/142282514698"
+ },
+ {
+  "id": "cv149",
+  "fen": "r3kb1r/ppp2ppp/2p5/3qN3/4n1P1/5P1P/PPPPQ3/R1B1K2R b KQkq - 0 11",
+  "before": 669,
+  "phase": "opening",
+  "src": "https://www.chess.com/game/live/123419593352"
+ }
+]
