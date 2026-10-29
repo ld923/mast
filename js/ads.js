@@ -44,7 +44,7 @@ export const BR = {
     fu: ['Ready to press START?', 'D BoxStation: the past, played in the present.', 'Coming soon'] },
   gaffer: { name: 'The Gaffer', sub: 'Your FPL assistant manager', url: '', cta: 'Coming soon', cta2: 'Coming soon', dom: 'The Gaffer', v: null, who: 'Tempo', color: '#00A86B',
     icon: m('gaffer-icon.webp', 192, 192), hero: m('gaffer-logo.webp', 900, 330), fit: 'cover',
-    shots: ['shot-gaffer-week', 'shot-gaffer-squad'].map(s => A + s + '.webp'),
+    shots: ['shot-gaffer-panel', 'shot-gaffer-league', 'shot-gaffer-week', 'shot-gaffer-multiverse'].map(s => A + s + '.webp'),
     copy: ['Captained the wrong piece again? Let the Gaffer pick your FPL captain.', 'Blunders on the board, blunders in FPL. The Gaffer fixes one of them.', 'From the same crew: your Fantasy Premier League assistant manager.', 'Tal sacrifices queens. The Gaffer never sacrifices your bench.', 'Win chance 60%. Shame your blitz isn\'t.'],
     sets: [['Your FPL assistant manager', 'The Gaffer plans your transfers, captain and bench every gameweek.', 'Coming soon'], ['Head to head with your mates', 'Win chances, projected points and a crew of pundit managers.', 'Coming soon']] },
   robin: { name: 'Robin', sub: "Malta's electronics and home shops in one app", url: '', cta: 'Coming soon', cta2: 'Coming soon', dom: 'Robin', v: null, who: null, color: '#e8521f',
