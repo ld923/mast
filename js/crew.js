@@ -9,6 +9,7 @@ import { figure, figCSS } from './figures.js';
 import { insignia } from './prog-ui.js';
 import { rankIdx } from './progress.js';
 import { bubbleHook as SXb } from './secrets.js';
+import { speak } from './voice.js';
 import { recordCrew, moodEx, outfitOf, introOnce } from './crewstate.js';
 let CHAT = null; const chatter = () => CHAT || (CHAT = fetch('data/characters.json').then(r => r.json()).then(j => j.chatter || []).catch(() => []));
 const ORDER = ['Skipper', 'Morphy', 'Kasparov', 'Capablanca', 'Tal', 'Carlsen', 'Leela', 'Tempo'];
@@ -120,6 +121,7 @@ export class Crew {
     let txt = line || this.line(who, event, vars); ({ who, txt } = SXb(who, txt)); if (!this.f[who]) return; this.silent(who, ex, 4200);
     if (this.dg && (event === 'solve' || event === 'fail')) { const d = this.dg; this.dg = null; if (event === 'solve') { this.silent(d.winner, 'pleased', 5000); this.silent(d.loser, 'disappointed', 5000); txt = `${txt} (Engine verdict: ${d.winner} was right, ${d.loser} was not.)`; } }
     if (!txt) return;
+    speak(who, txt, 'bubble', { event });
     this.bub.style.setProperty('--ac', CH[who].acc);
     this.bub.innerHTML = `<span class="kk">${CH[who].nick}</span><p></p>`; this.bub.querySelector('p').textContent = txt;
     requestAnimationFrame(() => this.bub.classList.add('on'));

@@ -1,6 +1,7 @@
 // Crew chat (#chat/<id>): persona chat over the Anthropic Messages API, called directly from the browser with the user's own key.
 // Key + memory live only in this browser's localStorage. Chess facts come only from the engine analysis we attach.
 import { CH } from './portraits.js';
+import { speak } from './voice.js';
 import { photo } from './photo.js';
 import { eraScene, eraCaption } from './era.js';
 import { getEngine } from './engine.js';
@@ -154,7 +155,7 @@ export async function chatScreen({ render, topbar }, id) {
       const eng = engine ? await engine : '';
       let first = true;
       const r = await send(n, hist, { ctx: ctx.fen ? { fen: ctx.fen, note: ctx.note, engine: eng, master: ctx.master } : {}, onText: d => { if (first) { t.textContent = ''; first = false; } t.textContent += d; } });
-      t.textContent = r.text; hist.push({ role: 'assistant', content: r.text }); saveHist(); bond(n, 1); ctx = {}; engine = null;
+      t.textContent = r.text; speak(n, r.text, 'chat', { sentences: 2 }); hist.push({ role: 'assistant', content: r.text }); saveHist(); bond(n, 1); ctx = {}; engine = null;
       if (ph) ph.className = ph.className.replace(/m-\w+/, 'm-pleased');
     } catch (err) { t.textContent = 'The radio crackles: ' + (err && err.message ? err.message.slice(0, 160) : 'no reply') + '. Check the key in Settings.'; hist.pop(); if (ph) ph.className = ph.className.replace(/m-\w+/, 'm-disappointed'); }
     busy = false;

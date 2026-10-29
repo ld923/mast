@@ -1,5 +1,6 @@
 // Coach (#coach): hub + Diagnose, Clock habits, Thinking, today's session, weekly challenge. Openings/endgames in coach2.js, numbers in coach3.js.
 import { esc, q, C, upd, day, data, css, runSet, reg, stopCoach, eng, verify, errorPool, toUci, sanOf, shuffle, rngOf, hashStr, isoWeek, fmtDay, barsChart, lineChart, bar, empty, crewSays, tagMove, MOTIF, cpStm, getCCT, setCCT, cctAcc, cctChance, isDebug } from './coach-core.js';
+import { speak } from './voice.js';
 import { openingsPage, endgamesPage, convertPage, endgameAct, openingAct, convertAct } from './coach2.js';
 import { proofPage, liveStats, tcLabel } from './coach3.js';
 import * as Sync from './sync.js';
@@ -132,15 +133,19 @@ function thinkingPage(ctx, B) {
 }
 
 /* ---------- today's session ---------- */
-async function sessionPage(ctx, B) {
+export async function sessionSteps({ watch = false } = {}) {
   const top = await topLeak(), due = Object.values((C().openings || {}).box || {}).filter(b => b.due <= Date.now()).length, lbl = MOTIF[top][0], dbg = isDebug();
-  const steps = [
-    { k: 'First instinct', mins: 3, run: r => instinctAct(r, { n: dbg ? 2 : 6 }) },
-    { k: 'Your leak: ' + lbl.toLowerCase(), mins: 3, run: r => leakAct(r, { motif: top, n: dbg ? 3 : 5 }) },
-    { k: 'Endgame practice', mins: 4, run: r => endgameAct(r) },
-    { k: "What's the threat?", mins: 2, run: r => threatAct(r, { n: dbg ? 2 : 4 }) },
-    due ? { k: 'Opening trainer', mins: 2, run: r => openingAct(r, { n: dbg ? 2 : 5 }) } : { k: 'Blindfold', mins: 2, run: r => blindAct(r, { n: dbg ? 2 : 3 }) }
-  ];
+  const W = { k: 'First instinct', mins: watch ? 2 : 3, who: 'Kasparov', why: 'Three seconds to pick, then time to verify: it is the habit that stops rushed blunders.', run: r => instinctAct(r, { n: dbg ? 2 : watch ? 5 : 6 }) };
+  const L = { k: 'Your leak: ' + lbl.toLowerCase(), mins: 3, who: 'Tal', why: `${lbl} is the mistake that costs you most in your recent games, so we drill exactly that.`, motif: top, run: r => leakAct(r, { motif: top, n: dbg ? 3 : 5 }) };
+  const V = { k: 'Finish the win', mins: 2, who: 'Carlsen', why: 'These are positions you were winning and let slip; decide fast and decide right.', win: true, run: async r => { const P = await errorPool(null); const items = shuffle(P.convert).slice(0, dbg ? 3 : 5); const res = await runSet(r, items, { timed: 0, cct: true }).promise; const ok = res.filter(x => x.ok).length; return { title: 'Finish the win', ok, n: res.length }; } };
+  const E = { k: 'Endgame practice', mins: watch ? 3 : 4, who: 'Capablanca', why: 'Endgames are where a calm technique turns a small edge into a full point.', run: r => endgameAct(r) };
+  if (watch) return { steps: [W, L, V, E], top, lbl };
+  return { top, lbl, steps: [W, L, E,
+    { k: "What's the threat?", mins: 2, who: 'Leela', why: 'Ask what the opponent threatens before you move.', run: r => threatAct(r, { n: dbg ? 2 : 4 }) },
+    due ? { k: 'Opening trainer', mins: 2, who: 'Morphy', why: 'Your own opening errors, on a spaced schedule.', run: r => openingAct(r, { n: dbg ? 2 : 5 }) } : { k: 'Blindfold', mins: 2, who: 'Leela', why: 'See the board without the pieces.', run: r => blindAct(r, { n: dbg ? 2 : 3 }) }] };
+}
+async function sessionPage(ctx, B) {
+  const { steps } = await sessionSteps();
   const tot = steps.reduce((a, s) => a + s.mins, 0), done = (C().sessions || []).some(s => s.day === day());
   B.innerHTML = `<p class="sub">About ${tot} minutes, built from your weak spots. Works offline once the engine has loaded once. ${done ? 'You already finished a session today; this is a bonus round.' : ''}</p><ol class="sub">${steps.map(s => `<li><b>${esc(s.k)}</b>, about ${s.mins} min</li>`).join('')}</ol><button class="btn" id="ss-go" type="button">Start the session</button><div id="ss" class="co-sec"></div>`;
   q(B, '#ss-go').onclick = async () => {
@@ -152,7 +157,7 @@ async function sessionPage(ctx, B) {
       let r; try { r = await st.run(body); } catch (e) { r = { n: 0, ok: 0 }; } if (!S.isConnected) return;
       out.push({ k: st.k, ok: r.ok || 0, n: r.n || 0, skipped }); if (!skipped && r.n) { await new Promise(res => { body.insertAdjacentHTML('beforeend', '<div class="co-row" style="margin-top:12px"><button class="btn" id="ss-next" type="button">Next step</button></div>'); q(body, '#ss-next').onclick = res; }); }
     }
-    const ok = out.reduce((a, s) => a + s.ok, 0), n = out.reduce((a, s) => a + s.n, 0); upd(c => { (c.sessions ||= []).push({ t: Date.now(), day: day(), ok, n }); c.sessions = c.sessions.slice(-120); }); xp(40, 'coach session'); sfx('success');
+    const ok = out.reduce((a, s) => a + s.ok, 0), n = out.reduce((a, s) => a + s.n, 0); upd(c => { (c.sessions ||= []).push({ t: Date.now(), day: day(), ok, n }); c.sessions = c.sessions.slice(-120); }); xp(40, 'coach session'); sfx('success'); speak('Skipper', `${ok} of ${n} across ${out.filter(s => s.n).length} steps. Well sailed, Gerald.`, 'result');
     S.innerHTML = `<h2>Session complete</h2>${crewSays('Skipper', 'excited', `${ok} of ${n} across ${out.filter(s => s.n).length} steps. Well sailed, Gerald. See you tomorrow.`)}<ul class="sub">${out.map(s => `<li>${esc(s.k)}: ${s.n ? `${s.ok}/${s.n}` : s.skipped ? 'skipped' : 'no data'}</li>`).join('')}</ul><a class="btn" href="#coach">Back to Coach</a>`;
   };
 }

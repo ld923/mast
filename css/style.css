@@ -489,3 +489,12 @@ html[data-anim=full] .chart .rock .glow{transform-box:fill-box;transform-origin:
  .deck .hs.sel .hit{fill-opacity:.1;stroke-opacity:.9}
 }
 @media(max-width:820px){.deckwrap{width:auto;aspect-ratio:auto!important;max-height:none!important}}
+
+/* start today's watch */
+.watch-cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 8px;padding:16px 20px;border-radius:var(--r-lg,16px);background:var(--a);color:#101418;font:800 clamp(15px,4.4vw,20px) var(--f-disp,sans-serif);letter-spacing:.08em;text-align:center;text-decoration:none;box-shadow:0 6px 24px color-mix(in srgb,var(--a) 45%,transparent);min-height:56px;position:relative;z-index:6;animation:wcta 2.6s ease-in-out infinite}
+.watch-cta.done{background:var(--glass-h);color:var(--fg);border:1px solid var(--a);box-shadow:none;animation:none}
+.watch-cta:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+@keyframes wcta{50%{transform:scale(1.015)}}
+html[data-anim="off"] .watch-cta,html[data-anim="calm"] .watch-cta{animation:none}
+@media(prefers-reduced-motion:reduce){.watch-cta{animation:none}}
+@media(max-width:480px){.watch-cta{margin:6px 0;padding:12px 14px;min-height:48px}}

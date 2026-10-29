@@ -7,6 +7,7 @@ import { play as sfx } from './sound.js';
 import { full } from './fx.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+export const TAP = { f: null }; // optional per-result listener (the guided watch)
 export const q = (r, s) => r.querySelector(s);
 export const j = u => fetch(u).then(r => r.ok ? r.json() : Promise.reject(u));
 const DEBUG = () => /[?&]debug=1/.test(location.search);
@@ -193,7 +194,7 @@ export function runSet(root, items, cfg = {}) {
     if (stopped) return; stopT(); board.setLegal({}); const best = item.sol[0];
     const res = { ok, secs, played, flagged: !!flagged, id: item.id, fen: item.fen, best, bestSan: item.san || sanOf(item.fen, best), kind: item.kind };
     if (cfg.instinct) { res.first = first.uci; res.firstSan = first.san; res.firstBest = !!first.uci && item.sol.includes(first.uci); res.changed = !!first.uci && played !== first.uci; res.verifySecs = secsNow(); res.firstSecs = first.secs; }
-    results.push(res); if (cfg.cct) cctRecord(ok); $('#r-bd').classList.remove('blind');
+    results.push(res); if (TAP.f) { try { TAP.f(res, item); } catch (_) { } } if (cfg.cct) cctRecord(ok); $('#r-bd').classList.remove('blind');
     if (cfg.silent) { sfx('move'); info('<b>Recorded.</b> Answers come at the end.'); if (cfg.onEach) cfg.onEach(res, item, i); const l2 = i + 1 >= items.length; actions(`<button class="btn" id="r-next" type="button">${l2 ? 'Finish' : 'Next position'}</button>`); const b2 = $('#r-next'); b2.onclick = () => { if (l2) { stopped = true; resolveAll(results); } else { i++; load(); } }; b2.focus({ preventScroll: true }); return; }
     sfx(ok ? 'success' : 'fail'); board.showArrow(best.slice(0, 2), best.slice(2, 4), '#3FB37F');
     info(`<b>${ok ? 'Right.' : flagged ? 'Out of time.' : 'Not this one.'}</b> Best was <b>${esc(res.bestSan)}</b>${item.played && !ok ? `; in your game you played <b>${esc(item.played)}</b>` : ''}.${cfg.instinct ? (res.firstBest ? ' Your first instinct was already right.' : res.changed && ok ? ' Checking paid off: you improved on your first pick.' : res.changed ? ' You changed it, but not to the best move.' : '') : ''}${item.note ? `<p class="sub sm">${esc(item.note)}</p>` : ''}`, ok ? 'ok' : 'bad');

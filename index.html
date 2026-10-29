@@ -47,6 +47,10 @@ try{if(sessionStorage.getItem('mast.splash')||document.documentElement.dataset.a
  <div class="seg"><button data-cs="ring">Ring</button><button data-cs="glass">Hourglass</button></div>
  <span class="k" style="margin-top:14px">Blunder-check prompt (CCT) in drills</span>
  <div class="seg"><button data-cct="1">On</button><button data-cct="0">Off</button></div>
+ <span class="k" style="margin-top:14px">Crew voices</span>
+ <div class="seg"><button data-cv="off">Off</button><button data-cv="key">Key moments</button><button data-cv="all">All</button></div>
+ <div class="row tight" style="margin-top:6px;flex-wrap:wrap;gap:4px"><button class="btn ghost sm" type="button" data-vt="Skipper">Skipper</button><button class="btn ghost sm" type="button" data-vt="Morphy">Morphy</button><button class="btn ghost sm" type="button" data-vt="Capablanca">Capablanca</button><button class="btn ghost sm" type="button" data-vt="Tal">Tal</button><button class="btn ghost sm" type="button" data-vt="Kasparov">Kasparov</button><button class="btn ghost sm" type="button" data-vt="Carlsen">Carlsen</button><button class="btn ghost sm" type="button" data-vt="Leela">Leela</button><button class="btn ghost sm" type="button" data-vt="Tempo">Tempo</button></div>
+ <div class="row tight" style="margin-top:6px"><a class="btn ghost sm" href="#studio">Voice studio: record Skipper or Tempo</a></div>
  <span class="k" style="margin-top:14px">Crew chat &mdash; Anthropic API key</span>
  <div class="keyrow" style="display:flex;gap:6px;margin-top:4px"><input id="apikey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-..." aria-label="Anthropic API key" style="flex:1;min-width:0;padding:8px;border-radius:10px;border:1px solid var(--glass-b);background:var(--glass-h);color:var(--fg)"><button class="btn ghost sm" type="button" id="keytest">Test key</button></div>
  <p class="sub sm" id="keymsg" style="margin:4px 0 0;line-height:1.4">The key is stored only in this browser on this device and sent only to api.anthropic.com. Usage is billed to the key's owner. Leave empty to turn chat off.</p>

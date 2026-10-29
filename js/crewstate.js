@@ -1,4 +1,5 @@
 import { photo } from './photo.js';
+import { speak } from './voice.js';
 import { eraScene } from './era.js';
 // Crew state: moods from Gerald's recent results per master, solved counts -> outfit unlocks, selected outfit, intro cards.
 import { store, seen, markSeen } from './ui.js';
@@ -41,6 +42,7 @@ export function introOnce(n) {
   el.className = 'intro'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', c.nick); el.tabIndex = -1;
   el.style.setProperty('--ac', c.acc);
   el.innerHTML = `<div class="ic"><div class="ifig iph era-${n.toLowerCase()}">${eraScene(n)}<span class="iphm">${photo(n, n === 'Tempo' || n === 'Skipper' ? 'char' : 'pleased')}</span></div><div class="itx"><span class="k">${ERA[n] || ''}</span><h2>${c.nick}</h2><p class="sub">${n === 'Tempo' ? c.insp : n === 'Skipper' ? c.insp : 'Inspired by ' + c.insp}</p><p class="iq">“${c.tag}”</p><span class="sub sm">Tap to continue</span></div></div>`;
+  speak(n, c.tag, 'intro', { event: 'open' });
   document.body.appendChild(el); el.focus({ preventScroll: true }); document.dispatchEvent(new CustomEvent('mast:intro', { detail: 'open' }));
   return new Promise(res => {
     const close = () => { if (!el.isConnected) return; el.classList.add('out'); document.dispatchEvent(new CustomEvent('mast:intro', { detail: 'close' })); setTimeout(() => el.remove(), getAnim() === 'off' ? 0 : 300); res(true); };

@@ -1,4 +1,5 @@
 import { photo } from './photo.js';
+import { speak } from './voice.js';
 // Progression visuals: rank insignia, sail XP meter, HUD, toasts, ceremonies, chest, cards, collection, trophies, daily route, boss intro, Tempo arrival.
 import * as Pr from './progress.js';
 import { figure, figCSS } from './figures.js';
@@ -310,6 +311,7 @@ export function bossIntro(id) {
   const o = overlay('pgo', `<div class="box" style="--ac:${acc}"><div class="boss" style="--ac:${acc}"><div class="bf">${figure(B.who, 'stand', 'excited', {})}</div><div><span class="tag">BOSS</span><h2>${esc(B.name)}</h2><p class="sub">${esc(B.title)}</p>
    <div class="hp" role="img" aria-label="Boss health: 5 positions">${'<i></i>'.repeat(5)}</div><p class="sub sm">5 hard positions · ${Pr.BOSS_CLOCK}s each · 2 lives. Each position you solve breaks a segment.</p><p class="hearts">♥ ♥</p></div></div>
    <div class="row"><button class="btn" id="bs-go">Fight</button><button class="btn ghost" id="bs-no">Not yet</button></div></div>`);
+  speak(B.who, B.name + '. ' + B.title, 'boss');
   play('drums'); const go = o.el.querySelector('#bs-go'); go.onclick = () => o.close(true); o.el.querySelector('#bs-no').onclick = () => o.close(false); go.focus();
   return o.p;
 }

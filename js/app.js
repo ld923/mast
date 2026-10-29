@@ -28,6 +28,9 @@ import { initSecrets, secretsView, wireBackstory } from './secrets.js';
 import { coachScreen, stopCoach } from './coach.js';
 import { getCCT, setCCT } from './coach-core.js';
 import { onSyncAlerts, visitNudge, briefCoachHTML } from './coach3.js';
+import { watchScreen, watchDone } from './watch.js';
+import { studioScreen } from './voice-studio.js';
+import { getMode as getVoiceMode, setMode as setVoiceMode, test as voiceTest, describe as voiceDescribe } from './voice.js';
 import { initFx, setAnim, getAnim, setHaptics, getHaptics, full, countAll } from './fx.js';
 
 const $ = s => document.querySelector(s);
@@ -53,6 +56,7 @@ function buildShell() {
     menu.querySelectorAll('[data-s]').forEach(b => b.classList.toggle('on', (b.dataset.s === '1') === ambientOn()));
     menu.querySelectorAll('[data-bv]').forEach(b => b.classList.toggle('on', b.dataset.bv === getBoardView()));
     menu.querySelectorAll('[data-rp]').forEach(b => b.classList.toggle('on', (b.dataset.rp === '1') === getRipples()));
+    menu.querySelectorAll('[data-cv]').forEach(b => b.classList.toggle('on', b.dataset.cv === getVoiceMode()));
     menu.querySelectorAll('[data-cs]').forEach(b => b.classList.toggle('on', b.dataset.cs === getClockStyle()));
     menu.querySelectorAll('[data-cct]').forEach(b => b.classList.toggle('on', (b.dataset.cct === '1') === getCCT()));
     const un = unlockedThemes(), cur = getBoardTheme(), SW = { night: ['#B98F66', '#17314B', '#7a5230'], teak: ['#d3a86b', '#8a5a2e', '#9b6b3a'], chart: ['#ecdcb2', '#c7ad78', '#6b5a3a'], havana: ['#d9b48a', '#5a2a1c', '#7b2f1f'], riga: ['#f4f9fd', '#9dbad3', '#cfe0ee'] };
@@ -61,6 +65,8 @@ function buildShell() {
   };
   menu.querySelectorAll('[data-bv]').forEach(b => b.onclick = () => { setBoardView(b.dataset.bv); paint(); });
   menu.querySelectorAll('[data-rp]').forEach(b => b.onclick = () => { setRipples(b.dataset.rp === '1'); paint(); });
+  menu.querySelectorAll('[data-cv]').forEach(b => b.onclick = () => { setVoiceMode(b.dataset.cv); paint(); });
+  menu.querySelectorAll('[data-vt]').forEach(b => b.onclick = () => { voiceTest(b.dataset.vt); });
   menu.querySelectorAll('[data-cct]').forEach(b => b.onclick = () => { setCCT(b.dataset.cct === '1'); paint(); });
   menu.querySelectorAll('[data-cs]').forEach(b => b.onclick = () => { setClockStyle(b.dataset.cs); paint(); });
   menu.querySelectorAll('[data-a]').forEach(b => b.onclick = () => { setAnim(b.dataset.a); paint(); });
@@ -135,7 +141,8 @@ function today() {
   const wx = wxNow(), tod = timeOfDay();
   render(`${topbar}
   <header class="bcast deck-hd"><div><div class="k"><span class="live"></span>On deck · ${new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' })} · ${WEATHER_WORD[wx]}</div>
-   <h1>${g} <em>watch</em>, Gerald</h1></div><span class="row"><a class="btn ghost" href="#coach/session">Today's session</a><button class="btn" id="brief-open" aria-haspopup="dialog" aria-controls="brief">Captain's briefing</button></span></header>
+   <h1>${g} <em>watch</em>, Gerald</h1></div><span class="row"><button class="btn ghost" id="brief-open" aria-haspopup="dialog" aria-controls="brief">Captain's briefing</button></span></header>
+  <a class="watch-cta${watchDone() ? ' done' : ''}" id="watch-cta" href="#watch">${watchDone() ? 'Watch complete ✓ · extra round?' : "START TODAY'S WATCH · 10 min"}</a>
   <div class="deckwrap" id="deck"></div>
   <p class="sub sm deck-hint">Tap the table for today's drill, the chart for the voyage, the wheel to play, a crew member to meet them.</p>
   <div class="sheet-bg" id="brief-bg" hidden></div>
@@ -364,7 +371,7 @@ async function route() {
     stopDrills(); if (r !== 'play') stopPlay(); if (r !== 'review') stopReview(); if (pzBoard && r !== 'puzzles') { try { pzBoard.destroy(); } catch (e) { } pzBoard = null; if (pzCrew) pzCrew.destroy(); }
     if (r !== 'puzzles') killBossClk(); stopCoach();
     window.scrollTo(0, 0); view.classList.remove('in-cabin');
-    await ({ today, drills, puzzles, voyage, masters, review, play, chat, coach: () => coachScreen({ render, topbar, D }), postcard: () => postcardView({ render, topbar }), collection: a => collectionView({ render, topbar }, a), trophies: () => trophiesView({ render, topbar }), secrets: () => secretsView({ render, topbar }) }[r] || today)(arg);
+    await ({ today, drills, puzzles, voyage, masters, review, play, chat, coach: () => coachScreen({ render, topbar, D }), watch: () => { watchScreen({ render, topbar }); }, studio: () => studioScreen({ render, topbar }), postcard: () => postcardView({ render, topbar }), collection: a => collectionView({ render, topbar }, a), trophies: () => trophiesView({ render, topbar }), secrets: () => secretsView({ render, topbar }) }[r] || today)(arg);
   };
   const vt = full() && routed && document.startViewTransition;
   if (vt) { try { await document.startViewTransition(run).updateCallbackDone; } catch (e) { } }

@@ -1,6 +1,7 @@
 // Secrets layer: registry, found-state (mast.secrets), detection hooks (games, drills, puzzles), the #secrets page, personal file.
 // Scenes and mini-games live in secrets-fun.js. Nothing here is visible until found, except hints.
 import { store } from './ui.js';
+import { speak } from './voice.js';
 import { full, confetti, wash, getAnim } from './fx.js';
 import { photo } from './photo.js';
 import { CH } from './portraits.js';
@@ -72,6 +73,7 @@ export function find(id, { silent = false, line } = {}) {
   ST.found[id] = Date.now(); save();
   try { Pr.addXp(r.xp || 0, 'secret'); } catch (_) { }
   document.dispatchEvent(new CustomEvent('mast:secret', { detail: { id } }));
+  if (!silent) speak(r.who || 'Skipper', line || r.reward, 'secret');
   if (!silent) import('./prog-ui.js').then(u => { tq = tq.then(() => u.toast({ k: 'Secret found', title: r.name, line: line || r.reward, who: r.who })).catch(() => { }); });
   return true;
 }
