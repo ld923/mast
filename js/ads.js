@@ -43,7 +43,7 @@ export const BR = {
     sets: [['Past, played in the present', 'D BoxStation is a retro handheld console. Coming soon.', 'Coming soon'], ['Retro handheld gaming', 'Press START on D BoxStation. Coming soon.', 'Coming soon'], ['Meet D BoxStation', 'The past, played in the present. Coming soon.', 'Coming soon']],
     fu: ['Ready to press START?', 'D BoxStation: the past, played in the present.', 'Coming soon'] },
   robin: { name: 'Robin', sub: "Malta's electronics and home shops in one app", url: '', cta: 'Coming soon', cta2: 'Coming soon', dom: 'Robin', v: null, who: null, color: '#e8521f',
-    icon: m('robin-icon.webp', 192, 192), hero: m('robin-hero.webp', 800, 800), fit: 'cover', shots: [A + 'robin-card.webp'],
+    icon: m('robin-icon.webp', 192, 192), hero: m('robin-hero.webp', 800, 800), fit: 'cover', shots: ['shot-robin-home', 'shot-robin-compare', 'shot-robin-cats', 'robin-card'].map(s => A + s + '.webp'),
     copy: ['Comparing moves takes time. Comparing prices should not. Robin.', 'Every Malta shop on one board. You pick the best move.', 'Fork the shops, not your budget.', 'One search, every shop: a clean skewer of the price list.', 'Zwischenzug for shoppers: check Robin before you buy.'],
     sets: [['Malta\'s shops in one app', 'Robin searches Malta\'s electronics and home shops at once, so you can compare.', 'Coming soon'], ['Compare. Get alerted. Get it installed.', 'Compare shops, set price alerts, and book delivery with installation. Coming soon.', 'Coming soon'], ['One search for Malta', 'Robin: electronics and home shops, side by side. The shops compete, you choose.', 'Coming soon']],
     fu: ['Still comparing?', 'Robin: Malta\'s electronics and home shops in one app. Coming soon.', 'Coming soon'] },
