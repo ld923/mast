@@ -50,7 +50,7 @@ function updateToast(reg) {
   if (document.querySelector('.upd')) return;
   if (!document.getElementById('upd-css')) { const s = document.createElement('style'); s.id = 'upd-css'; s.textContent = CSS; document.head.appendChild(s); }
   const el = document.createElement('div'); el.className = 'upd'; el.setAttribute('role', 'status');
-  el.innerHTML = '<div><span class="k">Gaffer</span><b>New version ready</b></div><button class="btn sm" type="button">Refresh</button>';
+  el.innerHTML = '<div><span class="k">Mast</span><b>New version ready</b></div><button class="btn sm" type="button">Refresh</button>';
   document.body.appendChild(el); requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('on')));
   el.querySelector('button').onclick = () => { const w = reg.waiting; if (w) w.postMessage('skip'); else location.reload(); };
 }
